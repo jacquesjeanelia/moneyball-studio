@@ -1,0 +1,6 @@
+ScraperFC
+soccerdata
+understatapi
+pandas
+scikit-learn
+thefuzz

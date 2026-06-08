@@ -1,0 +1,17 @@
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    container_name: football-db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: supersecretpassword
+      POSTGRES_DB: similarity_engine
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      # This automatically runs our SQL schema when the DB is created for the first time
+      - ./backend/schema.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  postgres_data:

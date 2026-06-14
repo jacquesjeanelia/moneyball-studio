@@ -6,6 +6,13 @@ from sklearn.preprocessing import MinMaxScaler
 import psycopg2
 from psycopg2.extras import execute_values
 
+def safe_read_csv(file_path, **kwargs):
+    try:
+        return pd.read_csv(file_path, encoding='utf-8', **kwargs)
+    except UnicodeDecodeError:
+        return pd.read_csv(file_path, encoding='latin1', **kwargs)
+
+
 DB_CONFIG = {
     "host":     os.getenv("DB_HOST",     "localhost"),
     "port":     int(os.getenv("DB_PORT", "5432")),
@@ -30,8 +37,8 @@ FEATURE_COLS = [
 def load_and_clean_data():
     if not os.path.exists(RAW_DATA_PATH):
         raise FileNotFoundError(f"Raw data file not found at {RAW_DATA_PATH}. Please run the ingestion script first.")
-    df = pd.read_csv(RAW_DATA_PATH)
-    df = df[df['minutes_played'] >= 450]
+    df = safe_read_csv(RAW_DATA_PATH)
+    # df = df[df['minutes_played'] >= 450]
     df = df[df['player_name'].notnull()]
     df[FEATURE_COLS] = df[FEATURE_COLS].fillna(0)
     df = df[df['transfermarkt_position'] != 'Goalkeeper']
@@ -60,7 +67,7 @@ def insert_countries(cur, countries_csv: str) -> dict[str, int]:
     if not os.path.exists(countries_csv):
         raise FileNotFoundError(f"Countries data file not found at {countries_csv}. Please ensure it exists.")
     
-    df = pd.read_csv(countries_csv).fillna('')
+    df = safe_read_csv(countries_csv).fillna('')
     rows = [(df['country'], df['flag']) for _, df in df.iterrows()]
 
     execute_values(
@@ -81,7 +88,7 @@ def insert_leagues(cur, leagues_csv: str, country_id_map: dict[str, int]) -> dic
     if not os.path.exists(leagues_csv):
         raise FileNotFoundError(f"Leagues data file not found at {leagues_csv}. Please ensure it exists.")
     
-    df = pd.read_csv(leagues_csv).fillna('')
+    df = safe_read_csv(leagues_csv).fillna('')
     rows =  [(row['league'], country_id_map.get(row['country'], None), row['league_url']) for _, row in df.iterrows()]
     execute_values(
         cur,
@@ -100,7 +107,7 @@ def insert_clubs(cur, clubs_csv: str, league_id_map: dict[str, int]) -> dict[str
     if not os.path.exists(clubs_csv):
         raise FileNotFoundError(f"Clubs data file not found at {clubs_csv}. Please ensure it exists.")
     
-    df = pd.read_csv(clubs_csv).fillna('')
+    df = safe_read_csv(clubs_csv).fillna('')
     rows = [(row['Club Name'], league_id_map.get(row['League'], None), row['Club Image URL']) for _, row in df.iterrows()]
     execute_values(
         cur,
@@ -168,8 +175,10 @@ def insert_player_season_stats(cur, df: pd.DataFrame, player_id_map: dict[str, i
         
         vec_string ='[' + ','.join(f"{v:.8f}" for v in vec) + ']'
 
+        minutes_played = row['minutes_played'] if pd.notna(row['minutes_played']) else 0
+
         rows.append((
-            player_id, '2024/2025', _float(row, 'npxg_per90'), _float(row, 'xa_per90'), _float(row, 'shots_on_target_per90'), 
+            player_id, minutes_played, '2024/2025', _float(row, 'npxg_per90'), _float(row, 'xa_per90'), _float(row, 'shots_on_target_per90'), 
             _float(row, 'progressive_passes_per90'), _float(row, 'successful_dribbles_per90'), 
             _float(row, 'pass_completion_percentage'), _float(row, 'tackles_interceptions_per90'), 
             _float(row, 'aerial_duels_won_percentage'), _float(row, 'ball_recoveries_per90'), 
@@ -180,7 +189,7 @@ def insert_player_season_stats(cur, df: pd.DataFrame, player_id_map: dict[str, i
         cur,
         """
             INSERT INTO player_season_stats (
-                player_id, season, npxg_per90, xa_per90, shots_on_target_per90, 
+                player_id, minutes_played, season, npxg_per90, xa_per90, shots_on_target_per90, 
                 progressive_passes_per90, successful_dribbles_per90, pass_completion_percentage, 
                 tackles_interceptions_per90, aerial_duels_won_percentage, ball_recoveries_per90, 
                 fouls_committed_per90, stats_vector
@@ -192,49 +201,49 @@ def insert_player_season_stats(cur, df: pd.DataFrame, player_id_map: dict[str, i
 
 def run():
     print("=" * 60)
-    print("Phase 3 — Transform & Load")
+    print("Phase 3 - Transform & Load")
     print("=" * 60)
  
     # --- Transform ---
-    print("\n[1/2] Cleaning & vectorising…")
+    print("\n[1/2] Cleaning & vectorising...")
     df = load_and_clean_data()
     df = scale_features(df)
  
     # --- Load ---
-    print("\n[2/2] Inserting into PostgreSQL…")
+    print("\n[2/2] Inserting into PostgreSQL...")
     conn = _connect_db()
     conn.autocommit = False
     cur = conn.cursor()
  
     try: 
-        print("  → countries")
+        print("  -> countries")
         country_id_map = insert_countries(cur, COUNTRIES_PATH)
         print(f"     {len(country_id_map)} countries")
 
-        print("\n  → leagues")
+        print("\n  -> leagues")
         league_id_map = insert_leagues(cur, LEAGUES_PATH, country_id_map)
         print(f"     {len(league_id_map)} leagues")
  
-        print("  → clubs")
+        print("  -> clubs")
         club_id_map = insert_clubs(cur, CLUBS_PATH, league_id_map)
         print(f"     {len(club_id_map)} clubs")
  
-        print("  → players")
+        print("  -> players")
         player_id_map = insert_players(cur, df, club_id_map, country_id_map)
         print(f"     {len(player_id_map)} players")
  
-        # print("  → player_positions")
+        # print("  -> player_positions")
         # insert_player_positions(cur, df, player_id_map)
  
-        print("  → player_season_stats")
+        print("  -> player_season_stats")
         insert_player_season_stats(cur, df, player_id_map)
  
         conn.commit()
-        print("\n✓ All data committed successfully.")
+        print("\nOK: All data committed successfully.")
  
     except Exception as exc:
         conn.rollback()
-        print(f"\n✗ Error — transaction rolled back.\n  {exc}")
+        print(f"\nError - transaction rolled back.\n  {exc}")
         raise
  
     finally:

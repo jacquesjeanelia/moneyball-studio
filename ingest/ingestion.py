@@ -209,6 +209,6 @@ def merge_sofascore_with_transfermarkt(player_stats_path="data/raw/player_stats.
     print(f"Total processed players: {len(final_df)}")
 
 if __name__ == "__main__":
-    get_all_leagues(["England Premier League", "Spain La Liga", "Italy Serie A", "France Ligue 1", "Germany Bundesliga"], ["24/25"])
+    # get_all_leagues(["England Premier League", "Spain La Liga", "Italy Serie A", "France Ligue 1", "Germany Bundesliga"], ["24/25"])
     # get_transfermarkt_dataset()
     merge_sofascore_with_transfermarkt()

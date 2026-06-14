@@ -20,7 +20,7 @@ Belize,https://upload.wikimedia.org/wikipedia/commons/e/e7/Flag_of_Belize.svg
 Benin,https://upload.wikimedia.org/wikipedia/commons/0/0a/Flag_of_Benin.svg
 Bhutan,https://upload.wikimedia.org/wikipedia/commons/9/91/Flag_of_Bhutan.svg
 Bolivia,https://upload.wikimedia.org/wikipedia/commons/4/48/Flag_of_Bolivia.svg
-Bosnia and Herzegovina,https://upload.wikimedia.org/wikipedia/commons/b/bf/Flag_of_Bosnia_and_Herzegovina.svg
+Bosnia-Herzegovina,https://upload.wikimedia.org/wikipedia/commons/b/bf/Flag_of_Bosnia_and_Herzegovina.svg
 Botswana,https://upload.wikimedia.org/wikipedia/commons/f/fa/Flag_of_Botswana.svg
 Brazil,https://upload.wikimedia.org/wikipedia/en/0/05/Flag_of_Brazil.svg
 Brunei,https://upload.wikimedia.org/wikipedia/commons/9/9c/Flag_of_Brunei.svg
@@ -37,7 +37,7 @@ Chile,https://upload.wikimedia.org/wikipedia/commons/7/78/Flag_of_Chile.svg
 China,https://upload.wikimedia.org/wikipedia/commons/f/fa/Flag_of_the_People%27s_Republic_of_China.svg
 Colombia,https://upload.wikimedia.org/wikipedia/commons/2/21/Flag_of_Colombia.svg
 Comoros,https://upload.wikimedia.org/wikipedia/commons/9/94/Flag_of_the_Comoros.svg
-Democratic Republic of Congo,https://upload.wikimedia.org/wikipedia/commons/6/6f/Flag_of_the_Democratic_Republic_of_the_Congo.svg
+DR Congo,https://upload.wikimedia.org/wikipedia/commons/6/6f/Flag_of_the_Democratic_Republic_of_the_Congo.svg
 Republic of Congo,https://upload.wikimedia.org/wikipedia/commons/9/92/Flag_of_the_Republic_of_the_Congo.svg
 Costa Rica,https://upload.wikimedia.org/wikipedia/commons/f/f2/Flag_of_Costa_Rica.svg
 Croatia,https://upload.wikimedia.org/wikipedia/commons/1/1b/Flag_of_Croatia.svg
@@ -81,7 +81,7 @@ Iraq,https://upload.wikimedia.org/wikipedia/commons/f/f6/Flag_of_Iraq.svg
 Ireland,https://upload.wikimedia.org/wikipedia/commons/4/45/Flag_of_Ireland.svg
 Israel,https://upload.wikimedia.org/wikipedia/commons/d/d4/Flag_of_Israel.svg
 Italy,https://upload.wikimedia.org/wikipedia/en/0/03/Flag_of_Italy.svg
-Ivory Coast,https://upload.wikimedia.org/wikipedia/commons/f/fe/Flag_of_C%C3%B4te_d%27Ivoire.svg
+Cote d'Ivoire,https://upload.wikimedia.org/wikipedia/commons/f/fe/Flag_of_C%C3%B4te_d%27Ivoire.svg
 Jamaica,https://upload.wikimedia.org/wikipedia/commons/0/0a/Flag_of_Jamaica.svg
 Japan,https://upload.wikimedia.org/wikipedia/en/9/9e/Flag_of_Japan.svg
 Jordan,https://upload.wikimedia.org/wikipedia/commons/c/c0/Flag_of_Jordan.svg
@@ -89,7 +89,7 @@ Kazakhstan,https://upload.wikimedia.org/wikipedia/commons/d/d3/Flag_of_Kazakhsta
 Kenya,https://upload.wikimedia.org/wikipedia/commons/4/49/Flag_of_Kenya.svg
 Kiribati,https://upload.wikimedia.org/wikipedia/commons/d/d3/Flag_of_Kiribati.svg
 North Korea,https://upload.wikimedia.org/wikipedia/commons/5/51/Flag_of_North_Korea.svg
-South Korea,https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg
+"Korea, South",https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg
 Kuwait,https://upload.wikimedia.org/wikipedia/commons/a/aa/Flag_of_Kuwait.svg
 Kyrgyzstan,https://upload.wikimedia.org/wikipedia/commons/c/c7/Flag_of_Kyrgyzstan.svg
 Laos,https://upload.wikimedia.org/wikipedia/commons/5/56/Flag_of_Laos.svg
@@ -101,7 +101,7 @@ Libya,https://upload.wikimedia.org/wikipedia/commons/0/05/Flag_of_Libya.svg
 Liechtenstein,https://upload.wikimedia.org/wikipedia/commons/4/47/Flag_of_Liechtenstein.svg
 Lithuania,https://upload.wikimedia.org/wikipedia/commons/1/11/Flag_of_Lithuania.svg
 Luxembourg,https://upload.wikimedia.org/wikipedia/commons/d/da/Flag_of_Luxembourg.svg
-Macedonia,https://upload.wikimedia.org/wikipedia/commons/f/f8/Flag_of_Macedonia.svg
+North Macedonia,https://upload.wikimedia.org/wikipedia/commons/f/f8/Flag_of_Macedonia.svg
 Madagascar,https://upload.wikimedia.org/wikipedia/commons/b/bc/Flag_of_Madagascar.svg
 Malawi,https://upload.wikimedia.org/wikipedia/commons/d/d1/Flag_of_Malawi.svg
 Malaysia,https://upload.wikimedia.org/wikipedia/commons/6/66/Flag_of_Malaysia.svg
@@ -177,7 +177,7 @@ Togo,https://upload.wikimedia.org/wikipedia/commons/6/68/Flag_of_Togo.svg
 Tonga,https://upload.wikimedia.org/wikipedia/commons/9/9a/Flag_of_Tonga.svg
 Trinidad and Tobago,https://upload.wikimedia.org/wikipedia/commons/6/64/Flag_of_Trinidad_and_Tobago.svg
 Tunisia,https://upload.wikimedia.org/wikipedia/commons/c/ce/Flag_of_Tunisia.svg
-Turkey,https://upload.wikimedia.org/wikipedia/commons/b/b4/Flag_of_Turkey.svg
+Türkiye,https://upload.wikimedia.org/wikipedia/commons/b/b4/Flag_of_Turkey.svg
 Turkmenistan,https://upload.wikimedia.org/wikipedia/commons/1/1b/Flag_of_Turkmenistan.svg
 Tuvalu,https://upload.wikimedia.org/wikipedia/commons/3/38/Flag_of_Tuvalu.svg
 Uganda,https://upload.wikimedia.org/wikipedia/commons/4/4e/Flag_of_Uganda.svg

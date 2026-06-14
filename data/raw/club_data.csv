@@ -1,0 +1,101 @@
+League,Club Name,Club Image URL
+England Premier League,Arsenal,https://api.sofascore.app/api/v1/team/42/image
+England Premier League,Leicester City,https://api.sofascore.app/api/v1/team/31/image
+England Premier League,Brighton & Hove Albion,https://api.sofascore.app/api/v1/team/30/image
+England Premier League,Brentford,https://api.sofascore.app/api/v1/team/50/image
+England Premier League,Bournemouth,https://api.sofascore.app/api/v1/team/60/image
+England Premier League,Aston Villa,https://api.sofascore.app/api/v1/team/40/image
+England Premier League,Nottingham Forest,https://api.sofascore.app/api/v1/team/14/image
+England Premier League,Wolverhampton,https://api.sofascore.app/api/v1/team/3/image
+England Premier League,Fulham,https://api.sofascore.app/api/v1/team/43/image
+England Premier League,Manchester City,https://api.sofascore.app/api/v1/team/17/image
+England Premier League,West Ham United,https://api.sofascore.app/api/v1/team/37/image
+England Premier League,Ipswich Town,https://api.sofascore.app/api/v1/team/32/image
+England Premier League,Tottenham Hotspur,https://api.sofascore.app/api/v1/team/33/image
+England Premier League,Crystal Palace,https://api.sofascore.app/api/v1/team/7/image
+England Premier League,Manchester United,https://api.sofascore.app/api/v1/team/35/image
+England Premier League,Southampton,https://api.sofascore.app/api/v1/team/45/image
+England Premier League,Chelsea,https://api.sofascore.app/api/v1/team/38/image
+England Premier League,Everton,https://api.sofascore.app/api/v1/team/48/image
+England Premier League,Newcastle United,https://api.sofascore.app/api/v1/team/39/image
+England Premier League,Liverpool FC,https://api.sofascore.app/api/v1/team/44/image
+Spain La Liga,Real Madrid,https://api.sofascore.app/api/v1/team/2829/image
+Spain La Liga,Deportivo Alavés,https://api.sofascore.app/api/v1/team/2885/image
+Spain La Liga,Real Betis,https://api.sofascore.app/api/v1/team/2816/image
+Spain La Liga,Celta Vigo,https://api.sofascore.app/api/v1/team/2821/image
+Spain La Liga,Espanyol,https://api.sofascore.app/api/v1/team/2814/image
+Spain La Liga,Getafe,https://api.sofascore.app/api/v1/team/2859/image
+Spain La Liga,Valencia,https://api.sofascore.app/api/v1/team/2828/image
+Spain La Liga,Atlético Madrid,https://api.sofascore.app/api/v1/team/2836/image
+Spain La Liga,Girona FC,https://api.sofascore.app/api/v1/team/24264/image
+Spain La Liga,Rayo Vallecano,https://api.sofascore.app/api/v1/team/2818/image
+Spain La Liga,Real Sociedad,https://api.sofascore.app/api/v1/team/2824/image
+Spain La Liga,Osasuna,https://api.sofascore.app/api/v1/team/2820/image
+Spain La Liga,Real Valladolid,https://api.sofascore.app/api/v1/team/2831/image
+Spain La Liga,Villarreal,https://api.sofascore.app/api/v1/team/2819/image
+Spain La Liga,Leganés,https://api.sofascore.app/api/v1/team/2845/image
+Spain La Liga,Las Palmas,https://api.sofascore.app/api/v1/team/6577/image
+Spain La Liga,FC Barcelona,https://api.sofascore.app/api/v1/team/2817/image
+Spain La Liga,Mallorca,https://api.sofascore.app/api/v1/team/2826/image
+Spain La Liga,Sevilla,https://api.sofascore.app/api/v1/team/2833/image
+Spain La Liga,Athletic Club,https://api.sofascore.app/api/v1/team/2825/image
+Italy Serie A,Hellas Verona,https://api.sofascore.app/api/v1/team/2701/image
+Italy Serie A,Genoa,https://api.sofascore.app/api/v1/team/2713/image
+Italy Serie A,Empoli,https://api.sofascore.app/api/v1/team/2705/image
+Italy Serie A,Torino,https://api.sofascore.app/api/v1/team/2696/image
+Italy Serie A,Venezia,https://api.sofascore.app/api/v1/team/2688/image
+Italy Serie A,AC Milan,https://api.sofascore.app/api/v1/team/2692/image
+Italy Serie A,Juventus,https://api.sofascore.app/api/v1/team/2687/image
+Italy Serie A,Udinese,https://api.sofascore.app/api/v1/team/2695/image
+Italy Serie A,Lazio,https://api.sofascore.app/api/v1/team/2699/image
+Italy Serie A,Inter,https://api.sofascore.app/api/v1/team/2697/image
+Italy Serie A,Bologna,https://api.sofascore.app/api/v1/team/2685/image
+Italy Serie A,Fiorentina,https://api.sofascore.app/api/v1/team/2693/image
+Italy Serie A,SSC Napoli,https://api.sofascore.app/api/v1/team/2714/image
+Italy Serie A,Monza,https://api.sofascore.app/api/v1/team/2729/image
+Italy Serie A,Parma,https://api.sofascore.app/api/v1/team/2690/image
+Italy Serie A,Atalanta,https://api.sofascore.app/api/v1/team/2686/image
+Italy Serie A,Como,https://api.sofascore.app/api/v1/team/2704/image
+Italy Serie A,AS Roma,https://api.sofascore.app/api/v1/team/2702/image
+Italy Serie A,Cagliari,https://api.sofascore.app/api/v1/team/2719/image
+Italy Serie A,Lecce,https://api.sofascore.app/api/v1/team/2689/image
+France Ligue 1,Paris Saint-Germain,https://api.sofascore.app/api/v1/team/1644/image
+France Ligue 1,Le Havre,https://api.sofascore.app/api/v1/team/1662/image
+France Ligue 1,RC Strasbourg,https://api.sofascore.app/api/v1/team/1659/image
+France Ligue 1,Saint-Étienne,https://api.sofascore.app/api/v1/team/1678/image
+France Ligue 1,Olympique de Marseille,https://api.sofascore.app/api/v1/team/1641/image
+France Ligue 1,Nantes,https://api.sofascore.app/api/v1/team/1647/image
+France Ligue 1,RC Lens,https://api.sofascore.app/api/v1/team/1648/image
+France Ligue 1,Montpellier,https://api.sofascore.app/api/v1/team/1642/image
+France Ligue 1,Guingamp,https://api.sofascore.app/api/v1/team/1654/image
+France Ligue 1,Angers,https://api.sofascore.app/api/v1/team/1684/image
+France Ligue 1,Nice,https://api.sofascore.app/api/v1/team/1661/image
+France Ligue 1,Metz,https://api.sofascore.app/api/v1/team/1651/image
+France Ligue 1,Auxerre,https://api.sofascore.app/api/v1/team/1646/image
+France Ligue 1,Stade Rennais,https://api.sofascore.app/api/v1/team/1658/image
+France Ligue 1,AS Monaco,https://api.sofascore.app/api/v1/team/1653/image
+France Ligue 1,Stade de Reims,https://api.sofascore.app/api/v1/team/1682/image
+France Ligue 1,Toulouse,https://api.sofascore.app/api/v1/team/1681/image
+France Ligue 1,Lille,https://api.sofascore.app/api/v1/team/1643/image
+France Ligue 1,Olympique Lyonnais,https://api.sofascore.app/api/v1/team/1649/image
+France Ligue 1,Stade Brestois,https://api.sofascore.app/api/v1/team/1715/image
+France Ligue 1,USL Dunkerque,https://api.sofascore.app/api/v1/team/6918/image
+Germany Bundesliga,Holstein Kiel,https://api.sofascore.app/api/v1/team/2573/image
+Germany Bundesliga,FC Augsburg,https://api.sofascore.app/api/v1/team/2600/image
+Germany Bundesliga,1. FSV Mainz 05,https://api.sofascore.app/api/v1/team/2556/image
+Germany Bundesliga,FC Bayern München,https://api.sofascore.app/api/v1/team/2672/image
+Germany Bundesliga,Borussia Dortmund,https://api.sofascore.app/api/v1/team/2673/image
+Germany Bundesliga,TSG Hoffenheim,https://api.sofascore.app/api/v1/team/2569/image
+Germany Bundesliga,Borussia M'gladbach,https://api.sofascore.app/api/v1/team/2527/image
+Germany Bundesliga,1. FC Heidenheim,https://api.sofascore.app/api/v1/team/5885/image
+Germany Bundesliga,VfL Bochum 1848,https://api.sofascore.app/api/v1/team/2542/image
+Germany Bundesliga,VfB Stuttgart,https://api.sofascore.app/api/v1/team/2677/image
+Germany Bundesliga,SV 07 Elversberg,https://api.sofascore.app/api/v1/team/2598/image
+Germany Bundesliga,SV Werder Bremen,https://api.sofascore.app/api/v1/team/2534/image
+Germany Bundesliga,1. FC Union Berlin,https://api.sofascore.app/api/v1/team/2547/image
+Germany Bundesliga,RB Leipzig,https://api.sofascore.app/api/v1/team/36360/image
+Germany Bundesliga,VfL Wolfsburg,https://api.sofascore.app/api/v1/team/2524/image
+Germany Bundesliga,SC Freiburg,https://api.sofascore.app/api/v1/team/2538/image
+Germany Bundesliga,Eintracht Frankfurt,https://api.sofascore.app/api/v1/team/2674/image
+Germany Bundesliga,FC St. Pauli,https://api.sofascore.app/api/v1/team/2526/image
+Germany Bundesliga,Bayer 04 Leverkusen,https://api.sofascore.app/api/v1/team/2681/image

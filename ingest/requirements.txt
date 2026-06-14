@@ -1,6 +1,8 @@
-ScraperFC
 soccerdata
 understatapi
-pandas
-scikit-learn
 thefuzz
+pandas
+ScraperFC==4.5.0
+scikit-learn
+psycopg2-binary
+numpy

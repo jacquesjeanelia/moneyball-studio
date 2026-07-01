@@ -82,10 +82,9 @@ export function categoryColor(category: string | null | undefined): string {
 }
 
 /**
- * Convert a percentile rank (0–100, higher = better) into a "top X%" figure
- * where a *smaller* number is better. 99th percentile -> top 1%, 50th -> top 50%.
- * Clamped to a 1% floor so an elite reading never shows the unintuitive "top 0%".
+ * Return the raw percentile rank (0–100, higher = better) directly.
+ * Previously this inverted to "top X%"; now it shows the true percentile.
  */
 export function topPercent(percentile: number): number {
-  return Math.max(1, Math.round(100 - percentile))
+  return Math.round(percentile)
 }

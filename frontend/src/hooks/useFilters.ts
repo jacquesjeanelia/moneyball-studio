@@ -78,6 +78,9 @@ export interface Facets {
   positions: { key: string; count: number }[]
 }
 
+/** Specific position codes in logical attacker→defender order. Used for dropdown ordering + filtering. */
+const POSITION_ORDER = ['ST', 'CF', 'LW', 'RW', 'CAM', 'AM', 'LM', 'RM', 'CM', 'CDM', 'DM', 'LWB', 'RWB', 'LB', 'RB', 'CB', 'GK']
+
 /** Every specific role a player can fill (main + alternates), de-duplicated. */
 function playerPositions(p: PlayerSummary): string[] {
   const set = new Set<string>()
@@ -122,16 +125,19 @@ export function useFacets(players: PlayerSummary[] | undefined): Facets {
       }
     }
 
+    const positionRank = Object.fromEntries(POSITION_ORDER.map((p, i) => [p, i]))
+
     return {
-      leagues: [...leagues.values()].sort((a, b) => b.count - a.count),
-      countries: [...countries.values()].sort((a, b) => b.count - a.count),
+      leagues: [...leagues.values()].sort((a, b) => a.name.localeCompare(b.name)),
+      countries: [...countries.values()].sort((a, b) => a.name.localeCompare(b.name)),
       clubs: [...clubs.values()].sort((a, b) => a.name.localeCompare(b.name)),
       categories: (['Attack', 'Midfield', 'Defender'] as Category[])
         .map((key) => ({ key, count: categories.get(key) ?? 0 }))
         .filter((x) => x.count > 0),
       positions: [...positions.entries()]
+        .filter(([key]) => key in positionRank)
         .map(([key, count]) => ({ key, count }))
-        .sort((a, b) => b.count - a.count),
+        .sort((a, b) => positionRank[a.key] - positionRank[b.key]),
     }
   }, [players])
 }

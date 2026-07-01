@@ -191,8 +191,7 @@ docker-compose.yml
 
 ## Open questions for the user (ask if relevant)
 
-1. The 12-metric set was chosen for positional balance — confirm it's the set you
-   want on the radar/cards, or name swaps (e.g. include `chances_created_per90`,
-   `duels_won_per90`, `clearances_per90`).
+1. The 32-metric set (all `player_season_stats` columns) is now surfaced in the
+   stat table, radar chart, and compare page — confirm this is the desired set.
 2. You mentioned testing cosine similarity on a *smaller* set of players — is the
    current 2271-row DB the intended test slice, or should ingestion be re-run?

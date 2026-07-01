@@ -12,14 +12,28 @@ async def db_conn() -> AsyncGenerator[Connection, None]:
         yield conn
 
 
-# The 12 headline stat columns, in canonical order, shared by every query that
-# returns season stats. Aliased to a table in each query via {a} (e.g. "pss").
+# All 32 stat columns from player_season_stats, in canonical order, shared by
+# every query that returns season stats. Aliased to a table in each query via
+# {a} (e.g. "pss").
 STAT_COLUMNS = (
     "minutes_played",
-    "npxg_per90", "shots_on_target_per90", "xa_per90", "big_chances_created_per90",
-    "successful_passes_per90", "successful_pass_rate", "successful_dribbles_per90",
-    "accurate_long_balls_per90",
-    "tackles_per90", "interceptions_per90", "recoveries_per90", "aerial_duel_success_rate",
+    # Attacking
+    "npxg_per90", "shots_per90", "shots_on_target_per90", "headed_shots_per90",
+    "xa_per90", "chances_created_per90", "big_chances_created_per90",
+    "successful_crosses_per90", "successful_cross_rate",
+    "opposition_box_touches_per90",
+    # Possession & progression
+    "successful_passes_per90", "successful_pass_rate",
+    "accurate_long_balls_per90", "accurate_long_balls_rate",
+    "successful_dribbles_per90", "successful_dribble_rate",
+    "touches_per90", "dispossessed_per90", "fouls_won_per90",
+    "duels_won_per90", "duel_success_rate",
+    # Defending & physical
+    "aerial_duels_won_per90", "aerial_duel_success_rate",
+    "tackles_per90", "interceptions_per90", "blocks_per90",
+    "clearances_per90", "recoveries_per90",
+    "possession_won_final_third_per90", "dribbled_past_per90",
+    "fouls_committed_per90", "defcon_per90",
 )
 
 

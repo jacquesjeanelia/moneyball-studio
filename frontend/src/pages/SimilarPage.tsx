@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { useAllPlayers, usePlayer, useSimilar, cohortFor } from '@/hooks/usePlayers'
@@ -8,7 +8,7 @@ import { PageTransition } from '@/components/PageTransition'
 import { SmartImage } from '@/components/SmartImage'
 import { PositionPill } from '@/components/primitives'
 import { ErrorState, Spinner, EmptyState } from '@/components/states'
-import { formatMarketValue, formatSimilarity, categoryColor } from '@/lib/format'
+import { formatMarketValue, formatSimilarity, categoryColor, parsePriceInput } from '@/lib/format'
 
 /** Every role a player can fill (main + alternates), de-duplicated, main first. */
 function playerPositions(p: { main_position: string | null; alternate_positions: string[] }): string[] {
@@ -27,8 +27,10 @@ export function SimilarPage() {
   const { data: similar, isLoading, isError, error, refetch } = useSimilar(playerId, 100)
   const { data: allPlayers } = useAllPlayers()
 
-  // Threshold: similarity score floor (0–1). Default surfaces strong matches.
-  const [threshold, setThreshold] = useState(0.9)
+  const SIMILARITY_THRESHOLD = 0.75
+
+  // Price filter: max market value in EUR.
+  const [maxPrice, setMaxPrice] = useState<number | null>(null)
 
   // Position filter (multi-select). Empty = show every shared-position lookalike.
   const [activePositions, setActivePositions] = useState<string[]>([])
@@ -55,13 +57,14 @@ export function SimilarPage() {
   const filtered = useMemo(
     () =>
       (similar ?? []).filter((s) => {
-        if (s.similarity_score < threshold) return false
+        if (s.similarity_score < SIMILARITY_THRESHOLD) return false
+        if (maxPrice != null && (s.player.current_market_value_eur ?? 0) > maxPrice) return false
         if (activePositions.length === 0) return true
         // Keep candidates who play at least one of the selected positions.
         const roles = playerPositions(s.player)
         return activePositions.some((p) => roles.includes(p))
       }),
-    [similar, threshold, activePositions],
+    [similar, maxPrice, activePositions],
   )
 
   const accent = categoryColor(target?.category)
@@ -82,10 +85,10 @@ export function SimilarPage() {
             <h1 className="font-display font-extrabold text-3xl sm:text-4xl tracking-tight">
               Statistical lookalikes
             </h1>
-            <p className="mt-1.5 text-sm text-chalk-faint max-w-xl">
+            {/* <p className="mt-1.5 text-sm text-chalk-faint max-w-xl">
               Ranked by playing style. The <span className="text-chalk-dim font-semibold">vs target</span> figures show how each
               player's overall output and price compare — a close style match at a lower level or price is the value to chase.
-            </p>
+            </p> */}
           </div>
 
           {/* Target chip */}
@@ -116,14 +119,9 @@ export function SimilarPage() {
           />
         )}
 
-        {/* Threshold control */}
-        <ThresholdControl
-          value={threshold}
-          onChange={setThreshold}
-          accent={accent}
-          matchCount={filtered.length}
-          totalCount={similar?.length ?? 0}
-        />
+        <div className="flex flex-wrap items-stretch gap-2.5">
+          <MaxPriceField value={maxPrice} onChange={setMaxPrice} />
+        </div>
 
         {/* Results */}
         <div className="mt-7">
@@ -132,7 +130,7 @@ export function SimilarPage() {
           {!isLoading && !isError && filtered.length === 0 && (
             <EmptyState
               title="No players match these filters"
-              hint="Lower the similarity threshold or clear the position filter to surface more lookalikes."
+              hint="Lower the similarity threshold, raise the max price, or clear the position filter to surface more lookalikes."
             />
           )}
           {!isLoading && !isError && filtered.length > 0 && (
@@ -208,45 +206,37 @@ function PositionFilter({
 
 // ---------------------------------------------------------------------------
 
-function ThresholdControl({
-  value,
-  onChange,
-  accent,
-  matchCount,
-  totalCount,
-}: {
-  value: number
-  onChange: (v: number) => void
-  accent: string
-  matchCount: number
-  totalCount: number
-}) {
-  const pct = Math.round(value * 100)
+const MAX_PRICE_EUR = 500_000_000
+
+function MaxPriceField({ value, onChange }: { value: number | null; onChange: (v: number | null) => void }) {
+  const [raw, setRaw] = useState('')
+
+  useEffect(() => {
+    if (value === null) setRaw('')
+  }, [value])
+
+  const commit = (s: string) => {
+    setRaw(s)
+    const parsed = parsePriceInput(s)
+    onChange(parsed === null ? null : Math.min(parsed, MAX_PRICE_EUR))
+  }
+
   return (
-    <div className="rounded-2xl surface p-5">
-      <div className="flex items-center justify-between mb-3">
-        <div>
-          <div className="text-sm font-bold text-chalk">Similarity threshold</div>
-          <div className="text-xs text-chalk-faint">
-            Showing <span className="text-chalk tnum">{matchCount}</span> of {totalCount} ranked candidates
-          </div>
-        </div>
-        <div className="font-display font-extrabold text-3xl tnum" style={{ color: accent }}>
-          {pct}%
-        </div>
-      </div>
-      <input
-        type="range"
-        min={70}
-        max={99}
-        value={pct}
-        onChange={(e) => onChange(Number(e.target.value) / 100)}
-        className="w-full accent-current cursor-pointer"
-        style={{ accentColor: accent }}
-      />
-      <div className="flex justify-between text-[11px] text-chalk-faint mt-1">
-        <span>70% · broad</span>
-        <span>99% · near-identical</span>
+    <div className="flex flex-col rounded-lg surface px-3 py-1.5 min-w-[8.5rem] transition-colors hover:border-ink-500 focus-within:border-signal-500/60">
+      <span className="text-[10px] font-bold uppercase tracking-wider text-chalk-faint leading-none mb-1">Max price</span>
+      <div className="flex items-center gap-1 text-sm font-semibold">
+        <span className="text-chalk-faint">€</span>
+        <input
+          inputMode="numeric"
+          value={raw}
+          onChange={(e) => commit(e.target.value)}
+          placeholder="Any"
+          title="In thousands — type 500 for €500K, or use m for millions (e.g. 30m)"
+          className="w-12 bg-transparent text-chalk placeholder:text-chalk-dim outline-none tnum"
+        />
+        {value != null && (
+          <span className="ml-1 text-xs text-volt font-bold tnum border-l border-ink-600 pl-1.5">{formatMarketValue(value)}</span>
+        )}
       </div>
     </div>
   )
@@ -273,7 +263,7 @@ function SimilarRow({
 }) {
   const p = item.player
   const pct = item.similarity_score
-  const ratingGap = targetRating != null ? targetRating - candidateRating : null
+  const ratingGap = targetRating != null ?  candidateRating - targetRating: null
   const value = p.current_market_value_eur ?? null
   const valueGap = targetValue != null && value != null ? value - targetValue : null
   return (
@@ -288,19 +278,19 @@ function SimilarRow({
 
       {/* photo + name -> profile */}
       <Link to={`/players/${p.id}`} className="flex items-center gap-3 flex-1 min-w-0">
-        <div className="relative h-12 w-12 rounded-lg overflow-hidden shrink-0">
+        <div className="h-12 w-12 rounded-lg overflow-hidden shrink-0">
           <SmartImage src={p.photo_url} alt={p.name} fallbackName={p.name} className="h-full w-full" imgClassName="object-top" />
-          {p.club?.logo_url && (
-            <div className="absolute -bottom-1 -right-1 h-5 w-5 rounded bg-ink-900 p-0.5 ring-1 ring-white/10">
-              <SmartImage src={p.club.logo_url} alt="" fallback="icon" fit="contain" className="h-full w-full" />
-            </div>
-          )}
         </div>
         <div className="min-w-0">
           <div className="font-display font-bold text-chalk truncate group-hover:text-signal-400 transition-colors">
             {p.name}
           </div>
-          <div className="flex items-center gap-2 text-xs text-chalk-faint">
+          <div className="flex items-center gap-1.5 text-xs text-chalk-faint">
+            {p.club?.logo_url && (
+              <span className="h-5 w-5 shrink-0">
+                <SmartImage src={p.club.logo_url} alt="" fallback="icon" fit="contain" className="h-full w-full" />
+              </span>
+            )}
             <span className="truncate">{p.club?.name ?? 'Free agent'}</span>
             {p.age != null && <span className="tnum">· {p.age}y</span>}
             {/* Price inline on phones, where the dedicated value column is hidden. */}
@@ -323,7 +313,7 @@ function SimilarRow({
       <div className="hidden sm:flex flex-col items-end gap-1 w-28">
         <GapBadge gap={ratingGap} suffix=" pts" />
         <ValueGapBadge gap={valueGap} />
-        <span className="text-[10px] text-chalk-faint uppercase tracking-wide">vs target</span>
+        {/* <span className="text-[10px] text-chalk-faint uppercase tracking-wide">vs target</span> */}
       </div>
 
       {/* value */}
@@ -335,9 +325,6 @@ function SimilarRow({
       <div className="w-16 sm:w-24 text-right">
         <div className="font-display font-extrabold text-lg tnum" style={{ color: accent }}>
           {formatSimilarity(pct)}
-        </div>
-        <div className="hidden sm:block h-1.5 rounded-full bg-ink-700 overflow-hidden mt-1">
-          <div className="h-full rounded-full" style={{ width: `${pct * 100}%`, background: accent }} />
         </div>
       </div>
 
@@ -373,7 +360,8 @@ function ValueGapBadge({ gap }: { gap: number | null }) {
   if (gap === 0) return <span className="text-[11px] font-semibold text-chalk-faint whitespace-nowrap">same price</span>
   const cheaper = gap < 0
   const color = cheaper ? 'var(--color-emerald)' : 'var(--color-amber)'
-  const label = `${formatMarketValue(Math.abs(gap))} ${cheaper ? 'cheaper' : 'dearer'}`
+  const sign = cheaper ? '+' : '-'
+  const label = `${sign}${formatMarketValue(Math.abs(gap))}`
   return (
     <span className="text-[11px] font-semibold tnum whitespace-nowrap" style={{ color }} title="Market value vs target">
       {label}

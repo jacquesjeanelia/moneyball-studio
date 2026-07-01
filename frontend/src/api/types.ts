@@ -28,19 +28,39 @@ export interface PlayerStats {
   minutes_played: number | null
   // Attacking
   npxg_per90: number | null
+  shots_per90: number | null
   shots_on_target_per90: number | null
+  headed_shots_per90: number | null
   xa_per90: number | null
+  chances_created_per90: number | null
   big_chances_created_per90: number | null
+  successful_crosses_per90: number | null
+  successful_cross_rate: number | null
+  opposition_box_touches_per90: number | null
   // Possession & progression
   successful_passes_per90: number | null
   successful_pass_rate: number | null
-  successful_dribbles_per90: number | null
   accurate_long_balls_per90: number | null
-  // Defending & duels
+  accurate_long_balls_rate: number | null
+  successful_dribbles_per90: number | null
+  successful_dribble_rate: number | null
+  touches_per90: number | null
+  dispossessed_per90: number | null
+  fouls_won_per90: number | null
+  duels_won_per90: number | null
+  duel_success_rate: number | null
+  // Defending & physical
+  aerial_duels_won_per90: number | null
+  aerial_duel_success_rate: number | null
   tackles_per90: number | null
   interceptions_per90: number | null
+  blocks_per90: number | null
+  clearances_per90: number | null
   recoveries_per90: number | null
-  aerial_duel_success_rate: number | null
+  possession_won_final_third_per90: number | null
+  dribbled_past_per90: number | null
+  fouls_committed_per90: number | null
+  defcon_per90: number | null
 }
 
 export interface PlayerSummary {
@@ -74,7 +94,7 @@ export interface SimilarPlayer {
 /** Broad player role — drives colour-coding and the category segmented control. */
 export type Category = 'Attack' | 'Midfield' | 'Defender'
 
-// The 12 radar/stat metrics, in display order, with metadata for rendering.
+// The 32 radar/stat metrics, in display order, with metadata for rendering.
 export type MetricKey = keyof Omit<PlayerStats, 'id' | 'minutes_played'>
 
 export interface MetricMeta {

@@ -173,15 +173,14 @@ def insert_players(cur, df: pd.DataFrame, club_id_map: dict[str, int], country_i
         dob = row['dob'] if pd.notna(row['dob']) else None
         value = int(row['value']) if pd.notna(row['value']) else 0
         height = int(row['height_cm']) if pd.notna(row['height_cm']) else None
-        category = row['category'] if pd.notna(row['category']) else None
-        main_position = row['positions'].split(",")[0].strip() if pd.notna(row['positions']) else []
+        # category = row['category'] if pd.notna(row['category']) else None
+        main_position = row['category']
         foot = row['preferred_foot'] if pd.notna(row['preferred_foot']) else None
         photo_url = PLAYER_IMAGE_URL + f"{row['fotmob_id']}.png" if pd.notna(row['fotmob_id']) else None
 
         rows.append((
             name,
             dob,
-            category,
             main_position,
             foot,
             height,
@@ -195,7 +194,7 @@ def insert_players(cur, df: pd.DataFrame, club_id_map: dict[str, int], country_i
         cur,
         """
             INSERT INTO players (
-                name, date_of_birth, category, main_position, preferred_foot, height_cm, club_id, country_id, photo_url, current_market_value_eur
+                name, date_of_birth, main_position, preferred_foot, height_cm, club_id, country_id, photo_url, current_market_value_eur
             ) VALUES %s
             ON CONFLICT DO NOTHING
         """,
@@ -212,8 +211,8 @@ def insert_player_alternate_positions(cur, df: pd.DataFrame, player_id_map: dict
             continue
 
         positions = row['positions'].split(",") if pd.notna(row['positions']) else []
-        for i in range(1, len(positions)):
-            rows.append((player_id, positions[i].strip()))
+        for position in positions:
+            rows.append((player_id, position.strip()))
 
     execute_values(
         cur,

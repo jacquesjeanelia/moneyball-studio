@@ -13,11 +13,11 @@ from unidecode import unidecode
 
 POSITION_MAP = {
     "Keeper": "GK",
-    "Left-Back": "LB",
-    "Right-Back": "RB",
-    "Left Wing Back": "LWB",
-    "Right Wing Back": "RWB",
-    "Center-Back": "CB",
+    "Left Back": "LB",
+    "Right Back": "RB",
+    "Left Wing-Back": "LWB",
+    "Right Wing-Back": "RWB",
+    "Center Back": "CB",
     "Defensive Midfielder": "DM",
     "Central Midfielder": "CM",
     "Left Midfielder": "LM",
@@ -728,14 +728,14 @@ def get_player_info(fotmob_id: int = 292462, tm_id: int = 937958):
         elif info['title'] == "Country":
             country = info['value']['fallback']
     
-    primary_position = POSITION_MAP[json['positionDescription']['primaryPosition']['label']] if json['positionDescription']['primaryPosition']['label'] in POSITION_MAP else json['positionDescription']['primaryPosition']['label']
+    primary_position = POSITION_MAP[json['positionDescription']['primaryPosition']['label']] if json['positionDescription']['primaryPosition']['label'] in POSITION_MAP.keys() else json['positionDescription']['primaryPosition']['label']
     try:
         position_info = json['positionDescription']['nonPrimaryPositions']
     except KeyError:
         position_info = []
     positions = []
     for p in position_info:
-        positions.append(POSITION_MAP[p['label']] if p['label'] in POSITION_MAP else p['label'])
+        positions.append(POSITION_MAP[p['label']] if p['label'] in POSITION_MAP.keys() else p['label'])
     positions = ','.join(positions) if positions else None
     return (fotmob_id, tm_id, name, dob, height_cm, foot, country, primary_position, positions, price)
 

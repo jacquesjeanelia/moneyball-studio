@@ -11,6 +11,50 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./backend/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d football"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: moneyball_backend
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/football
+      # Same-origin in the default compose setup (frontend proxies /api),
+      # so the browser never makes a cross-origin call. Override if the API
+      # is exposed on its own domain.
+      CORS_ORIGINS: "http://localhost,http://localhost:5173,http://localhost:4173"
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/health').status==200 else 1)"]
+      interval: 30s
+      timeout: 3s
+      start_period: 10s
+      retries: 3
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+      args:
+        # Empty => use same-origin "/api" via the nginx proxy (recommended).
+        VITE_API_BASE_URL: ""
+    container_name: moneyball_frontend
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "80:80"
+    restart: unless-stopped
 
   pgadmin:
     image: dpage/pgadmin4
@@ -22,6 +66,8 @@ services:
       - "5050:80"
     depends_on:
       - db
+    profiles:
+      - tools
 
 volumes:
   pgdata:

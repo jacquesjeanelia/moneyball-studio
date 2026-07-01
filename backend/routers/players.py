@@ -3,6 +3,7 @@ from typing import AsyncGenerator
 from asyncpg import Connection
 from database import get_db_connection
 from models import PlayerSummary, PlayerDetail, PlayerStats, Club, League, Country
+from roles import broad_role, role_categories, role_positions, clean_position
 
 router = APIRouter()
 
@@ -11,14 +12,40 @@ async def db_conn() -> AsyncGenerator[Connection, None]:
         yield conn
 
 
+# The 12 headline stat columns, in canonical order, shared by every query that
+# returns season stats. Aliased to a table in each query via {a} (e.g. "pss").
+STAT_COLUMNS = (
+    "minutes_played",
+    "npxg_per90", "shots_on_target_per90", "xa_per90", "big_chances_created_per90",
+    "successful_passes_per90", "successful_pass_rate", "successful_dribbles_per90",
+    "accurate_long_balls_per90",
+    "tackles_per90", "interceptions_per90", "recoveries_per90", "aerial_duel_success_rate",
+)
+
+
+def _stat_select(alias: str) -> str:
+    """SQL fragment selecting every stat column off `alias`, plus the presence flag."""
+    cols = ", ".join(f"{alias}.{c}" for c in STAT_COLUMNS)
+    return f"{alias}.player_id AS stats_player_id, {cols}"
+
+
+def _build_stats(row) -> PlayerStats | None:
+    """Build a PlayerStats from a row, or None if the player has no stats row."""
+    if row["stats_player_id"] is None:
+        return None
+    return PlayerStats(id=row["id"], **{c: row[c] for c in STAT_COLUMNS})
+
+
 # ---------------------------------------------------------------------------------
 # GET /api/players
-# Returns a list of players, optionally filtered by season, position, club, country
+# Returns a list of players, optionally filtered by season, position, club, country.
+# Each row carries market value + season stats so the client can do instant
+# search / filtering / percentile radars without N round-trips.
 # ---------------------------------------------------------------------------------
 @router.get("/", response_model=list[PlayerSummary])
 async def list_players(
     season: str = Query("2024/2025", description="Season to filter stats by"),
-    position: str | None = Query(None, description="Attack, Midfield, Defender"),
+    category: str | None = Query(None, description="Attack, Midfield, Defender"),
     country_id: int | None = Query(None),
     club_id: int | None = Query(None),
     conn: Connection = Depends(db_conn)
@@ -27,11 +54,20 @@ async def list_players(
     args = [season]
     idx = 2
 
-    if position:
-        filters.append(f"p.main_position = ${idx}")
-        args.append(position)
-        idx += 1
-    
+    if category:
+        # `category` is a broad role (Attack/Midfield/Defender). The dataset
+        # stores specific labels, so match the label set for the role, falling
+        # back to the position code when the label is missing/unrecognised.
+        labels = role_categories(category)
+        codes = role_positions(category)
+        filters.append(
+            f"(LOWER(p.category) = ANY(${idx}::text[])"
+            f" OR (p.category IS NULL AND UPPER(p.main_position) = ANY(${idx + 1}::text[])))"
+        )
+        args.append(labels)
+        args.append(codes)
+        idx += 2
+
     if country_id:
         filters.append(f"co.id = ${idx}")
         args.append(country_id)
@@ -45,19 +81,26 @@ async def list_players(
     where = " AND ".join(filters)
 
     rows = await conn.fetch(f"""
-        SELECT 
-            p.id, p.name, p.main_position, p.photo_url, p.country_id, 
+        SELECT
+            p.id, p.name, p.category, p.main_position, p.photo_url, p.country_id,
+            p.current_market_value_eur,
             DATE_PART('year', AGE(p.date_of_birth)) AS age,
+            COALESCE(ap.positions, ARRAY[]::text[]) AS alternate_positions,
             co.name AS country_name, co.flag_url AS country_flag_url,
             p.club_id, cl.name AS club_name, cl.logo_url AS club_logo_url,
             l.id AS league_id, l.name AS league_name, l.logo_url AS league_logo_url, l.country_id AS league_country_id,
-            lco.name AS league_country_name, lco.flag_url AS league_country_flag_url
+            lco.name AS league_country_name, lco.flag_url AS league_country_flag_url,
+            {_stat_select('pss')}
         FROM players p
         LEFT JOIN countries co ON p.country_id = co.id
         LEFT JOIN clubs cl ON p.club_id = cl.id
         LEFT JOIN leagues l ON cl.league_id = l.id
         LEFT JOIN countries lco ON l.country_id = lco.id
         LEFT JOIN player_season_stats pss ON p.id = pss.player_id
+        LEFT JOIN (
+            SELECT player_id, ARRAY_AGG(position ORDER BY position) AS positions
+            FROM player_alternate_positions GROUP BY player_id
+        ) ap ON ap.player_id = p.id
         WHERE {where}
         ORDER BY p.name ASC
     """, *args)
@@ -67,24 +110,28 @@ async def list_players(
             id=row["id"],
             name=row["name"],
             country=Country(id=row["country_id"], name=row["country_name"], flag_url=row["country_flag_url"]) if row["country_name"] else None,
-            main_position=row["main_position"],
+            category=broad_role(row["category"], row["main_position"]),
+            main_position=clean_position(row["main_position"]),
+            alternate_positions=list(row["alternate_positions"]),
             age=int(row["age"]) if row["age"] else None,
+            current_market_value_eur=row["current_market_value_eur"],
             club=Club(
                 id=row["club_id"],
                 name=row["club_name"],
                 logo_url=row["club_logo_url"],
                 league=League(
-                    id=row["league_id"], 
-                    name=row["league_name"], 
-                    logo_url=row["league_logo_url"], 
+                    id=row["league_id"],
+                    name=row["league_name"],
+                    logo_url=row["league_logo_url"],
                     country=Country(
-                        id=row["league_country_id"], 
-                        name=row["league_country_name"], 
+                        id=row["league_country_id"],
+                        name=row["league_country_name"],
                         flag_url=row["league_country_flag_url"]
                     )
                 ) if row["league_name"] else None
             ) if row["club_name"] else None,
-            photo_url=row["photo_url"]
+            photo_url=row["photo_url"],
+            season_stats=_build_stats(row),
         ) for row in rows
     ]
 
@@ -99,26 +146,27 @@ async def get_player(
     season: str = Query("2024/2025"),
     conn: Connection = Depends(db_conn)
 ):
-    row = await conn.fetchrow("""
-        SELECT 
-            p.id, p.name, p.main_position, p.photo_url,
+    row = await conn.fetchrow(f"""
+        SELECT
+            p.id, p.name, p.category, p.main_position, p.photo_url,
             DATE_PART('year', AGE(p.date_of_birth)) AS age,
             p.date_of_birth, p.preferred_foot, p.height_cm, p.current_market_value_eur,
+            COALESCE(ap.positions, ARRAY[]::text[]) AS alternate_positions,
             p.country_id, co.name AS country_name, co.flag_url AS country_flag_url,
             p.club_id, cl.name AS club_name, cl.logo_url AS club_logo_url,
             l.id AS league_id, l.name AS league_name, l.logo_url AS league_logo_url, l.country_id AS league_country_id,
             lco.name AS league_country_name, lco.flag_url AS league_country_flag_url,
-            ps.player_id AS stats_player_id, ps.minutes_played, ps.npxg_per90, ps.xa_per90,
-            ps.shots_on_target_per90, ps.progressive_passes_per90,
-            ps.successful_dribbles_per90, ps.pass_completion_percentage,
-            ps.tackles_interceptions_per90, ps.aerial_duels_won_percentage,
-            ps.ball_recoveries_per90
+            {_stat_select('ps')}
         FROM players p
         LEFT JOIN countries co ON p.country_id = co.id
         LEFT JOIN clubs cl ON p.club_id = cl.id
         LEFT JOIN leagues l ON cl.league_id = l.id
         LEFT JOIN countries lco ON l.country_id = lco.id
         LEFT JOIN player_season_stats ps ON p.id = ps.player_id AND ps.season = $2
+        LEFT JOIN (
+            SELECT player_id, ARRAY_AGG(position ORDER BY position) AS positions
+            FROM player_alternate_positions GROUP BY player_id
+        ) ap ON ap.player_id = p.id
         WHERE p.id = $1
     """, player_id, season)
 
@@ -129,7 +177,9 @@ async def get_player(
         id=row["id"],
         name=row["name"],
         age=int(row["age"]) if row["age"] else None,
-        main_position=row["main_position"],
+        category=broad_role(row["category"], row["main_position"]),
+        main_position=clean_position(row["main_position"]),
+        alternate_positions=list(row["alternate_positions"]),
         preferred_foot=row["preferred_foot"],
         height_cm=row["height_cm"],
         country=Country(id=row["country_id"], name=row["country_name"], flag_url=row["country_flag_url"]) if row["country_name"] else None,
@@ -151,17 +201,5 @@ async def get_player(
         photo_url=row["photo_url"],
         current_market_value_eur=row["current_market_value_eur"],
         date_of_birth=str(row["date_of_birth"]) if row["date_of_birth"] else None,
-        season_stats=PlayerStats(
-            id=row["id"],
-            minutes_played=row["minutes_played"],
-            npxg_per90=row["npxg_per90"],
-            xa_per90=row["xa_per90"],
-            shots_on_target_per90=row["shots_on_target_per90"],
-            progressive_passes_per90=row["progressive_passes_per90"],
-            successful_dribbles_per90=row["successful_dribbles_per90"],
-            pass_completion_percentage=row["pass_completion_percentage"],
-            tackles_interceptions_per90=row["tackles_interceptions_per90"],
-            aerial_duels_won_percentage=row["aerial_duels_won_percentage"],
-            ball_recoveries_per90=row["ball_recoveries_per90"]
-        ) if row["stats_player_id"] is not None else None
+        season_stats=_build_stats(row),
     )

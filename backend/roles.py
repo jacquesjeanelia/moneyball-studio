@@ -1,0 +1,74 @@
+"""Map the dataset's granular position vocabulary to the three broad roles the
+UI colour-codes, groups (percentile cohorts) and filters by.
+
+The source data stores `category` as a specific role label (e.g. "Center Back",
+"Striker") and `main_position` as a short code (e.g. "CB", "ST"). The frontend
+contract expects `category` to be one of "Attack" / "Midfield" / "Defender",
+so we normalise here and leave `main_position` untouched as the specific code.
+"""
+
+ATTACK = "Attack"
+MIDFIELD = "Midfield"
+DEFENDER = "Defender"
+
+# Specific category label (lower-cased) -> broad role.
+_CATEGORY_TO_ROLE = {
+    "striker": ATTACK,
+    "forward": ATTACK,
+    "left winger": ATTACK,
+    "right winger": ATTACK,
+    "attacking midfielder": MIDFIELD,
+    "central midfielder": MIDFIELD,
+    "defensive midfielder": MIDFIELD,
+    "left midfielder": MIDFIELD,
+    "right midfielder": MIDFIELD,
+    "midfielder": MIDFIELD,
+    "center back": DEFENDER,
+    "centre back": DEFENDER,
+    "left back": DEFENDER,
+    "right back": DEFENDER,
+    "left wing-back": DEFENDER,
+    "right wing-back": DEFENDER,
+    "defender": DEFENDER,
+}
+
+# Short position code -> broad role (fallback when category is missing/unknown).
+_POSITION_TO_ROLE = {
+    "ST": ATTACK, "CF": ATTACK, "LW": ATTACK, "RW": ATTACK,
+    "AM": MIDFIELD, "CAM": MIDFIELD, "CM": MIDFIELD, "DM": MIDFIELD, "CDM": MIDFIELD,
+    "LM": MIDFIELD, "RM": MIDFIELD,
+    "CB": DEFENDER, "LB": DEFENDER, "RB": DEFENDER, "LWB": DEFENDER, "RWB": DEFENDER,
+}
+
+
+def broad_role(category: str | None, main_position: str | None) -> str | None:
+    """Resolve a player's broad role from their specific category, falling back
+    to the main-position code. Returns None when neither is recognised."""
+    if category:
+        role = _CATEGORY_TO_ROLE.get(category.strip().lower())
+        if role:
+            return role
+    if main_position:
+        return _POSITION_TO_ROLE.get(main_position.strip().upper())
+    return None
+
+
+def role_categories(role: str) -> list[str]:
+    """Specific category labels (lower-cased) that map to a broad role."""
+    return [k for k, v in _CATEGORY_TO_ROLE.items() if v == role]
+
+
+def role_positions(role: str) -> list[str]:
+    """Short position codes that map to a broad role."""
+    return [k for k, v in _POSITION_TO_ROLE.items() if v == role]
+
+
+def clean_position(code: str | None) -> str | None:
+    """Normalise a main-position code, treating ingestion artifacts ("{}", "")
+    as missing."""
+    if not code:
+        return None
+    code = code.strip()
+    if code in ("{}", "[]", "None"):
+        return None
+    return code or None

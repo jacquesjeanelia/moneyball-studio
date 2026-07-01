@@ -1,0 +1,827 @@
+competition_id,competition,country
+IN1L,Super League,Indonesia
+ILI2,Championship,Indonesia
+IN3L,Liga Nusantara,Indonesia
+IN20,EPA Super League U20,Indonesia
+I3P1,Liga Nusantara Promotion Playoff,Indonesia
+I3P2,Liga Nusantara Relegation Playoff,Indonesia
+OM1L,Oman Jindal League,Oman
+BH1L,Bhutan Premier League,Bhutan
+AUS1,A-League Men,Australia
+A2SW,National Premier League - New South Wales,Australia
+A2VI,National Premier League - Victoria,Australia
+KHM1,Cambodian Premier League,Cambodia
+CSPC,Cambodian Super Cup,Cambodia
+HGKG,Hong Kong Premier League,Hongkong
+HK2L,Hong Kong First Division,Hongkong
+HK3L,Hong Kong Second Division,Hongkong
+HKFA,Hong Kong FA Cup,Hongkong
+HKSC,Hong Kong Senior Challenge Shield,Hongkong
+HLC2,Hong Kong League Cup,Hongkong
+HFA4,Hong Kong FA Cup Junior Division,Hongkong
+HK2F,Hong Kong U22 FA Cup,Hongkong
+HK22,Hong Kong U22 League,Hongkong
+BGD1,Bangladesh Football League,Bangladesh
+BGDP,Bangladesh Federation Cup,Bangladesh
+BGSC,Bangladesh Super Cup,Bangladesh
+LIB1,Lebanese Premier League,Lebanon
+RSK1,K League 1,"Korea, South"
+RSK2,K League 2,"Korea, South"
+K3L,K3 League,"Korea, South"
+K4L,K4 League,"Korea, South"
+KSC1,Korean Super Cup,"Korea, South"
+KRC3,K3·K4 Championship,"Korea, South"
+TFPL,Taiwan Football Premier League,Chinese Taipei
+TFL2,Taiwan Football League Div.2,Chinese Taipei
+IND1,Indian Super League,India
+INIL,Indian Football League,India
+IND2,I-League 2,India
+INDC,Durand Cup,India
+INSC,Super Cup,India
+INKP,Super League Kerala Playoffs,India
+IND4,RF Development League,India
+INR1,Super League Kerala,India
+JAP1,J1 League,Japan
+JAP2,J2 League,Japan
+JAP3,J3 League,Japan
+JFL,Japan Football League,Japan
+HOSL,Hokkaido Soccer League,Japan
+TOHL,Tohoku Soccer League (Div.1),Japan
+KTOS,Kanto Soccer League (Div.1),Japan
+HKSE,Hokushin'etsu Football League (Div.1),Japan
+TOSL,Tokai Soccer League (Div.1),Japan
+JPKA,Kansai Soccer League (Div.1),Japan
+JCSL,Chugoku Soccer League,Japan
+SHSL,Shikoku Soccer League,Japan
+JPKS,Kyushu Soccer League,Japan
+J6TN,Tohoku Soccer League (Div.2 North),Japan
+J6TS,Tohoku Soccer League (Div.2 South),Japan
+J6K2,Kanto Soccer League (Div.2),Japan
+J6H2,Hokushin'etsu Football League (Div.2),Japan
+J6T2,Tokai Soccer League (Div.2),Japan
+J6KA,Kansai Soccer League (Div.2),Japan
+J18E,Prince Takamado U18 Premier League East,Japan
+J18W,Prince Takamado U18 Premier League West,Japan
+J1YV,J1 100 Year Vision League,Japan
+J2J3,J2/J3 100 Year Vision League,Japan
+JJFL,JFL Cup,Japan
+IRN1,Persian Gulf Pro League,Iran
+IRN2,Azadegan League,Iran
+IRN3,League 2,Iran
+IRNP,Hazfi Cup,Iran
+IRSC,Iran Super Cup,Iran
+IPL2,League 2 - Playoff,Iran
+MYS1,Malaysia Super League,Malaysia
+MYSP,Malaysia FA Cup,Malaysia
+MYC1,Piala Malaysia,Malaysia
+MLCC,MFL Challenge Cup,Malaysia
+CSL,Chinese Super League,China
+CLO,China League One,China
+CHL3,China League Two A,China
+CL3S,China League Two B,China
+CN41,Chinese Champions League (Regional Stage),China
+CHFA,Chinese FA Cup,China
+CHSC,Chinese FA Super Cup,China
+KG1L,Jogorku Liga,Kyrgyzstan
+IRQ1,Iraq Stars League,Iraq
+IRQC,Iraq FA Cup,Iraq
+JO1L,Jordanian Pro League,Jordan
+MYA1,Myanmar National League,Myanmar
+MLD1,Dhivehi Premier League,Maldives
+QSL,Qatar Stars League,Qatar
+QU2L,Qatari Second Division,Qatar
+QEC1,Amir Cup,Qatar
+QSCP,Qatari Stars Cup (Ooredoo),Qatar
+AMCQ,Amir Cup - Preliminary stage,Qatar
+SIN1,Singapore Premier League,Singapore
+SIN2,Singapore Premier League 2,Singapore
+SINP,Singapore Cup,Singapore
+SPCS,Singapore Community Shield,Singapore
+PFL1,Philippines Football League,Philippines
+SA1,Saudi Pro League,Saudi Arabia
+SA2L,Saudi First Division League,Saudi Arabia
+SAKC,King's Cup,Saudi Arabia
+SASS,Saudi Super Cup,Saudi Arabia
+UAE1,UAE Pro League,United Arab Emirates
+UAEP,UAE President's Cup,United Arab Emirates
+UASC,UAE Super Cup,United Arab Emirates
+UALC,UAE League Cup,United Arab Emirates
+TAD1,Vysshaya Liga,Tajikistan
+UZ1,O'zbekiston Superligasi,Uzbekistan
+UZ2L,O'zbekiston Pro Liga,Uzbekistan
+UZSC,Uzbekistan Supercup,Uzbekistan
+VIE1,V.League 1,Vietnam
+VPO1,Vietnamese Cup,Vietnam
+ALG1,Ligue 1,Algeria
+ALGP,Coupe d'Algerie,Algeria
+AGSC,Supercoupe d'Algérie,Algeria
+THA1,Thai League,Thailand
+THA2,Thai League 2,Thailand
+THFA,Thai FA Cup,Thailand
+T3LC,Thai League 3 Champions League,Thailand
+THLC,Thai Cup,Thailand
+COM1,Championnat des Comores de D1,Comoros
+EGY1,Egyptian Premier League,Egypt
+EGYP,Egypt Cup,Egypt
+ESCU,Egyptian Super Cup,Egypt
+EGCP,Championship Playoff,Egypt
+EGRP,Relegation Playoff,Egypt
+EGLC,Egyptian League Cup,Egypt
+ETP1,Ethiopian Premier League,Ethiopia
+MAR1,Botola Pro Inwi,Morocco
+GHPL,Ghana Premier League,Ghana
+NPFL,Nigeria Professional Football League,Nigeria
+SEN1,Ligue 1,Senegal
+LPL,Libyan Premier League,Libya
+SFA1,Betway Premiership,South Africa
+SFAL,MTN8,South Africa
+TELK,Carling Knockout,South Africa
+NEDC,Nedbank Cup,South Africa
+TUN1,Ligue 1,Tunisia
+TUNP,Tunisian Cup,Tunisia
+UGL1,Uganda Premier League,Uganda
+CDN1,Canadian Premier League,Canada
+CAN,Canadian Championship,Canada
+BZ1C,Liga Premier de Belice Clausura,Belize
+CRPD,Primera División Apertura,Costa Rica
+CRPV,Primera División Apertura Play-Off,Costa Rica
+PDV1,Primera División Clausura,Costa Rica
+CRPO,Copa de Costa Rica,Costa Rica
+CSC2,Recopa Costa Rica,Costa Rica
+DOM1,Liga Dominicana de Fútbol,Dominican Republic
+DO1P,Liga Dominicana de Fútbol - Liguilla,Dominican Republic
+HO1A,Liga Nacional Apertura,Honduras
+HOC1,Liga Nacional Clausura,Honduras
+HOAP,Liga Nacional Apertura Playoff,Honduras
+PN1C,Liga Panameña de Fútbol Clausura,Panama
+SL1A,Primera División Apertura,El Salvador
+SL1C,Primera División Clausura,El Salvador
+ELC1,Copa El Salvador,El Salvador
+ELSC,Supercopa de El Salvador,El Salvador
+SLP1,Primera División Apertura Final stages,El Salvador
+MEXA,Liga MX Apertura,Mexico
+MEX1,Liga MX Clausura,Mexico
+POMX,Liguilla Apertura,Mexico
+MEX2,Liga de Expansión MX Clausura,Mexico
+MEXB,Liga de Expansión MX Apertura,Mexico
+MXBA,Liguilla de Expansión Apertura,Mexico
+M21A,Liga MX U21 Apertura,Mexico
+M21C,Liga MX U21 Clausura,Mexico
+21MA,Liguilla MX U21 Apertura,Mexico
+M193,Liguilla MX U19 Apertura,Mexico
+M192,Liga MX U19 Clausura,Mexico
+M191,Liga MX U19 Apertura,Mexico
+GU1C,National League Clausura,Guatemala
+GU1A,National League Apertura ,Guatemala
+GUPA,National League Apertura Play-Off,Guatemala
+JPL1,Jamaica Premier League,Jamaica
+PRC1,Liga Puerto Rico Clausura,Puerto Rico
+PRA1,Liga Puerto Rico Apertura,Puerto Rico
+PRP1,Liga Puerto Rico Apertura Playoff,Puerto Rico
+NC1A,Liga Primera de Nicaragua Apertura,Nicaragua
+NC1C,Liga Primera de Nicaragua Clausura,Nicaragua
+CNIC,Copa Primera de Nicaragua,Nicaragua
+NCP1,Liga Primera de Nicaragua Apertura Playoff,Nicaragua
+MLS1,Major League Soccer,United States
+USL,USL Championship,United States
+MNP3,MLS Next Pro,United States
+USC3,USL League One,United States
+MLSP,US Open Cup,United States
+USLC,USL Cup,United States
+FIJ1,Fiji Premier League,Fiji
+NNL1,National League - North,New Zealand
+NCL1,National League - Central,New Zealand
+NSL1,National League - South,New Zealand
+ARG1,Torneo Apertura ,Argentina
+ARG2,Primera Nacional,Argentina
+ARG3,Torneo Federal A,Argentina
+URL3,Primera B Metropolitana,Argentina
+CLPI,Copa LPF Proyección Apertura,Argentina
+ARCA,Copa Argentina,Argentina
+SCIN,Supercopa Internacional,Argentina
+PR1A,Primera División Apertura,Paraguay
+PAR2,División Intermedia,Paraguay
+EC1N,LigaPro Serie A,Ecuador
+EC2L,Liga Pro Serie B,Ecuador
+ECUP,Copa Ecuador,Ecuador
+TDeA,Liga 1 Apertura,Peru
+PER2,Liga 2,Peru
+PLI3,Liga 3,Peru
+BRA1,Campeonato Brasileiro Série A,Brazil
+BRA2,Campeonato Brasileiro Série B,Brazil
+BRA3,Campeonato Brasileiro Série C,Brazil
+BRA4,Campeonato Brasileiro Série D,Brazil
+CB20,CBF Brasileiro U20,Brazil
+BRC,Copa do Brasil,Brazil
+SCBR,Supercopa Rei,Brazil
+BRP2,Campeonato Goiano - Quadrangular de Rebaixamento,Brazil
+BRP1,Campeonato Paranaense - Quadrangular de Rebaixamen,Brazil
+BRP4,Campeonato Maranhense - Quadrangular de Rebaixamen,Brazil
+SPjr,Copa São Paulo de Futebol Júnior,Brazil
+CSUS,Copa Sul-Sudeste,Brazil
+BRNE,Copa do Nordeste,Brazil
+BRP6,Taça Acesc 70 anos,Brazil
+BRVE,Copa Verde,Brazil
+BRCC,Troféu Farroupilha,Brazil
+BRQR,Campeonato Gaúcho - Relegation Round,Brazil
+BCP1,Campeonato Paulista,Brazil
+BRCR,Campeonato Carioca - Taça Rio,Brazil
+BRP5,Campeonato Carioca - Quadrangular de Rebaixamento,Brazil
+BRCG,Campeonato Carioca,Brazil
+BRCM,Campeonato Mineiro,Brazil
+BRRS,Campeonato Gaúcho,Brazil
+BRCB,Campeonato Baiano,Brazil
+BRGO,Campeonato Goiano,Brazil
+BRPE,Campeonato Pernambucano,Brazil
+BRPR,Campeonato Paranaense,Brazil
+BRCE,Campeonato Cearense ,Brazil
+BCE2,Campeonato Cearense - Relegation Round,Brazil
+BRPA,Campeonato Paraense,Brazil
+BRP3,Campeonato Catarinense - Quadrangular de Rebaixame,Brazil
+BRPB,Campeonato Paraibano,Brazil
+BRSC,Campeonato Catarinense,Brazil
+BRAL,Campeonato Alagoano,Brazil
+BRMA,Campeonato Maranhense,Brazil
+BRDF,Campeonato Brasiliense,Brazil
+BRRN,Campeonato Potiguar,Brazil
+BRMS,Campeonato Mato-Grossense,Brazil
+BRPI,Campeonato Piauiense,Brazil
+BRES,Campeonato Capixaba,Brazil
+BRRD,Campeonato Rondoniense,Brazil
+BRMT,Campeonato Sul-Mato-Grossense,Brazil
+BRTO,Campeonato Tocantinense,Brazil
+BRSE,Campeonato Sergipano,Brazil
+brti,Troféu Inconfidência,Brazil
+BRAC,Campeonato Acreano,Brazil
+BRRR,Campeonato Roraimense,Brazil
+BRAP,Campeonato Amapaense,Brazil
+BO1A,División Profesional,Bolivia
+VZ1A,Liga FUTVE Apertura,Venezuela
+VN2A,Liga FUTVE 2,Venezuela
+A1,Bundesliga,Austria
+A2,2. Liga,Austria
+ATRM,Regional League Central,Austria
+ATRO,Regional League East,Austria
+ATRW,Regionalliga West,Austria
+A4W,Wiener Stadtliga,Austria
+A4N,1. Landesliga Niederösterreich,Austria
+A4B,Burgenlandliga,Austria
+A4O,Oberösterreich Liga,Austria
+A4ST,Landesliga Steiermark,Austria
+A4K,Kärntner Liga,Austria
+A4T,Regionalliga Tirol,Austria
+A4V,Eliteliga Vorarlberg,Austria
+A4S,Salzburger Liga,Austria
+JGD2,ÖFB Jugendliga U18,Austria
+JGD3,ÖFB Jugendliga U16,Austria
+ofb,ÖFB-Cup,Austria
+AZ1,Premyer Liqa,Azerbaijan
+ASPK,Azerbaycan Kuboku,Azerbaijan
+BE1,Jupiler Pro League,Belgium
+BE2,Challenger Pro League,Belgium
+BE3A,1ste Nationale ACFF,Belgium
+BE3V,1ste Nationale VV,Belgium
+VFVB,2de Nationale VV B,Belgium
+VFVA,2de Nationale VV A,Belgium
+ACFF,2de Nationale ACFF,Belgium
+BE5B,3de Nationale VV B,Belgium
+BE5A,3de Nationale VV A,Belgium
+BE21,U21 Pro League,Belgium
+BEY1,U18 Elite 1 - Belgium,Belgium
+CCB,Croky Cup,Belgium
+BESC,Volkswagen Supercup,Belgium
+BE3B,1ste Nationale ACFF Relegation Play-Offs,Belgium
+B3AB,1ste Nationale ACFF Promotion Play-Offs,Belgium
+BPO4,Jupiler Pro League Relegation Play-offs,Belgium
+EJPL,Jupiler Pro League Champions' Play-Offs,Belgium
+POBE,Jupiler Pro League Europe Play-Offs,Belgium
+CLPD,Liga de Primera ,Chile
+CL2B,Liga de Ascenso ,Chile
+CHI3,Segunda División Profesional,Chile
+CH1C,Copa Chile,Chile
+CSUC,Supercopa de Chile,Chile
+CLLC,Copa de la Liga de Chile,Chile
+GB1,Premier League,England
+GB2,Championship,England
+GB3,League One,England
+GB4,League Two,England
+CNAT,National League,England
+NLN6,National League North,England
+NLS6,National League South,England
+GB18,U18 Premier League,England
+FAC,FA Cup,England
+GBCS,Community Shield,England
+CGB,EFL Cup,England
+NLC,National League Cup,England
+FAYC,FA Youth Cup,England
+21PL,Premier League Cup,England
+PLIC,Premier League International Cup U21,England
+GB21,Premier League 2,England
+GBFL,EFL Trophy,England
+COLP,Liga DIMAYOR Apertura,Colombia
+CO2T,Torneo DIMAYOR I,Colombia
+COSP,Superliga Águila de Campeones,Colombia
+WER1,Vysheyshaya Liga,Belarus
+WER2,Pershaya Liga,Belarus
+WRPO,Belarusian Cup,Belarus
+WRSP,Belarusian Super Cup,Belarus
+ARM1,Premier League,Armenia
+ARM2,Armenian First League,Armenia
+ARPO,Armenian Independence Cup,Armenia
+ARSC,Armenian Supercup,Armenia
+AND1,Primera Divisió,Andorra
+AND2,Segona Divisió,Andorra
+ANDP,Copa Constitució,Andorra
+ZYP1,Cyprus League,Cyprus
+CYP2,2. Division,Cyprus
+CPO1,Kypello Kyprou,Cyprus
+CYSC,Cypriot Super Cup,Cyprus
+ALB1,Kategoria Superiore,Albania
+ALB2,Kategoria e Parë,Albania
+ALBP,Kupa e Shqipërisë,Albania
+ALBS,Superkupa e Shqipërisë,Albania
+KR1,SuperSport HNL,Croatia
+KR2,Prva Nogometna Liga,Croatia
+KRC,Hrvatski nogometni kup,Croatia
+DK1,Superliga,Denmark
+DK2,1.Division,Denmark
+DK3O,2.Division,Denmark
+DK4L,3.Division,Denmark
+DKDL,U19 Boys League,Denmark
+DKDD,U19 Boys Division,Denmark
+DKP,Oddset Pokalen,Denmark
+DKMR,Superliga Championship round,Denmark
+DKAR,Superliga Relegation round,Denmark
+DK2R,1.Division Relegation,Denmark
+DK2P,1.Division Promotion,Denmark
+DKDA,2.Division Relegation,Denmark
+DK3V,2.Division Promotion,Denmark
+D4P1,3.Division Promotion,Denmark
+D4P2,3.Division Relegation,Denmark
+DKRE,Future Cup,Denmark
+URU1,Liga AUF Apertura,Uruguay
+URU2,Segunda División - Fase Regular,Uruguay
+UR2T,Segunda División - Torneo Competencia,Uruguay
+URSC,Supercopa Uruguaya,Uruguay
+FR1,Ligue 1,France
+FR2,Ligue 2,France
+FR3,Championnat National,France
+CN2A,Championnat National 2 - Groupe A,France
+CN2B,Championnat National 2 - Groupe B,France
+CN2C,Championnat National 2 - Groupe C,France
+C3PL,Championnat National 3 - Groupe D,France
+C3HF,Championnat National 3 - Groupe G,France
+C3IF,Championnat National 3 - Groupe H,France
+C3BR,Championnat National 3 - Groupe E,France
+C3NO,Championnat National 3 - Groupe F,France
+C3CM,Championnat National 3 - Groupe A,France
+C3VL,Championnat National 3 - Groupe C,France
+C3NA,Championnat National 3 - Groupe B,France
+F19A,National U19 Championship - Group A,France
+F19B,Championnat National U19 - Groupe B,France
+F19C,Championnat National U19 - Groupe C,France
+F19D,Championnat National U19 - Groupe D,France
+FRC,Coupe de France,France
+FRCH,Trophée des Champions,France
+FRYC,Coupe Gambardella,France
+BU1,efbet Liga,Bulgaria
+BU2,Vtora Liga,Bulgaria
+BULP,Bulgarian Cup,Bulgaria
+BULS,Bulgarian Super Cup,Bulgaria
+FI1,Veikkausliiga,Finland
+FI2,Ykkösliiga,Finland
+FIYK,Ykkönen,Finland
+FI3A,Kakkonen - Group A,Finland
+FI3B,Kakkonen - Group B,Finland
+FI3C,Kakkonen - Group C,Finland
+F4KP,Kolmonen Pohjoinen,Finland
+F4LA,Kolmonen Läntinen,Finland
+KOG3,Kolmonen Etelä Group C,Finland
+FI4L,Kolmonen Itäinen,Finland
+KOG2,Kolmonen Etelä Group B,Finland
+KOG1,Kolmonen Etelä Group A,Finland
+F18Q,P18 SM Qualification,Finland
+FIS,Suomen Cup,Finland
+FIL,Liigacup,Finland
+YKCP,Ykkösliigacup,Finland
+TS1,Chance Liga,Czech Republic
+TS2,Chance Narodni Liga,Czech Republic
+CZ3C,Ceska fotbalova liga,Czech Republic
+CZ3M,Moravskoslezska fotbalova liga,Czech Republic
+CZ19,1. Dorostenecka liga,Czech Republic
+TSP,MOL Cup,Czech Republic
+FARO,Meistaradeildin,Faroe Islands
+FAR2,1. deild,Faroe Islands
+FAPO,Løgmanssteypið,Faroe Islands
+FASC,Stórsteypadystur,Faroe Islands
+EST1,Premium Liiga,Estonia
+EST2,Esiliiga,Estonia
+EST3,Esiliiga B,Estonia
+ES17,U17 Eliitliiga Esiliiga,Estonia
+ELME,U19 Eliitliiga Meistriliiga,Estonia
+ESTP,Eesti Karikas,Estonia
+ESTS,Eesti Superkarikas,Estonia
+QELM,U19 Eliitliiga Qualification,Estonia
+L1,Bundesliga,Germany
+L2,2. Bundesliga,Germany
+L3,3. Liga,Germany
+RLN3,Regionalliga Nord,Germany
+RLN4,Regionalliga Northeast,Germany
+RLW3,Regionalliga West,Germany
+RLSW,Regionalliga Südwest,Germany
+RLB3,Regionalliga Bayern,Germany
+OBLB,Oberliga Baden-Württemberg,Germany
+OBLC,Hessenliga,Germany
+OBLJ,Oberliga Hamburg,Germany
+OLW3,Oberliga Westfalen,Germany
+OLNI,Oberliga Niederrhein,Germany
+OLMR,Mittelrheinliga,Germany
+OLB1,Bayernliga Nord,Germany
+OLB2,Bayernliga Süd,Germany
+OLRP,Oberliga Rheinland-Pfalz/Saar,Germany
+OBLF,NOFV-Oberliga Nord,Germany
+OBLG,NOFV-Oberliga Süd,Germany
+OBLK,Bremenliga,Germany
+OBLL,Oberliga Schleswig-Holstein,Germany
+OBLN,Oberliga Niedersachsen,Germany
+LLHB,Landesliga Bremen,Germany
+VLMV,Verbandsliga Mecklenburg-Vorpommern,Germany
+LLL,Landesliga Lüneburg,Germany
+VLBE,Berlin-Liga,Germany
+LLHO,Landesliga Holstein,Germany
+VLSA,Verbandsliga Sachsen-Anhalt,Germany
+SLI,Sachsenliga,Germany
+RHL,Rheinlandliga,Germany
+VLSW,Verbandsliga Südwest,Germany
+VLHN,Verbandsliga Hessen-Nord,Germany
+VLHM,Verbandsliga Hessen-Mitte,Germany
+VLHS,Verbandsliga Hessen-Süd,Germany
+VLBA,Verbandsliga Baden,Germany
+THLI,Thüringenliga,Germany
+VLW1,Westfalenliga 1,Germany
+VLW2,Westfalenliga 2,Germany
+LNR2,Landesliga Niederrhein - Gruppe 2 ,Germany
+LBNO,Landesliga Bayern Nordost,Germany
+LBNW,Landesliga Bayern Nordwest,Germany
+LNR1,Landesliga Niederrhein - Gruppe 1,Germany
+LNBR,Landesliga Braunschweig,Germany
+LNHA,Landesliga Hannover,Germany
+LNWE,Landesliga Weser-Ems,Germany
+BRBL,Brandenburgliga,Germany
+LBSO,Landesliga Bayern Südost,Germany
+LBMI,Landesliga Bayern Mitte,Germany
+LLSA,Schröder-Liga Saar,Germany
+VLBW,Verbandsliga Württemberg,Germany
+VLSB,Verbandsliga Südbaden,Germany
+LLM1,Landesliga Mittelrhein Staffel 1,Germany
+LLM2,Landesliga Mittelrhein Staffel 2,Germany
+LLSL,Landesliga Schleswig,Germany
+LBSW,Landesliga Bayern Südwest,Germany
+LLHA,Landesliga Hansa,Germany
+LLHM,Landesliga Hammonia,Germany
+19D1,U19 DFB-Nachwuchsliga - Vorrunde Gruppe A,Germany
+19D2,U19 DFB-Nachwuchsliga - Vorrunde Gruppe B,Germany
+19D3,U19 DFB-Nachwuchsliga - Vorrunde Gruppe C,Germany
+19D4,U19 DFB-Nachwuchsliga - Vorrunde Gruppe D,Germany
+19D5,U19 DFB-Nachwuchsliga - Vorrunde Gruppe E,Germany
+19D6,U19 DFB-Nachwuchsliga - Vorrunde Gruppe F,Germany
+19D7,U19 DFB-Nachwuchsliga - Vorrunde Gruppe G,Germany
+19D8,U19 DFB-Nachwuchsliga - Vorrunde Gruppe H,Germany
+19LA,U19 DFB-Nachwuchsliga - Hauptrunde Liga A,Germany
+19LB,U19 DFB-Nachwuchsliga - Hauptrunde Liga B,Germany
+19D9,U19 DFB-Nachwuchsliga - Vorrunde Gruppe I,Germany
+17DA,U17 DFB-Nachwuchsliga - Vorrunde Gruppe A,Germany
+17DB,U17 DFB-Nachwuchsliga - Vorrunde Gruppe B,Germany
+17DC,U17 DFB-Nachwuchsliga - Vorrunde Gruppe C,Germany
+17DD,U17 DFB-Nachwuchsliga - Vorrunde Gruppe D,Germany
+17DE,U17 DFB-Nachwuchsliga - Vorrunde Gruppe E,Germany
+17DF,U17 DFB-Nachwuchsliga - Vorrunde Gruppe F,Germany
+17DG,U17 DFB-Nachwuchsliga - Vorrunde Gruppe G,Germany
+17DH,U17 DFB-Nachwuchsliga - Vorrunde Gruppe H,Germany
+17LA,U17 DFB-Nachwuchsliga - Hauptrunde Liga A,Germany
+17LB,U17 DFB-Nachwuchsliga - Hauptrunde Liga B,Germany
+DFB,DFB-Pokal,Germany
+DFL,Franz-Beckenbauer-Supercup,Germany
+AJ,German Under-19 Championship,Germany
+BJ,German Under-17 Championship,Germany
+DFBJ,DFB-Pokal der Junioren,Germany
+WFVP,Landespokal Württemberg,Germany
+SAPO,Landespokal Sachsen,Germany
+MRPO,Landespokal Mittelrhein,Germany
+WFPO,Landespokal Westfalen,Germany
+TFVP,Landespokal Thüringen,Germany
+SANP,Landespokal Sachsen-Anhalt,Germany
+HBPO,Landespokal Bremen,Germany
+NRPO,Landespokal Niederrhein,Germany
+MPPO,Landespokal Mecklenburg-Vorpommern,Germany
+OPHH,Landespokal Hamburg,Germany
+BBPO,Landespokal Brandenburg,Germany
+NP34,Landespokal Niedersachsen (3. und 4. Liga),Germany
+NPAM,Regional Cup Lower Saxony (Amateure),Germany
+BVFP,Landespokal Baden,Germany
+HEPO,Landespokal Hessen,Germany
+SBP,Landespokal Südbaden,Germany
+SWP,Landespokal Südwest,Germany
+BVP,Landespokal Bayern,Germany
+BPP,Landespokal Berlin,Germany
+RLP,Landespokal Rheinland,Germany
+SRPO,Landespokal Saarland,Germany
+SHPO,Landespokal Schleswig-Holstein,Germany
+BOS1,Premijer Liga Bosne i Hercegovine,Bosnia-Herzegovina
+BOS2,Prva liga FBiH,Bosnia-Herzegovina
+BH2S,Prva Liga RS,Bosnia-Herzegovina
+BI19,Premijer Liga BiH U19,Bosnia-Herzegovina
+BI17,Premijer Liga BiH U17,Bosnia-Herzegovina
+BIHP,Kup BiH,Bosnia-Herzegovina
+IS1,Besta deild,Iceland
+IS2,Lengjudeild,Iceland
+ISL3,2. deild,Iceland
+ISLS,Meistarakeppni,Iceland
+ISL,Lengjubikarinn,Iceland
+GR1,Super League 1,Greece
+GRS2,Super League 2,Greece
+GR20,Super League U19,Greece
+GRP,Kypello Elladas,Greece
+GRSC,Greek Super Cup,Greece
+S2PO,Super League 2 Play-out,Greece
+S2PA,Super League 2 Play-off,Greece
+S1PO,Super League Play-out,Greece
+GRP2,G' Ethniki Play-off,Greece
+GRPL,Super League 5th place play-off,Greece
+POGR,Super League Play-off,Greece
+G19C,Kypello Super League U19,Greece
+GRP3,Kypello Elladas Amateur,Greece
+G2SC,Super League 2 Super Cup,Greece
+GE1N,Erovnuli Liga,Georgia
+GEO2,Erovnuli Liga 2,Georgia
+GEP1,David Kipiani Cup,Georgia
+IT1,Serie A,Italy
+IT2,Serie B,Italy
+IT3A,Serie C - Girone A,Italy
+IT3B,Serie C - Girone B,Italy
+IT3C,Serie C - Girone C,Italy
+IT4A,Serie D - Girone A,Italy
+IT4B,Serie D - Girone B,Italy
+IT4C,Serie D - Girone C,Italy
+IT4D,Serie D - Girone D,Italy
+IT4E,Serie D - Girone E,Italy
+IT4F,Serie D - Girone F,Italy
+IT4G,Serie D - Girone G,Italy
+IT4H,Serie D - Girone H,Italy
+IT4I,Serie D - Girone I,Italy
+IJ1,Primavera 1,Italy
+IJ2A,Primavera 2 - A,Italy
+IJ2B,Primavera 2 - B,Italy
+ITJ7,Campionato Under 18,Italy
+ITJ4,Campionato Under 17 - A,Italy
+ITJ5,Campionato nazionale Under 17 - B,Italy
+ITJ6,Campionato nazionale Under 17 - C,Italy
+CIT,Italy Cup,Italy
+SCI,Supercoppa Italiana,Italy
+ITJF,Campionato Under 17 - Finals,Italy
+CITP,Coppa Italia Primavera,Italy
+TDV,Viareggio Cup,Italy
+CILP,Coppa Italia Serie C,Italy
+ITC4,Coppa Italia Serie D,Italy
+SCIC,Supercoppa di Serie C,Italy
+SCIJ,Supercoppa Primavera,Italy
+IR1,League of Ireland Premier Division,Ireland
+IR2,League of Ireland First Division,Ireland
+IRPO,FAI Cup,Ireland
+IRPC,President of Ireland's Cup,Ireland
+IRMC,Munster Senior Cup,Ireland
+IRLC,Leinster Senior Cup,Ireland
+GI1,Gibraltar Football League,Gibraltar
+G17L,Gibraltar U18 League,Gibraltar
+GINC,Intermediate Cup,Gibraltar
+GIRC,Rock Cup,Gibraltar
+GISC,Pepe Reyes Cup,Gibraltar
+GN1P,National League Championship Group,Gibraltar
+U18R,U18 Rock Cup,Gibraltar
+GIIL,Gibraltar Intermediate League,Gibraltar
+KAS1,Premier Liga,Kazakhstan
+KAS2,Pervaya Liga,Kazakhstan
+KAZP,Kazakhstan Cup,Kazakhstan
+KASC,Kasachischer Supercup,Kazakhstan
+UNG1,Nemzeti Bajnokság,Hungary
+UN2,Nemzeti Bajnokság II.,Hungary
+UNGP,Magyar Kupa,Hungary
+LET1,Virsliga,Latvia
+LET2,Futbola Pirmā līga,Latvia
+ISR1,Ligat ha'Al,Israel
+ISR2,Liga Leumit,Israel
+ISPO,Gvia haMedina,Israel
+IRLP,Aluf haAlufim,Israel
+ISRA,Ligat ha'Al - Relegation round,Israel
+ISRF,Ligat ha'Al -  Championship round,Israel
+KO1,Superliga e Kosovës,Kosovo
+KOP1,Kupa e Kosovës,Kosovo
+SKKO,Superkupa e Kosovës,Kosovo
+NIR1,Premiership,Northern Ireland
+NIR2,Championship,Northern Ireland
+NIR3,Intermediate League,Northern Ireland
+NILC,Irish League Cup,Northern Ireland
+NIRC,Irish Cup,Northern Ireland
+NSC,NIFL Charity Shield,Northern Ireland
+NIRF,Playoff Premiership,Northern Ireland
+NIAR,Playout Championship,Northern Ireland
+NIRU,Playout Premiership,Northern Ireland
+NIMC,Playoff Championship,Northern Ireland
+MUCU,Mid Ulster Cup,Northern Ireland
+CASH,County Antrim Shield,Northern Ireland
+NWSC,North West Cup,Northern Ireland
+CMCU,Craig Memorial Cup,Northern Ireland
+BRCP,Bob Radcliffe Cup,Northern Ireland
+SSCP,Steel & Sons Cup,Northern Ireland
+LUX1,BGL Ligue,Luxembourg
+LUX2,Ehrenpromotion,Luxembourg
+LUXP,Coupe de Luxembourg,Luxembourg
+MAZ1,Prva Makedonska Fudbalska Liga,North Macedonia
+NMAP,Kup na Makedonija,North Macedonia
+MT1P,Premier League Closing Round,Malta
+MT1N,Premier League Opening Round,Malta
+GZO1,Gozo Football League First Division,Malta
+MAL2,Challenge League,Malta
+MAL3,National Amateur League I,Malta
+MALC,Maltese FA Trophy,Malta
+GFAC,Gozo FA Cup,Malta
+MAJC,Malta FA Jubilee Cup,Malta
+MALS,Maltese Super Cup,Malta
+MT2P,Challenge League - Finals,Malta
+MLAC,National Amateur Cup,Malta
+MLP2,BOV Challenge Cup,Malta
+LIEP,Liechtensteiner Cup,Liechtenstein
+MNE1,Meridianbet 1. CFL,Montenegro
+MNE2,2. CFL,Montenegro
+MNEC,Montenegro Cup,Montenegro
+LI1,Toplyga,Lithuania
+LTU2,I Lyga,Lithuania
+LTVP,Lithuanian Cup,Lithuania
+LTSC,Lithuanian Supercup,Lithuania
+PL1,PKO BP Ekstraklasa,Poland
+PL2,Betclic 1 Liga,Poland
+PL2L,Betclic 2 Liga,Poland
+PL34,Betclic 3 Liga - Group IV,Poland
+PL33,Betclic 3 Liga - Group III,Poland
+PL32,Betclic 3 Liga - Group II,Poland
+PL31,Betclic 3 Liga - Group I,Poland
+PLZJ,Central Youth League,Poland
+POPU,STS Polish Cup,Poland
+PLSC,Superpuchar Polski,Poland
+NO1,Eliteserien,Norway
+NO2,OBOS-ligaen,Norway
+NO31,PostNord-ligaen Avd. 1,Norway
+NO32,PostNord-ligaen Avd. 2,Norway
+NO41,Norsk Tipping-Ligaen avdeling 1,Norway
+NO42,Norsk Tipping-Ligaen avdeling 2,Norway
+NO43,Norsk Tipping-Ligaen avdeling 3,Norway
+NO44,Norsk Tipping-Ligaen avdeling 4,Norway
+NO45,Norsk Tipping-Ligaen avdeling 5,Norway
+NO46,Norsk Tipping-Ligaen avdeling 6,Norway
+NOPO,NM-Cup,Norway
+SC1,Scottish Premiership,Scotland
+SC2,Scottish Championship,Scotland
+SC3,Scottish League One,Scotland
+SC4,Scottish League Two,Scotland
+SC5L,Scottish Lowland Football League,Scotland
+SC5H,Scottish Highland Football League,Scotland
+SFA,Scottish FA Cup,Scotland
+SCPM,Scottish Premiership Top Six Split,Scotland
+SCPA,Scottish Premiership Relegation Round,Scotland
+SL2P,Scottish League Two Play Offs,Scotland
+SCP,Scottish League Cup,Scotland
+SSC,Scottish Challenge Cup,Scotland
+MO1N,Super Liga,Moldova
+MOP2,Super Liga (Phase 2),Moldova
+ML1P,Liga 1 (Promotion),Moldova
+MWP1,Moldovan Cup,Moldova
+NL1,Eredivisie,Netherlands
+NL2,Keuken Kampioen Divisie,Netherlands
+NTD,Tweede Divisie,Netherlands
+510,Derde Divisie A,Netherlands
+511,Derde Divisie B,Netherlands
+211F,U21 Division 1 Fall,Netherlands
+212F,U21 Division 2 Fall,Netherlands
+NLAJ,U19 Division 1 Spring,Netherlands
+211S,U21 Division 1 Spring,Netherlands
+NLJV,U19 Division 1 Fall,Netherlands
+NLAE,U19 Division 2 Spring,Netherlands
+NLEV,U19 Division 2 Fall,Netherlands
+212S,U21 Division 2 Spring,Netherlands
+NLVB,U17 Division 1 Fall,Netherlands
+NLBJ,U17 Divisie 1 Spring,Netherlands
+NLP,KNVB Beker,Netherlands
+NLSC,Johan Cruijff Schaal,Netherlands
+7NP2,O17 Divisie 1 Najaar Degradatiepoule,Netherlands
+7NP1,O17 Divisie 1 Najaar Kampioenspoule,Netherlands
+NLJB,U19 Cup Netherlands,Netherlands
+NLBP,U21 Cup Netherlands,Netherlands
+SLO1,Niké Liga,Slovakia
+SK2,MONACObet liga,Slovakia
+SK19,I. Liga starsieho dorastu,Slovakia
+SKC,Slovnaft Cup,Slovakia
+SLMR,Nike Liga - Relegation Group,Slovakia
+SLAR,Nike Liga - Championship Group,Slovakia
+PO1,Liga Portugal,Portugal
+PO2,Liga Portugal 2 ,Portugal
+PT3A,Liga 3,Portugal
+CPSC,Campeonato de Portugal - Série C,Portugal
+CPSB,Campeonato de Portugal - Série B,Portugal
+CPSA,Campeonato de Portugal - Série A,Portugal
+CPSD,Campeonato de Portugal - Série D,Portugal
+PT23,Liga Revelação U23,Portugal
+POPO,Taça de Portugal,Portugal
+POSU,Supertaça Cândido de Oliveira,Portugal
+P3Au,Liga 3 - Promotion stage,Portugal
+P23C,Liga Revelação U23 - Championship round,Portugal
+P23Q,Liga Revelação U23 - Qualifikation round,Portugal
+P3As,Liga 3 - Relegation round,Portugal
+POCP,Allianz Cup,Portugal
+RU1,Premier Liga,Russia
+RU2,1.Division,Russia
+R3D1,2. Division A (Phase 1),Russia
+R3D2,2. Division A (Phase 2),Russia
+2DVB,2. Division B,Russia
+RJL2,U19 M-Liga (since 2024),Russia
+Y246,YFL U16,Russia
+Y047,YFL U17,Russia
+RUP,Russian Cup,Russia
+RUSS,Russian Super Cup,Russia
+UKR1,Premier Liga,Ukraine
+UKR2,Persha Liga,Ukraine
+UA3L,Druga Liga,Ukraine
+UA19,U19 Premier Liga,Ukraine
+UKRP,Ukrainian Cup,Ukraine
+SER1,Super liga Srbije,Serbia
+SER2,Prva liga Srbije,Serbia
+SB19,Omladinska liga Srbije,Serbia
+SB17,Kadetska liga Srbije,Serbia
+SERP,Kup Srbije,Serbia
+SL1,Prva Liga,Slovenia
+SL2,Druga Liga,Slovenia
+SL19,NextGen Liga,Slovenia
+SLP,Pokal Slovenije,Slovenia
+TR1,Süper Lig,Türkiye
+TR2,1.Lig,Türkiye
+TR3A,2.Lig Beyaz,Türkiye
+TR3B,2.Lig Kirmizi,Türkiye
+TR4A,3.Lig Grup 1,Türkiye
+TR4B,3.Lig Grup 2,Türkiye
+TR4C,3.Lig Grup 3,Türkiye
+TR4D,3.Lig Grup 4,Türkiye
+T191,U19 Süper Lig,Türkiye
+TRP,Türkiye Kupasi,Türkiye
+TRS,TFF Süper Kupa,Türkiye
+RO1,SuperLiga,Romania
+RO2,Liga 2,Romania
+ROMP,Romanian Cup,Romania
+ROMS,Romanian Supercup,Romania
+R2AP,Liga 2 Play-Off,Romania
+RO1C,SuperLiga - Championship group,Romania
+RO1R,SuperLiga - Relegation group,Romania
+R2AO,Liga 2 Play-Out,Romania
+WAL1,Cymru Premier,Wales
+WAL2,Cymru North,Wales
+WA2S,Cymru South,Wales
+WALE,Welsh Cup,Wales
+WALC,Welsh League Cup,Wales
+WALM,Welsh Tier Two League Cup,Wales
+SMR1,Campionato Sammarinese,San Marino
+SMP1,Coppa Titano,San Marino
+SMRS,Supercoppa San Marino,San Marino
+SE1,Allsvenskan,Sweden
+SE2,Superettan,Sweden
+SE3N,Ettan Norra,Sweden
+SE3S,Ettan Södra,Sweden
+SEC,Svenska Cupen,Sweden
+ES1,LaLiga,Spain
+ES2,LaLiga2,Spain
+E3G2,Primera Federación - Grupo II,Spain
+E3G1,Primera Federación - Grupo I,Spain
+E4G2,Segunda Federación - Grupo II,Spain
+E4G1,Segunda Federación - Grupo I,Spain
+E4G3,Segunda Federación - Grupo III,Spain
+E4G4,Segunda Federación - Grupo IV,Spain
+E4G5,Segunda Federación - Grupo V,Spain
+CDR,Copa del Rey,Spain
+SUC,Supercopa,Spain
+CEF1,Copa Federation,Spain
+C1,Super League,Switzerland
+C2,Challenge League,Switzerland
+CHPR,Promotion League,Switzerland
+CHC1,1. Liga Classic group 1,Switzerland
+CHC2,1. Liga Classic group 2,Switzerland
+CHC3,1. Liga Classic group 3,Switzerland
+CIR1,2. Liga interregional - Gruppe 1,Switzerland
+CIR2,2. Liga interregional - Gruppe 2,Switzerland
+CIR3,2. Liga interregional - Gruppe 3,Switzerland
+CIR4,2. Liga interregional - Gruppe 4,Switzerland
+CIR5,2. Liga interregional - Gruppe 5,Switzerland
+C191,Swiss U19 Elite League,Switzerland
+CH17,Swiss U17 Elite League,Switzerland
+SCC,Swiss Cup,Switzerland
+SUIC,Swiss Cup qualifiers,Switzerland
+C17C,Schweizer Cup U17,Switzerland
+C19C,Schweizer Cup U19,Switzerland
+LAO1,Lao League 1,Laos
+LAP1,Prime Minister Cup ,Laos

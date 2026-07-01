@@ -1,7 +1,7 @@
 soccerdata
 understatapi
 thefuzz
-pandas
+pandas>=2.2.0
 ScraperFC==4.5.0
 scikit-learn
 psycopg2-binary

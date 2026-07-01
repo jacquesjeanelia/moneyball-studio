@@ -1,10 +1,14 @@
+from operator import pos
 import os
 import ast
+import pprint
 import pandas as pd
 import numpy as np
-from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
 import psycopg2
 from psycopg2.extras import execute_values
+import csv
 
 def safe_read_csv(file_path, **kwargs):
     try:
@@ -21,39 +25,67 @@ DB_CONFIG = {
     "password": os.getenv("DB_PASSWORD", "postgres"),
 }
 
-RAW_DATA_PATH = "data/raw/combined_player_dataset.csv"
-PROCESSED_DATA_PATH = "data/processed/combined_player_dataset_processed.csv"
+PLAYER_INFO_PATH = "data/raw/fotmob_players_info.csv"
+PLAYER_STATS_PATH = "data/raw/fotmob_players_stats.csv"
 COUNTRIES_PATH = "data/raw/countries_data.csv"
-LEAGUES_PATH = "data/raw/leagues_data.csv"
-CLUBS_PATH = "data/raw/club_data.csv"
+LEAGUES_PATH = "data/raw/fotmob_leagues.csv"
+CLUBS_PATH = "data/raw/fotmob_clubs.csv"
+PROCESSED_DATA_PATH = "data/processed/combined_player_dataset.csv"
+
+PLAYER_IMAGE_URL = "https://images.fotmob.com/image_resources/playerimages/" # add {player_id}.png to get the image
+CLUB_IMAGE_URL = "https://images.fotmob.com/image_resources/logo/teamlogo/" # add {club_id}.png to get the image
+LEAGUE_IMAGE_URL = "https://images.fotmob.com/image_resources/logo/leaguelogo/" # add {league_id}.png to get the image
 
 FEATURE_COLS = [
-    'npxg_per90', 'xa_per90', 'shots_on_target_per90', 
-    'progressive_passes_per90', 'successful_dribbles_per90', 
-    'pass_completion_percentage', 'tackles_interceptions_per90', 
-    'aerial_duels_won_percentage','ball_recoveries_per90', 'fouls_committed_per90'
+    'npxg_per_90', 'shots_per_90', 'sot_per_90', 
+    'headed_shots_per_90', 'xa_per_90', 'succ_pass_per_90', 
+    'succ_pass_rate', 'acc_long_balls_per_90', 'succ_long_balls_rate', 
+    'chances_created_per_90', 'big_chances_created_per_90', 
+    'succ_crosses_per_90', 'succ_crosses_rate', 'succ_dribbles_per_90', 
+    'succ_dribbles_rate', 'duels_won_per_90', 'duels_won_rate', 
+    'aerials_won_per_90', 'aerials_won_rate', 'touches_per_90', 
+    'touches_opp_box_per_90', 'dispossessed_per_90', 'fouls_won_per_90', 
+    'defcon_per_90', 'tackles_per_90', 'interceptions_per_90', 
+    'blocks_per_90', 'fouls_committed_per_90', 'recoveries_per_90', 
+    'poss_won_final_3rd_per_90', 'succ_dribbles_def_per_90', 'clearances_per_90'
 ]
 
+def merge_player_data():
+    if not os.path.exists(PLAYER_INFO_PATH):
+        raise FileNotFoundError(f"Player info file not found at {PLAYER_INFO_PATH}. Please run the ingestion script first.")
+    if not os.path.exists(PLAYER_STATS_PATH):
+        raise FileNotFoundError(f"Player stats file not found at {PLAYER_STATS_PATH}. Please run the ingestion script first.")
+
+    df_info = safe_read_csv(PLAYER_INFO_PATH)
+    df_stats = safe_read_csv(PLAYER_STATS_PATH)
+
+    # Merge dataframes on player_id
+    df_merged = pd.merge(df_info, df_stats, left_on='fotmob_id', right_on='player_id', how='inner')
+    return df_merged
+
 def load_and_clean_data():
-    if not os.path.exists(RAW_DATA_PATH):
-        raise FileNotFoundError(f"Raw data file not found at {RAW_DATA_PATH}. Please run the ingestion script first.")
-    df = safe_read_csv(RAW_DATA_PATH)
+    df = merge_player_data()
     # df = df[df['minutes_played'] >= 450]
-    df = df[df['player_name'].notnull()]
+    df = df[df['name'].notnull()]
     df[FEATURE_COLS] = df[FEATURE_COLS].fillna(0)
-    df = df[df['transfermarkt_position'] != 'Goalkeeper']
-    df['transfermarkt_position'] = df['transfermarkt_position'].fillna('Unknown')
+    df['dob'] = df['dob'].str.slice(0, 10)
+    df = df[df['category'].str.lower() != 'keeper']
+    df = df[~df['positions'].str.contains('GK', na=False)]
+    # df.to_csv("data/processed/cleaned_player_dataset.csv", index=False, encoding='utf-8')
     return df
 
 def scale_features(df):
-    scaler = MinMaxScaler()
+    scaler = StandardScaler()
     scaled_features = scaler.fit_transform(df[FEATURE_COLS])
 
-    df['stats_vector'] = [str(list(vector.tolist())) for vector in scaled_features]
+    pca = PCA(n_components=17)
+    pca_stats = pca.fit_transform(scaled_features)
 
-    os.makedirs(os.path.dirname(PROCESSED_DATA_PATH), exist_ok=True)
-    df.to_csv(PROCESSED_DATA_PATH, index=False, encoding='utf-8')
-    print(f"Processed data saved to {PROCESSED_DATA_PATH}")
+    df['stats_vector'] = [str(list(vector.tolist())) for vector in pca_stats]
+
+    os.makedirs(os.path.dirname("data/processed/processed_player_dataset.csv"), exist_ok=True)
+    df.to_csv("data/processed/processed_player_dataset.csv", index=False, encoding='utf-8')
+    print(f"Processed data saved to {"data/processed/processed_player_dataset.csv"}")
     return df
 
 def _connect_db():
@@ -63,11 +95,11 @@ def _float(row, col:str):
     value = row[col]
     return None if value is None or (isinstance(value, float) and np.isnan(value)) else float(value)
 
-def insert_countries(cur, countries_csv: str) -> dict[str, int]:
-    if not os.path.exists(countries_csv):
-        raise FileNotFoundError(f"Countries data file not found at {countries_csv}. Please ensure it exists.")
+def insert_countries(cur) -> dict[str, int]:
+    if not os.path.exists(COUNTRIES_PATH):
+        raise FileNotFoundError(f"Countries data file not found at {COUNTRIES_PATH}. Please ensure it exists.")
     
-    df = safe_read_csv(countries_csv).fillna('')
+    df = safe_read_csv(COUNTRIES_PATH).fillna('')
     rows = [(df['country'], df['flag']) for _, df in df.iterrows()]
 
     execute_values(
@@ -84,12 +116,13 @@ def insert_countries(cur, countries_csv: str) -> dict[str, int]:
     return {name: id for id, name in cur.fetchall()}
 
 
-def insert_leagues(cur, leagues_csv: str, country_id_map: dict[str, int]) -> dict[str, int]:
-    if not os.path.exists(leagues_csv):
-        raise FileNotFoundError(f"Leagues data file not found at {leagues_csv}. Please ensure it exists.")
+def insert_leagues(cur, country_id_map: dict[str, int]) -> dict[int, int]:
+    if not os.path.exists(LEAGUES_PATH):
+        raise FileNotFoundError(f"Leagues data file not found at {LEAGUES_PATH}. Please ensure it exists.")
     
-    df = safe_read_csv(leagues_csv).fillna('')
-    rows =  [(row['league'], country_id_map.get(row['country'], None), row['league_url']) for _, row in df.iterrows()]
+    df = safe_read_csv(LEAGUES_PATH).fillna('')
+    rows =  [(row['league'], country_id_map.get(row['country'], None), LEAGUE_IMAGE_URL + f"{row['league_id']}.png") for _, row in df.iterrows()]
+    fotmob_map = {row['league_id']: row['league'] for _, row in df.iterrows()}
     execute_values(
         cur,
         """
@@ -100,15 +133,20 @@ def insert_leagues(cur, leagues_csv: str, country_id_map: dict[str, int]) -> dic
         rows
     )
     cur.execute("SELECT id, name FROM leagues")
-    return {name: id for id, name in cur.fetchall()}
+    db_map = {name: id for id, name in cur.fetchall()}
+    out_map = {k: db_map[v] for k, v in fotmob_map.items() if v in db_map} #fotmob_id -> db_id
+    return out_map
 
 
-def insert_clubs(cur, clubs_csv: str, league_id_map: dict[str, int]) -> dict[str, int]:
-    if not os.path.exists(clubs_csv):
-        raise FileNotFoundError(f"Clubs data file not found at {clubs_csv}. Please ensure it exists.")
+def insert_clubs(cur, league_id_map: dict[int, int]) -> dict[int, int]:
+    if not os.path.exists(CLUBS_PATH):
+        raise FileNotFoundError(f"Clubs data file not found at {CLUBS_PATH}. Please ensure it exists.")
     
-    df = safe_read_csv(clubs_csv).fillna('')
-    rows = [(row['Club Name'], league_id_map.get(row['League'], None), row['Club Image URL']) for _, row in df.iterrows()]
+    print(league_id_map)
+    
+    df = safe_read_csv(CLUBS_PATH).fillna('')
+    fotmob_map = {int(row['team_id']): row['team_name'] for _, row in df.iterrows()}
+    rows = [(row['team_name'], league_id_map.get(row['league_id'], None), CLUB_IMAGE_URL + f"{row['team_id']}.png") for _, row in df.iterrows()]
     execute_values(
         cur,
         """
@@ -119,29 +157,37 @@ def insert_clubs(cur, clubs_csv: str, league_id_map: dict[str, int]) -> dict[str
         rows
     )
     cur.execute("SELECT id, name FROM clubs")
-    return {name: id for id, name in cur.fetchall()}
+    db_map = {name: id for id, name in cur.fetchall()}
+    out_map = {k: db_map[v] for k, v in fotmob_map.items() if v in db_map} # fotmob_id -> db_id
+    return out_map
 
 
 def insert_players(cur, df: pd.DataFrame, club_id_map: dict[str, int], country_id_map: dict[str, int]) -> dict[str, int]:
     rows = []
-    df['date_of_birth'] = pd.to_datetime(df['date_of_birth'], dayfirst=True).dt.date
+    df['dob'] = df['dob'].astype(str).str.strip()
+    df['dob'] = pd.to_datetime(df['dob'], dayfirst=True, format='mixed', errors='coerce').dt.date
     for _, row in df.iterrows():
-        country_id = country_id_map.get(row['country_of_citizenship'], None)
-        club_id = club_id_map.get(row['club'], None)
-
-        dob = row['date_of_birth'] if pd.notna(row['date_of_birth']) else None
-        value = int(row['market_value_in_eur']) if pd.notna(row['market_value_in_eur']) else 0
-        height = int(row['height_in_cm']) if pd.notna(row['height_in_cm']) else None
+        country_id = country_id_map.get(row['country'], None)
+        club_id = club_id_map.get(row['club_id'], None)
+        name = row['name'] if pd.notna(row['name']) else None
+        dob = row['dob'] if pd.notna(row['dob']) else None
+        value = int(row['value']) if pd.notna(row['value']) else 0
+        height = int(row['height_cm']) if pd.notna(row['height_cm']) else None
+        category = row['category'] if pd.notna(row['category']) else None
+        main_position = row['positions'].split(",")[0].strip() if pd.notna(row['positions']) else []
+        foot = row['preferred_foot'] if pd.notna(row['preferred_foot']) else None
+        photo_url = PLAYER_IMAGE_URL + f"{row['fotmob_id']}.png" if pd.notna(row['fotmob_id']) else None
 
         rows.append((
-            row['player_name'], 
-            dob, 
-            row['transfermarkt_position'], 
-            row['preferred_foot'],
+            name,
+            dob,
+            category,
+            main_position,
+            foot,
             height,
             club_id,
             country_id, 
-            row['player_photo_url'], 
+            photo_url, 
             value
         ))
 
@@ -149,7 +195,7 @@ def insert_players(cur, df: pd.DataFrame, club_id_map: dict[str, int], country_i
         cur,
         """
             INSERT INTO players (
-                name, date_of_birth, main_position, preferred_foot, height_cm, club_id, country_id, photo_url, current_market_value_eur
+                name, date_of_birth, category, main_position, preferred_foot, height_cm, club_id, country_id, photo_url, current_market_value_eur
             ) VALUES %s
             ON CONFLICT DO NOTHING
         """,
@@ -158,12 +204,31 @@ def insert_players(cur, df: pd.DataFrame, club_id_map: dict[str, int], country_i
     cur.execute("SELECT id, name FROM players")
     return {name: id for id, name in cur.fetchall()}
 
-#TODO: insert_player_positions()
+def insert_player_alternate_positions(cur, df: pd.DataFrame, player_id_map: dict[str, int]):
+    rows = []
+    for _, row in df.iterrows():
+        player_id = player_id_map.get(row['name'], None)
+        if player_id is None:
+            continue
+
+        positions = row['positions'].split(",") if pd.notna(row['positions']) else []
+        for i in range(1, len(positions)):
+            rows.append((player_id, positions[i].strip()))
+
+    execute_values(
+        cur,
+        """
+            INSERT INTO player_alternate_positions (player_id, position) 
+            VALUES %s
+            ON CONFLICT DO NOTHING
+        """,
+        rows
+    )
 
 def insert_player_season_stats(cur, df: pd.DataFrame, player_id_map: dict[str, int]):
     rows = []
     for _, row in df.iterrows():
-        player_id = player_id_map.get(row['player_name'], None)
+        player_id = player_id_map.get(row['name'], None)
         if player_id is None:
             continue
 
@@ -178,21 +243,39 @@ def insert_player_season_stats(cur, df: pd.DataFrame, player_id_map: dict[str, i
         minutes_played = row['minutes_played'] if pd.notna(row['minutes_played']) else 0
 
         rows.append((
-            player_id, minutes_played, '2024/2025', _float(row, 'npxg_per90'), _float(row, 'xa_per90'), _float(row, 'shots_on_target_per90'), 
-            _float(row, 'progressive_passes_per90'), _float(row, 'successful_dribbles_per90'), 
-            _float(row, 'pass_completion_percentage'), _float(row, 'tackles_interceptions_per90'), 
-            _float(row, 'aerial_duels_won_percentage'), _float(row, 'ball_recoveries_per90'), 
-            _float(row, 'fouls_committed_per90'), vec_string
+            player_id, '2024/2025', minutes_played, _float(row, 'npxg_per_90'),  
+            _float(row, 'shots_per_90'), _float(row, 'sot_per_90'), _float(row, 'headed_shots_per_90'),
+            _float(row, 'xa_per_90'), _float(row, 'succ_pass_per_90'), _float(row, 'succ_pass_rate'),
+            _float(row, 'acc_long_balls_per_90'), _float(row, 'succ_long_balls_rate'),
+            _float(row, 'chances_created_per_90'), _float(row, 'big_chances_created_per_90'),
+            _float(row, 'succ_crosses_per_90'), _float(row, 'succ_crosses_rate'), 
+            _float(row, 'succ_dribbles_per_90'), _float(row, 'succ_dribbles_rate'),
+            _float(row, 'duels_won_per_90'), _float(row, 'duels_won_rate'), 
+            _float(row, 'aerials_won_per_90'), _float(row, 'aerials_won_rate'),
+            _float(row, 'touches_per_90'), _float(row, 'touches_opp_box_per_90'),
+            _float(row, 'dispossessed_per_90'), _float(row, 'fouls_won_per_90'), 
+            _float(row, 'defcon_per_90'), _float(row, 'tackles_per_90'), 
+            _float(row, 'interceptions_per_90'), _float(row, 'blocks_per_90'), 
+            _float(row, 'fouls_committed_per_90'), _float(row, 'recoveries_per_90'), _float(row, 'poss_won_final_3rd_per_90'),
+            _float(row, 'succ_dribbles_def_per_90'), _float(row, 'clearances_per_90'),
+            vec_string
         ))
 
     execute_values(
         cur,
         """
             INSERT INTO player_season_stats (
-                player_id, minutes_played, season, npxg_per90, xa_per90, shots_on_target_per90, 
-                progressive_passes_per90, successful_dribbles_per90, pass_completion_percentage, 
-                tackles_interceptions_per90, aerial_duels_won_percentage, ball_recoveries_per90, 
-                fouls_committed_per90, stats_vector
+                player_id, season, minutes_played, npxg_per90, shots_per90, shots_on_target_per90, 
+                headed_shots_per90, xa_per90, successful_passes_per90, successful_pass_rate,
+                accurate_long_balls_per90, accurate_long_balls_rate, chances_created_per90,
+                big_chances_created_per90, successful_crosses_per90, successful_cross_rate,
+                successful_dribbles_per90, successful_dribble_rate, duels_won_per90,
+                duel_success_rate, aerial_duels_won_per90, aerial_duel_success_rate,
+                touches_per90, opposition_box_touches_per90, dispossessed_per90,
+                fouls_won_per90, defcon_per90, tackles_per90, interceptions_per90,
+                blocks_per90, fouls_committed_per90, recoveries_per90,
+                possession_won_final_third_per90, dribbled_past_per90,
+                clearances_per90, stats_vector
             ) VALUES %s
             ON CONFLICT DO NOTHING
         """,
@@ -217,23 +300,23 @@ def run():
  
     try: 
         print("  -> countries")
-        country_id_map = insert_countries(cur, COUNTRIES_PATH)
+        country_id_map = insert_countries(cur)
         print(f"     {len(country_id_map)} countries")
 
         print("\n  -> leagues")
-        league_id_map = insert_leagues(cur, LEAGUES_PATH, country_id_map)
+        league_id_map = insert_leagues(cur, country_id_map)
         print(f"     {len(league_id_map)} leagues")
- 
+
         print("  -> clubs")
-        club_id_map = insert_clubs(cur, CLUBS_PATH, league_id_map)
+        club_id_map = insert_clubs(cur, league_id_map)
         print(f"     {len(club_id_map)} clubs")
  
         print("  -> players")
         player_id_map = insert_players(cur, df, club_id_map, country_id_map)
         print(f"     {len(player_id_map)} players")
  
-        # print("  -> player_positions")
-        # insert_player_positions(cur, df, player_id_map)
+        print("  -> player_alternate_positions")
+        insert_player_alternate_positions(cur, df, player_id_map)
  
         print("  -> player_season_stats")
         insert_player_season_stats(cur, df, player_id_map)

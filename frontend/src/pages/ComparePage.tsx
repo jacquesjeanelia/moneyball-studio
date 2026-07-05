@@ -8,8 +8,8 @@ import { SmartImage } from '@/components/SmartImage'
 import { PositionPill } from '@/components/primitives'
 import { RadarChart } from '@/components/RadarChart'
 import { ErrorState, Spinner } from '@/components/states'
-import { METRICS } from '@/lib/metrics'
-import { formatStat, topPercent } from '@/lib/format'
+import { METRIC_GROUPS, METRICS } from '@/lib/metrics'
+import { formatStat, topPercent, categoryColor } from '@/lib/format'
 
 const COLOR_A = 'var(--color-signal-400)'
 const COLOR_B = 'var(--color-cyan)'
@@ -34,6 +34,16 @@ export function ComparePage() {
 
   const radarA = useMemo(() => radarFor(playerA?.season_stats ?? null, table), [playerA, table])
   const radarB = useMemo(() => radarFor(playerB?.season_stats ?? null, table), [playerB, table])
+
+  // Grouped radars — one per stat category, per player
+  const radarByGroupA = useMemo(
+    () => METRIC_GROUPS.map((g) => radarFor(playerA?.season_stats ?? null, table, g.keys)),
+    [playerA, table],
+  )
+  const radarByGroupB = useMemo(
+    () => METRIC_GROUPS.map((g) => radarFor(playerB?.season_stats ?? null, table, g.keys)),
+    [playerB, table],
+  )
 
   const isLoading = qa.isLoading || qb.isLoading
   const isError = qa.isError || qb.isError
@@ -79,41 +89,63 @@ export function ComparePage() {
           <PlayerHeader player={playerB} color={COLOR_B} rating={ratingB} align="right" />
         </div>
 
+        {/* Grouped radar charts + metric breakdown */}
         <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,460px)_1fr] gap-8 lg:gap-12">
-          {/* Overlaid radar */}
-          <div className="lg:sticky lg:top-24 self-start">
-            <div className="rounded-2xl surface p-4">
-              <RadarChart
-                series={[
-                  { name: playerA.name, color: COLOR_A, points: radarA },
-                  { name: playerB.name, color: COLOR_B, points: radarB },
-                ]}
-                height={400}
-              />
-              <div className="flex items-center justify-center gap-5 text-xs">
-                <LegendDot color={COLOR_A} label={playerA.name} />
-                <LegendDot color={COLOR_B} label={playerB.name} />
+          {/* Radars */}
+          <div className="lg:sticky lg:top-24 self-start space-y-4">
+            {METRIC_GROUPS.map((group, i) => (
+              <div key={group.title} className="rounded-2xl surface p-3 sm:p-4">
+                <h4
+                  className="text-[11px] font-bold uppercase tracking-widest mb-1"
+                  style={{ color: categoryColor(group.category) }}
+                >
+                  {group.title}
+                </h4>
+                <RadarChart
+                  series={[
+                    { name: playerA.name, color: COLOR_A, points: radarByGroupA[i] },
+                    { name: playerB.name, color: COLOR_B, points: radarByGroupB[i] },
+                  ]}
+                  height={280}
+                />
               </div>
-            </div>
+            ))}
           </div>
 
-          {/* Metric-by-metric comparison */}
+          {/* Metric-by-metric comparison — grouped by category */}
           <div>
             <h2 className="flex items-center gap-2.5 font-display font-bold text-2xl mb-4">
               <span className="h-5 w-1 accent-bar rounded-full" />
               Metric breakdown
             </h2>
-            <div className="rounded-xl surface divide-y divide-ink-700/70">
-              {METRICS.map((m, i) => (
-                <CompareRow
-                  key={m.key}
-                  label={m.label}
-                  isPercent={m.isPercent}
-                  pointA={radarA[i]}
-                  pointB={radarB[i]}
-                  rawA={playerA.season_stats?.[m.key] ?? null}
-                  rawB={playerB.season_stats?.[m.key] ?? null}
-                />
+            <div className="space-y-6">
+              {METRIC_GROUPS.map((group) => (
+                <div key={group.title}>
+                  <h4
+                    className="text-xs font-bold uppercase tracking-widest mb-2"
+                    style={{ color: categoryColor(group.category) }}
+                  >
+                    {group.title}
+                  </h4>
+                  <div className="rounded-xl surface divide-y divide-ink-700/70">
+                    {group.keys.map((key) => {
+                      const meta = METRICS.find((m) => m.key === key)!
+                      const ptA = radarByGroupA[METRIC_GROUPS.indexOf(group)].find((p) => p.key === key)!
+                      const ptB = radarByGroupB[METRIC_GROUPS.indexOf(group)].find((p) => p.key === key)!
+                      return (
+                        <CompareRow
+                          key={key}
+                          label={meta.label}
+                          isPercent={meta.isPercent}
+                          pointA={ptA}
+                          pointB={ptB}
+                          rawA={playerA.season_stats?.[key] ?? null}
+                          rawB={playerB.season_stats?.[key] ?? null}
+                        />
+                      )
+                    })}
+                  </div>
+                </div>
               ))}
             </div>
           </div>
@@ -217,15 +249,6 @@ function CompareRow({
         <span>Top {topPercent(pointB.value)}%</span>
       </div>
     </div>
-  )
-}
-
-function LegendDot({ color, label }: { color: string; label: string }) {
-  return (
-    <span className="inline-flex items-center gap-1.5 text-chalk-dim">
-      <span className="h-2.5 w-2.5 rounded-full" style={{ background: color }} />
-      <span className="truncate max-w-[140px]">{label}</span>
-    </span>
   )
 }
 

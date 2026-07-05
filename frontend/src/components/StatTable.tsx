@@ -2,7 +2,7 @@ import type { PlayerStats } from '@/api/types'
 import type { PercentileTable } from '@/lib/percentiles'
 import { percentileOf } from '@/lib/percentiles'
 import { METRIC_GROUPS, METRICS } from '@/lib/metrics'
-import { formatStat, topPercent } from '@/lib/format'
+import { formatStat, topPercent, categoryColor } from '@/lib/format'
 import { StatBar } from './primitives'
 
 interface StatTableProps {
@@ -16,7 +16,7 @@ export function StatTable({ stats, table }: StatTableProps) {
     <div className="space-y-5">
       {METRIC_GROUPS.map((group) => (
         <div key={group.title}>
-          <h4 className="text-xs font-bold uppercase tracking-widest text-chalk-faint mb-2.5">{group.title}</h4>
+          <h4 className="text-xs font-bold uppercase tracking-widest mb-2.5" style={{ color: categoryColor(group.category) }}>{group.title}</h4>
           <div className="rounded-xl surface divide-y divide-ink-700/70">
             {group.keys.map((key) => {
               const meta = METRICS.find((m) => m.key === key)!

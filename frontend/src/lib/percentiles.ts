@@ -53,9 +53,16 @@ export interface RadarPoint {
   raw: number | null
 }
 
-/** Produce radar points for one player against a percentile table. */
-export function radarFor(stats: PlayerStats | null, table: PercentileTable): RadarPoint[] {
-  return METRICS.map((m) => {
+/** Produce radar points for one player against a percentile table.
+ *  When `keys` is provided, only those metrics are included (used for grouped
+ *  radar charts). Otherwise all METRICS are returned. */
+export function radarFor(
+  stats: PlayerStats | null,
+  table: PercentileTable,
+  keys?: MetricKey[],
+): RadarPoint[] {
+  const metrics = keys ? METRICS.filter((m) => keys.includes(m.key)) : METRICS
+  return metrics.map((m) => {
     const raw = stats?.[m.key] ?? null
     const sorted = table.get(m.key) ?? []
     const value = raw === null ? 0 : percentileOf(sorted, raw)

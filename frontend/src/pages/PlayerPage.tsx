@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { useAllPlayers, usePlayer, cohortFor } from '@/hooks/usePlayers'
+import { METRIC_GROUPS } from '@/lib/metrics'
 import { buildPercentileTable, overallRating, radarFor } from '@/lib/percentiles'
 import { PageTransition } from '@/components/PageTransition'
 import { SmartImage } from '@/components/SmartImage'
@@ -23,6 +24,14 @@ export function PlayerPage() {
   const cohort = useMemo(() => cohortFor(allPlayers, player?.category), [allPlayers, player?.category])
   const table = useMemo(() => buildPercentileTable(cohort), [cohort])
   const radarPoints = useMemo(() => radarFor(player?.season_stats ?? null, table), [player, table])
+  const radarByGroup = useMemo(
+    () =>
+      METRIC_GROUPS.map((g) => ({
+        ...g,
+        points: radarFor(player?.season_stats ?? null, table, g.keys),
+      })),
+    [player, table],
+  )
   const rating = overallRating(radarPoints)
 
   if (isLoading) return <div className="max-w-[1400px] mx-auto px-5 sm:px-8 py-20"><Spinner label="Loading profile…" /></div>
@@ -157,19 +166,28 @@ export function PlayerPage() {
             </div>
           </div>
 
-          {/* Performance profile + standout traits */}
+          {/* Grouped radar charts — one per stat category */}
           <div>
             <SectionTitle>Performance profile</SectionTitle>
-            <div className="rounded-2xl surface p-4 mt-1">
-              <RadarChart series={[{ name: player.name, color: accent, points: radarPoints }]} />
-              <div className="mt-2 flex items-center justify-center gap-2 text-xs text-chalk-faint">
-                <span className="h-2 w-2 rounded-full" style={{ background: accent }} />
-                Ranking vs positional peers
-              </div>
+            <div className="mt-1 space-y-5">
+              {radarByGroup.map((group) => (
+                <div key={group.title} className="rounded-2xl surface p-3 sm:p-4">
+                  <h4
+                    className="text-[11px] font-bold uppercase tracking-widest mb-1"
+                    style={{ color: categoryColor(group.category) }}
+                  >
+                    {group.title}
+                  </h4>
+                  <RadarChart
+                    series={[{ name: player.name, color: categoryColor(group.category), points: group.points }]}
+                    height={280}
+                  />
+                </div>
+              ))}
             </div>
 
             {/* top strengths */}
-            <div className="mt-5">
+            <div className="mt-6">
               <h4 className="text-xs font-bold uppercase tracking-widest text-chalk-faint mb-2.5">Standout traits</h4>
               <div className="space-y-2">
                 {[...radarPoints]

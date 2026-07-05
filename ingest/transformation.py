@@ -211,6 +211,8 @@ def insert_player_alternate_positions(cur, df: pd.DataFrame, player_id_map: dict
             continue
 
         positions = row['positions'].split(",") if pd.notna(row['positions']) else []
+        if not positions:
+            continue
         for position in positions:
             rows.append((player_id, position.strip()))
 

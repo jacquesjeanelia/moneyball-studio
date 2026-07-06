@@ -1,9 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { useAllPlayers, usePlayer, useSimilar, cohortFor } from '@/hooks/usePlayers'
-import { buildPercentileTable, overallRating, radarFor } from '@/lib/percentiles'
-import type { PlayerStats, SimilarPlayer } from '@/api/types'
+import { usePlayer, useSimilar } from '@/hooks/usePlayers'
+import type { SimilarPlayer } from '@/api/types'
 import { PageTransition } from '@/components/PageTransition'
 import { SmartImage } from '@/components/SmartImage'
 import { PositionPill } from '@/components/primitives'
@@ -25,7 +24,6 @@ export function SimilarPage() {
 
   const { data: target } = usePlayer(playerId)
   const { data: similar, isLoading, isError, error, refetch } = useSimilar(playerId, 100)
-  const { data: allPlayers } = useAllPlayers()
 
   const SIMILARITY_THRESHOLD = 0.75
 
@@ -40,19 +38,6 @@ export function SimilarPage() {
 
   const togglePosition = (pos: string) =>
     setActivePositions((prev) => (prev.includes(pos) ? prev.filter((p) => p !== pos) : [...prev, pos]))
-
-  // Overall-rating baseline: rate the target AND every candidate against the
-  // target's positional cohort, so the rating *gap* on each row is comparable.
-  // (Cosine ranks by style; this adds the quality/level the score can't show.)
-  const cohort = useMemo(() => cohortFor(allPlayers, target?.category), [allPlayers, target?.category])
-  const table = useMemo(() => buildPercentileTable(cohort), [cohort])
-  const statsById = useMemo(() => {
-    const m = new Map<number, PlayerStats | null>()
-    for (const p of allPlayers ?? []) m.set(p.id, p.season_stats)
-    return m
-  }, [allPlayers])
-  const ratingFor = (stats: PlayerStats | null) => overallRating(radarFor(stats, table))
-  const targetRating = target ? ratingFor(target.season_stats) : null
 
   const filtered = useMemo(
     () =>
@@ -136,16 +121,14 @@ export function SimilarPage() {
           {!isLoading && !isError && filtered.length > 0 && (
             <div className="space-y-3">
               {filtered.map((s, i) => (
-                <SimilarRow
-                  key={s.player.id}
-                  item={s}
-                  index={i}
-                  targetId={target?.id}
-                  accent={accent}
-                  targetRating={targetRating}
-                  candidateRating={ratingFor(statsById.get(s.player.id) ?? null)}
-                  targetValue={target?.current_market_value_eur ?? null}
-                />
+                  <SimilarRow
+                    key={s.player.id}
+                    item={s}
+                    index={i}
+                    targetId={target?.id}
+                    accent={accent}
+                    targetValue={target?.current_market_value_eur ?? null}
+                  />
               ))}
             </div>
           )}
@@ -249,21 +232,16 @@ function SimilarRow({
   index,
   targetId,
   accent,
-  targetRating,
-  candidateRating,
   targetValue,
 }: {
   item: SimilarPlayer
   index: number
   targetId?: number
   accent: string
-  targetRating: number | null
-  candidateRating: number
   targetValue: number | null
 }) {
   const p = item.player
   const pct = item.similarity_score
-  const ratingGap = targetRating != null ?  candidateRating - targetRating: null
   const value = p.current_market_value_eur ?? null
   const valueGap = targetValue != null && value != null ? value - targetValue : null
   return (
@@ -296,9 +274,8 @@ function SimilarRow({
             {/* Price inline on phones, where the dedicated value column is hidden. */}
             <span className="sm:hidden font-bold text-volt tnum shrink-0">· {formatMarketValue(value)}</span>
           </div>
-          {/* Quality/value gap vs target — inline on phones. */}
+          {/* Value gap vs target — inline on phones. */}
           <div className="sm:hidden mt-1 flex items-center gap-2">
-            <GapBadge gap={ratingGap} suffix=" pts" />
             <ValueGapBadge gap={valueGap} />
           </div>
         </div>
@@ -309,11 +286,9 @@ function SimilarRow({
         <PositionPill position={p.main_position} category={p.category} />
       </div>
 
-      {/* quality + value gap vs target */}
+      {/* value gap vs target */}
       <div className="hidden sm:flex flex-col items-end gap-1 w-28">
-        <GapBadge gap={ratingGap} suffix=" pts" />
         <ValueGapBadge gap={valueGap} />
-        {/* <span className="text-[10px] text-chalk-faint uppercase tracking-wide">vs target</span> */}
       </div>
 
       {/* value */}
@@ -339,18 +314,6 @@ function SimilarRow({
         </Link>
       )}
     </motion.div>
-  )
-}
-
-// Rating delta vs target: green if higher output, amber if lower, neutral if level.
-function GapBadge({ gap, suffix = '' }: { gap: number | null; suffix?: string }) {
-  if (gap == null) return null
-  const sign = gap > 0 ? '+' : ''
-  const color = gap > 0 ? 'var(--color-emerald)' : gap < 0 ? 'var(--color-amber)' : 'var(--color-chalk-faint)'
-  return (
-    <span className="text-xs font-bold tnum whitespace-nowrap" style={{ color }} title="Overall rating vs target">
-      {gap === 0 ? 'same level' : `${sign}${gap}${suffix}`}
-    </span>
   )
 }
 

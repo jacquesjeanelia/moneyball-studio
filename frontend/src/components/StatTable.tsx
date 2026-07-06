@@ -1,15 +1,13 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import type { PlayerStats } from '@/api/types'
-import type { PercentileTable } from '@/lib/percentiles'
-import { percentileOf } from '@/lib/percentiles'
+import { percentileKey } from '@/lib/percentiles'
 import { METRIC_GROUPS, METRICS } from '@/lib/metrics'
 import { formatStat, topPercent, categoryColor } from '@/lib/format'
 import { StatBar } from './primitives'
 
 interface StatTableProps {
   stats: PlayerStats | null
-  table: PercentileTable
 }
 
 type StatView = 'per90' | 'total'
@@ -17,7 +15,7 @@ type StatView = 'per90' | 'total'
 /** Format a total stat (per90 × minutes/90) for display. */
 function formatTotal(value: number | null): string {
   if (value === null || value === undefined) return '—'
-  return value.toLocaleString('en-US', { maximumFractionDigits: 1, minimumFractionDigits: 0 })
+  return value.toLocaleString('en-US', { maximumFractionDigits: 2, minimumFractionDigits: 0 })
 }
 
 /** Compute total value from a per90 stat and minutes played. */
@@ -31,8 +29,8 @@ const VIEW_OPTIONS: { key: StatView; label: string }[] = [
   { key: 'per90', label: 'Per 90' },
 ]
 
-/** Grouped stat table: raw value + percentile bar vs positional peers. */
-export function StatTable({ stats, table }: StatTableProps) {
+/** Grouped stat table: raw value + percentile bar (per90 only). */
+export function StatTable({ stats }: StatTableProps) {
   const [view, setView] = useState<StatView>('total')
   const minutes = stats?.minutes_played ?? null
 
@@ -75,16 +73,11 @@ export function StatTable({ stats, table }: StatTableProps) {
               {group.keys.map((key) => {
                 const meta = METRICS.find((m) => m.key === key)!
                 const raw = stats?.[key] ?? null
-                const sorted = table.get(key) ?? []
-                const pct = raw === null ? 0 : percentileOf(sorted, raw)
+                const pctKey = percentileKey(key)
+                const pct = view === 'per90' ? (stats?.[pctKey] ?? 0) : 0
                 const displayValue = view === 'total' && !meta.isPercent
                   ? formatTotal(toTotal(raw, minutes))
                   : formatStat(raw, meta.isPercent)
-                // const unitLabel = meta.isPercent
-                //   ? 'percentage'
-                //   : view === 'total'
-                //     ? 'total'
-                //     : 'per 90 mins'
                 return (
                   <motion.div
                     key={key}
@@ -97,7 +90,6 @@ export function StatTable({ stats, table }: StatTableProps) {
                   >
                     <div className="w-28 sm:w-48 shrink-0">
                       <div className="text-sm font-semibold text-chalk leading-tight">{meta.label}</div>
-                      {/* <div className="text-[11px] text-chalk-faint">{unitLabel}</div> */}
                     </div>
                     <div className="font-display font-bold text-base text-chalk tnum w-24 sm:w-28 text-right overflow-hidden">
                       <AnimatePresence mode="popLayout">
@@ -113,12 +105,16 @@ export function StatTable({ stats, table }: StatTableProps) {
                         </motion.span>
                       </AnimatePresence>
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <StatBar value={pct} />
-                    </div>
-                    <div className="hidden sm:block w-16 text-right">
-                      <span className="text-xs font-bold text-chalk-dim tnum">Top {topPercent(pct)}%</span>
-                    </div>
+                    {view === 'per90' && (
+                      <>
+                        <div className="flex-1 min-w-0">
+                          <StatBar value={pct} />
+                        </div>
+                        <div className="hidden sm:block w-16 text-right">
+                          <span className="text-xs font-bold text-chalk-dim tnum">Top {topPercent(pct)}%</span>
+                        </div>
+                      </>
+                    )}
                   </motion.div>
                 )
               })}

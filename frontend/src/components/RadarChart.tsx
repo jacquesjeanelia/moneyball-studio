@@ -18,13 +18,15 @@ export interface RadarSeries {
 interface RadarChartProps {
   series: RadarSeries[]
   height?: number
+  /** Map from metric short label → tick colour (e.g. for role-based multi-colour axes). */
+  tickColors?: Record<string, string>
 }
 
 /**
  * Percentile radar. Each axis is a metric; values are 0–100 percentile ranks
  * vs positional peers. Supports overlaying multiple players for comparison.
  */
-export function RadarChart({ series, height = 360 }: RadarChartProps) {
+export function RadarChart({ series, height = 360, tickColors }: RadarChartProps) {
   if (series.length === 0) return null
 
   // Merge series into recharts row format keyed by metric short label.
@@ -37,13 +39,23 @@ export function RadarChart({ series, height = 360 }: RadarChartProps) {
     return row
   })
 
+  const renderTick = (props: any) => {
+    const { payload, x, y } = props
+    const color = tickColors?.[payload.value] ?? 'var(--color-chalk-dim)'
+    return (
+      <text x={x} y={y} fill={color} textAnchor="middle" fontSize={11} fontWeight={600}>
+        {payload.value}
+      </text>
+    )
+  }
+
   return (
     <ResponsiveContainer width="100%" height={height}>
       <ReRadarChart data={data} outerRadius="72%">
         <PolarGrid stroke="var(--color-ink-600)" />
         <PolarAngleAxis
           dataKey="metric"
-          tick={{ fill: 'var(--color-chalk-dim)', fontSize: 11, fontWeight: 600 }}
+          tick={tickColors ? renderTick : { fill: 'var(--color-chalk-dim)', fontSize: 11, fontWeight: 600 }}
         />
         {series.map((s, si) => (
           <Radar

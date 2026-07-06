@@ -1,15 +1,16 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { useAllPlayers, usePlayer, cohortFor } from '@/hooks/usePlayers'
-import { buildPercentileTable, overallRating, radarFor, type RadarPoint } from '@/lib/percentiles'
-import type { PlayerDetail } from '@/api/types'
+import { motion } from 'framer-motion'
+import { usePlayer } from '@/hooks/usePlayers'
+import { radarFor, type RadarPoint } from '@/lib/percentiles'
+import type { MetricKey, PlayerDetail } from '@/api/types'
 import { PageTransition } from '@/components/PageTransition'
 import { SmartImage } from '@/components/SmartImage'
 import { PositionPill } from '@/components/primitives'
 import { RadarChart } from '@/components/RadarChart'
 import { ErrorState, Spinner } from '@/components/states'
-import { METRIC_GROUPS, METRICS } from '@/lib/metrics'
-import { formatStat, topPercent, categoryColor } from '@/lib/format'
+import { METRIC_GROUPS, METRICS, ROLE_METRICS, type Role } from '@/lib/metrics'
+import { formatStat, topPercent, categoryColor, CATEGORY_COLORS } from '@/lib/format'
 
 const COLOR_A = 'var(--color-signal-400)'
 const COLOR_B = 'var(--color-cyan)'
@@ -22,28 +23,64 @@ export function ComparePage() {
 
   const qa = usePlayer(a)
   const qb = usePlayer(b)
-  const { data: allPlayers } = useAllPlayers()
 
   const playerA = qa.data
   const playerB = qb.data
 
-  // Percentiles are computed against player A's category cohort so the
-  // axes share a consistent baseline (most comparisons are same-role).
-  const cohort = useMemo(() => cohortFor(allPlayers, playerA?.category), [allPlayers, playerA?.category])
-  const table = useMemo(() => buildPercentileTable(cohort), [cohort])
+  const keyToCategory = useMemo(() => {
+    const map = new Map<MetricKey, string>()
+    for (const g of METRIC_GROUPS) {
+      for (const k of g.keys) map.set(k, g.category)
+    }
+    return map
+  }, [])
 
-  const radarA = useMemo(() => radarFor(playerA?.season_stats ?? null, table), [playerA, table])
-  const radarB = useMemo(() => radarFor(playerB?.season_stats ?? null, table), [playerB, table])
-
-  // Grouped radars — one per stat category, per player
+  // Grouped radars — per-category percentile data for metric breakdown rows
   const radarByGroupA = useMemo(
-    () => METRIC_GROUPS.map((g) => radarFor(playerA?.season_stats ?? null, table, g.keys)),
-    [playerA, table],
+    () => METRIC_GROUPS.map((g) => radarFor(playerA?.season_stats ?? null, g.keys)),
+    [playerA],
   )
   const radarByGroupB = useMemo(
-    () => METRIC_GROUPS.map((g) => radarFor(playerB?.season_stats ?? null, table, g.keys)),
-    [playerB, table],
+    () => METRIC_GROUPS.map((g) => radarFor(playerB?.season_stats ?? null, g.keys)),
+    [playerB],
   )
+
+  // Radar view toggle — single chart matching PlayerPage pattern
+  const playerARole = (playerA?.role as Role | null) ?? null
+  const radarViews = useMemo(() => {
+    const views: { key: string; label: string; keys: MetricKey[] }[] = []
+    if (playerARole && ROLE_METRICS[playerARole]) {
+      views.push({ key: playerARole, label: playerARole, keys: ROLE_METRICS[playerARole] })
+    }
+    METRIC_GROUPS.forEach((g) => {
+      const short = g.title === 'Possession & Progression' ? 'Possession'
+        : g.title === 'Defending & Physical' ? 'Defending'
+        : g.title
+      views.push({ key: g.category, label: short, keys: g.keys })
+    })
+    return views
+  }, [playerARole])
+  const [radarView, setRadarView] = useState(radarViews[0]?.key ?? '')
+  const activeRadarKeys = useMemo(() => {
+    const keys = radarViews.find((v) => v.key === radarView)?.keys ?? []
+    if (radarView === playerARole) {
+      const order = ['Attack', 'Midfield', 'Defender']
+      return [...keys].sort((a, b) => {
+        const ca = order.indexOf(keyToCategory.get(a) ?? '')
+        const cb = order.indexOf(keyToCategory.get(b) ?? '')
+        return ca - cb
+      })
+    }
+    return keys
+  }, [radarView, radarViews, playerARole])
+  const activeRadarSeries = useMemo(() => {
+    const ptsA = radarFor(playerA?.season_stats ?? null, activeRadarKeys)
+    const ptsB = radarFor(playerB?.season_stats ?? null, activeRadarKeys)
+    return [
+      { name: playerA?.name ?? '', color: COLOR_A, points: ptsA },
+      { name: playerB?.name ?? '', color: COLOR_B, points: ptsB },
+    ]
+  }, [playerA, playerB, activeRadarKeys])
 
   const isLoading = qa.isLoading || qb.isLoading
   const isError = qa.isError || qb.isError
@@ -67,9 +104,6 @@ export function ComparePage() {
       </div>
     )
 
-  const ratingA = overallRating(radarA)
-  const ratingB = overallRating(radarB)
-
   return (
     <PageTransition>
       <div className="max-w-[1400px] mx-auto px-5 sm:px-8 py-8">
@@ -84,32 +118,51 @@ export function ComparePage() {
 
         {/* Player headers */}
         <div className="grid grid-cols-[1fr_auto_1fr] gap-3 sm:gap-6 items-center mb-8">
-          <PlayerHeader player={playerA} color={COLOR_A} rating={ratingA} align="left" />
+          <PlayerHeader player={playerA} color={COLOR_A} align="left" />
           <div className="font-display font-extrabold text-2xl sm:text-4xl text-chalk-faint select-none">VS</div>
-          <PlayerHeader player={playerB} color={COLOR_B} rating={ratingB} align="right" />
+          <PlayerHeader player={playerB} color={COLOR_B} align="right" />
         </div>
 
-        {/* Grouped radar charts + metric breakdown */}
+        {/* Single radar chart + metric breakdown */}
         <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,460px)_1fr] gap-8 lg:gap-12">
-          {/* Radars */}
+          {/* Radar */}
           <div className="lg:sticky lg:top-24 self-start space-y-4">
-            {METRIC_GROUPS.map((group, i) => (
-              <div key={group.title} className="rounded-2xl surface p-3 sm:p-4">
-                <h4
-                  className="text-[11px] font-bold uppercase tracking-widest mb-1"
-                  style={{ color: categoryColor(group.category) }}
-                >
-                  {group.title}
-                </h4>
-                <RadarChart
-                  series={[
-                    { name: playerA.name, color: COLOR_A, points: radarByGroupA[i] },
-                    { name: playerB.name, color: COLOR_B, points: radarByGroupB[i] },
-                  ]}
-                  height={280}
-                />
+            <div className="rounded-2xl surface p-3 sm:p-4">
+              <div className="flex justify-center mb-3">
+                <div className="inline-flex items-center rounded-lg surface p-0.5">
+                  {radarViews.map((v) => {
+                    const active = radarView === v.key
+                    const isRole = v.key === playerARole
+                    const color = isRole
+                      ? categoryColor(playerA?.category ?? null)
+                      : CATEGORY_COLORS[v.key] ?? 'var(--color-chalk)'
+                    return (
+                      <button
+                        key={v.key}
+                        onClick={() => setRadarView(v.key)}
+                        aria-pressed={active}
+                        className="relative px-3 py-1.5 text-xs font-semibold rounded-md transition-colors whitespace-nowrap"
+                        style={{ color: active ? '#fff' : 'var(--color-chalk-dim)' }}
+                      >
+                        {active && (
+                          <motion.span
+                            layoutId="compare-radar-view-pill"
+                            className="absolute inset-0 rounded-md"
+                            style={{ background: `color-mix(in srgb, ${color} 30%, var(--color-ink-600))` }}
+                            transition={{ type: 'spring', stiffness: 400, damping: 32 }}
+                          />
+                        )}
+                        <span className="relative">{v.label}</span>
+                      </button>
+                    )
+                  })}
+                </div>
               </div>
-            ))}
+              <RadarChart
+                series={activeRadarSeries}
+                height={340}
+              />
+            </div>
           </div>
 
           {/* Metric-by-metric comparison — grouped by category */}
@@ -160,12 +213,10 @@ export function ComparePage() {
 function PlayerHeader({
   player,
   color,
-  rating,
   align,
 }: {
   player: PlayerDetail
   color: string
-  rating: number
   align: 'left' | 'right'
 }) {
   const right = align === 'right'
@@ -194,11 +245,7 @@ function PlayerHeader({
         <div className={`flex items-center gap-2 text-xs text-chalk-faint max-w-full ${right ? 'sm:flex-row-reverse' : ''}`}>
           <span className="truncate">{player.club?.name}</span>
         </div>
-        <div className={`mt-1.5 flex items-center gap-2 ${right ? 'sm:flex-row-reverse' : ''}`}>
-          <span className="font-display font-extrabold text-xl sm:text-2xl tnum whitespace-nowrap" style={{ color }}>
-            Top {topPercent(rating)}%
-          </span>
-        </div>
+        
       </div>
     </Link>
   )

@@ -3,7 +3,7 @@ from typing import AsyncGenerator
 from asyncpg import Connection
 from database import get_db_connection
 from models import PlayerSummary, PlayerDetail, PlayerStats, Club, League, Country
-from roles import broad_role, role_categories, role_positions, clean_position
+from roles import broad_role, specific_role, role_categories, role_positions, clean_position
 
 router = APIRouter()
 
@@ -18,22 +18,40 @@ async def db_conn() -> AsyncGenerator[Connection, None]:
 STAT_COLUMNS = (
     "minutes_played",
     # Attacking
-    "npxg_per90", "shots_per90", "shots_on_target_per90", "headed_shots_per90",
-    "xa_per90", "chances_created_per90", "big_chances_created_per90",
-    "successful_crosses_per90", "successful_cross_rate",
-    "opposition_box_touches_per90",
+    "npxg_per90", "npxg_percentile",
+    "shots_per90", "shots_percentile",
+    "shots_on_target_per90", "shots_on_target_percentile",
+    "headed_shots_per90", "headed_shots_percentile",
+    "xa_per90", "xa_percentile",
+    "chances_created_per90", "chances_created_percentile",
+    "big_chances_created_per90", "big_chances_created_percentile",
+    "successful_crosses_per90", "successful_crosses_percentile",
+    "successful_cross_rate", "successful_cross_rate_percentile",
+    "opposition_box_touches_per90", "opposition_box_touches_percentile",
     # Possession & progression
-    "successful_passes_per90", "successful_pass_rate",
-    "accurate_long_balls_per90", "accurate_long_balls_rate",
-    "successful_dribbles_per90", "successful_dribble_rate",
-    "touches_per90", "dispossessed_per90", "fouls_won_per90",
-    "duels_won_per90", "duel_success_rate",
+    "successful_passes_per90", "successful_passes_percentile",
+    "successful_pass_rate", "successful_pass_rate_percentile",
+    "accurate_long_balls_per90", "accurate_long_balls_percentile",
+    "accurate_long_balls_rate", "accurate_long_balls_rate_percentile",
+    "successful_dribbles_per90", "successful_dribbles_percentile",
+    "successful_dribble_rate", "successful_dribble_rate_percentile",
+    "touches_per90", "touches_percentile",
+    "dispossessed_per90", "dispossessed_percentile",
+    "fouls_won_per90", "fouls_won_percentile",
+    "duels_won_per90", "duels_won_percentile",
+    "duel_success_rate", "duel_success_rate_percentile",
     # Defending & physical
-    "aerial_duels_won_per90", "aerial_duel_success_rate",
-    "tackles_per90", "interceptions_per90", "blocks_per90",
-    "clearances_per90", "recoveries_per90",
-    "possession_won_final_third_per90", "dribbled_past_per90",
-    "fouls_committed_per90", "defcon_per90",
+    "aerial_duels_won_per90", "aerial_duels_won_percentile",
+    "aerial_duel_success_rate", "aerial_duel_success_rate_percentile",
+    "tackles_per90", "tackles_percentile",
+    "interceptions_per90", "interceptions_percentile",
+    "blocks_per90", "blocks_percentile",
+    "clearances_per90", "clearances_percentile",
+    "recoveries_per90", "recoveries_percentile",
+    "possession_won_final_third_per90", "possession_won_final_third_percentile",
+    "dribbled_past_per90", "dribbled_past_percentile",
+    "fouls_committed_per90", "fouls_committed_percentile",
+    "defcon_per90", "defcon_percentile",
 )
 
 
@@ -125,6 +143,7 @@ async def list_players(
             name=row["name"],
             country=Country(id=row["country_id"], name=row["country_name"], flag_url=row["country_flag_url"]) if row["country_name"] else None,
             category=broad_role(row["category"], row["main_position"]),
+            role=specific_role(row["main_position"]),
             main_position=clean_position(row["main_position"]),
             alternate_positions=list(row["alternate_positions"]),
             age=int(row["age"]) if row["age"] else None,
@@ -192,6 +211,7 @@ async def get_player(
         name=row["name"],
         age=int(row["age"]) if row["age"] else None,
         category=broad_role(row["category"], row["main_position"]),
+        role=specific_role(row["main_position"]),
         main_position=clean_position(row["main_position"]),
         alternate_positions=list(row["alternate_positions"]),
         preferred_foot=row["preferred_foot"],

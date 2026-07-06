@@ -1,9 +1,10 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { useAllPlayers, usePlayer, cohortFor } from '@/hooks/usePlayers'
-import { METRIC_GROUPS } from '@/lib/metrics'
-import { buildPercentileTable, overallRating, radarFor } from '@/lib/percentiles'
+import { usePlayer } from '@/hooks/usePlayers'
+import { METRICS, METRIC_GROUPS, ROLE_METRICS, type Role } from '@/lib/metrics'
+import { radarFor } from '@/lib/percentiles'
+import type { MetricKey } from '@/api/types'
 import { PageTransition } from '@/components/PageTransition'
 import { SmartImage } from '@/components/SmartImage'
 import { PositionPill, StatBar } from '@/components/primitives'
@@ -11,7 +12,7 @@ import { PositionPitch } from '@/components/PositionPitch'
 import { StatTable } from '@/components/StatTable'
 import { RadarChart } from '@/components/RadarChart'
 import { ErrorState, Spinner } from '@/components/states'
-import { formatMarketValue, categoryColor, topPercent } from '@/lib/format'
+import { formatMarketValue, categoryColor, topPercent, CATEGORY_COLORS } from '@/lib/format'
 
 export function PlayerPage() {
   const { id } = useParams()
@@ -19,20 +20,67 @@ export function PlayerPage() {
   const navigate = useNavigate()
 
   const { data: player, isLoading, isError, error, refetch } = usePlayer(playerId)
-  const { data: allPlayers } = useAllPlayers()
 
-  const cohort = useMemo(() => cohortFor(allPlayers, player?.category), [allPlayers, player?.category])
-  const table = useMemo(() => buildPercentileTable(cohort), [cohort])
-  const radarPoints = useMemo(() => radarFor(player?.season_stats ?? null, table), [player, table])
-  const radarByGroup = useMemo(
-    () =>
-      METRIC_GROUPS.map((g) => ({
-        ...g,
-        points: radarFor(player?.season_stats ?? null, table, g.keys),
-      })),
-    [player, table],
-  )
-  const rating = overallRating(radarPoints)
+  // Radar view toggle
+  const playerRole = (player?.role as Role | null) ?? null
+  const keyToCategory = useMemo(() => {
+    const map = new Map<MetricKey, string>()
+    for (const g of METRIC_GROUPS) {
+      for (const k of g.keys) map.set(k, g.category)
+    }
+    return map
+  }, [])
+  const radarViews = useMemo(() => {
+    const views: { key: string; label: string; keys: MetricKey[] }[] = []
+    if (playerRole && ROLE_METRICS[playerRole]) {
+      views.push({ key: playerRole, label: playerRole, keys: ROLE_METRICS[playerRole] })
+    }
+    METRIC_GROUPS.forEach((g) => {
+      const short = g.title === 'Possession & Progression' ? 'Possession'
+        : g.title === 'Defending & Physical' ? 'Defending'
+        : g.title
+      views.push({ key: g.category, label: short, keys: g.keys })
+    })
+    return views
+  }, [playerRole])
+  const [radarView, setRadarView] = useState(radarViews[0]?.key ?? '')
+  const categoryOrder = ['Attack', 'Midfield', 'Defender']
+  const activeRadarKeys = useMemo(() => {
+    const keys = radarViews.find((v) => v.key === radarView)?.keys ?? []
+    // Role view: reorder keys so attacking stats group together, then possession, then defending
+    if (radarView === playerRole) {
+      return [...keys].sort((a, b) => {
+        const ca = categoryOrder.indexOf(keyToCategory.get(a) ?? '')
+        const cb = categoryOrder.indexOf(keyToCategory.get(b) ?? '')
+        return ca - cb
+      })
+    }
+    return keys
+  }, [radarView, radarViews, playerRole, keyToCategory])
+  // Build a map from metric short label -> colour for the role view axis labels
+  const activeTickColors = useMemo(() => {
+    const map: Record<string, string> = {}
+    if (radarView === playerRole) {
+      for (const g of METRIC_GROUPS) {
+        const color = CATEGORY_COLORS[g.category] ?? 'var(--color-chalk-dim)'
+        for (const k of activeRadarKeys) {
+          if (keyToCategory.get(k) === g.category) {
+            const meta = METRICS.find((m) => m.key === k)
+            if (meta) map[meta.short] = color
+          }
+        }
+      }
+    }
+    return map
+  }, [radarView, playerRole, activeRadarKeys, keyToCategory])
+  const activeRadarSeries = useMemo(() => {
+    const pts = radarFor(player?.season_stats ?? null, activeRadarKeys)
+    const color = categoryColor(player?.category ?? null)
+    return [{ name: player?.name ?? '', color, points: pts }]
+  }, [player, activeRadarKeys])
+
+  // All stats percentile points for standout traits
+  const radarPoints = useMemo(() => radarFor(player?.season_stats ?? null), [player])
 
   if (isLoading) return <div className="max-w-[1400px] mx-auto px-5 sm:px-8 py-20"><Spinner label="Loading profile…" /></div>
   if (isError || !player)
@@ -117,14 +165,8 @@ export function PlayerPage() {
               </div>
 
               {/* Stat ribbon */}
-              <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 gap-3">
+              <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <RibbonStat label="Market value" value={formatMarketValue(player.current_market_value_eur)} accent={accent} />
-                <RibbonStat
-                  label="Overall ranking"
-                  value={`Top ${topPercent(rating)}%`}
-                  accent={accent}
-                  // hint={`Average rank across all ${radarPoints.length} metrics vs. ${cohort.length.toLocaleString()} ${cohortLabel}. Top ${topPercent(rating)}% means this player rates ahead of ~${rating}% of positional peers overall.`}
-                />
               </div>
             </div>
 
@@ -154,7 +196,7 @@ export function PlayerPage() {
               : 'No minutes recorded'}
           </div>
           {player.season_stats ? (
-            <StatTable stats={player.season_stats} table={table} />
+            <StatTable stats={player.season_stats} />
           ) : (
             <div className="rounded-xl surface p-8 text-center text-chalk-faint">No stats recorded for this season.</div>
           )}
@@ -170,27 +212,48 @@ export function PlayerPage() {
             </div>
           </div>
 
-          {/* Grouped radar charts — one per stat category */}
+          {/* Performance profile — single chart with view toggle */}
           <div>
             <SectionTitle>Performance profile</SectionTitle>
-            <div className="mt-1 space-y-5">
-              {radarByGroup.map((group) => (
-                <div key={group.title} className="rounded-2xl surface p-3 sm:p-4">
-                  <h4
-                    className="text-[11px] font-bold uppercase tracking-widest mb-1"
-                    style={{ color: categoryColor(group.category) }}
-                  >
-                    {group.title}
-                  </h4>
-                  <RadarChart
-                    series={[{ name: player.name, color: categoryColor(group.category), points: group.points }]}
-                    height={280}
-                  />
+            <div className="rounded-2xl surface p-3 sm:p-4 mt-1">
+              <div className="flex justify-center mb-3">
+                <div className="inline-flex items-center rounded-lg surface p-0.5">
+                  {radarViews.map((v) => {
+                    const active = radarView === v.key
+                    const isRole = v.key === playerRole
+                    const color = isRole
+                      ? categoryColor(player?.category ?? null)
+                      : CATEGORY_COLORS[v.key] ?? 'var(--color-chalk)'
+                    return (
+                      <button
+                        key={v.key}
+                        onClick={() => setRadarView(v.key)}
+                        aria-pressed={active}
+                        className="relative px-3 py-1.5 text-xs font-semibold rounded-md transition-colors whitespace-nowrap"
+                        style={{ color: active ? '#fff' : 'var(--color-chalk-dim)' }}
+                      >
+                        {active && (
+                          <motion.span
+                            layoutId="radar-view-pill"
+                            className="absolute inset-0 rounded-md"
+                            style={{ background: `color-mix(in srgb, ${color} 30%, var(--color-ink-600))` }}
+                            transition={{ type: 'spring', stiffness: 400, damping: 32 }}
+                          />
+                        )}
+                        <span className="relative">{v.label}</span>
+                      </button>
+                    )
+                  })}
                 </div>
-              ))}
+              </div>
+              <RadarChart
+                series={activeRadarSeries}
+                tickColors={radarView === playerRole ? activeTickColors : undefined}
+                height={340}
+              />
             </div>
 
-            {/* top strengths */}
+            {/* Standout traits */}
             <div className="mt-6">
               <h4 className="text-xs font-bold uppercase tracking-widest text-chalk-faint mb-2.5">Standout traits</h4>
               <div className="space-y-2">

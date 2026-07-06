@@ -8,7 +8,20 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 import psycopg2
 from psycopg2.extras import execute_values
+import umap as UMAP
 import csv
+
+PLAYER_ROLES = {
+    "ST": "Striker",
+    "LW": "Creative Attacker", "RW": "Creative Attacker",
+    "LM": "Creative Attacker", "RM": "Creative Attacker",
+    "AM": "Creative Attacker",
+    "CM": "Midfielder", "DM": "Midfielder",
+    "LWB": "Fullback", "RWB": "Fullback", 
+    "LB": "Fullback", "RB": "Fullback",
+    "CB": "Center Back",
+    "GK": "Goalkeeper"
+}
 
 def safe_read_csv(file_path, **kwargs):
     try:
@@ -65,7 +78,7 @@ def merge_player_data():
 
 def load_and_clean_data():
     df = merge_player_data()
-    # df = df[df['minutes_played'] >= 450]
+    df = df[df['minutes_played'] >= 450]
     df = df[df['name'].notnull()]
     df[FEATURE_COLS] = df[FEATURE_COLS].fillna(0)
     df['dob'] = df['dob'].str.slice(0, 10)
@@ -74,7 +87,47 @@ def load_and_clean_data():
     # df.to_csv("data/processed/cleaned_player_dataset.csv", index=False, encoding='utf-8')
     return df
 
-def scale_features(df):
+def get_percentiles():
+    df = load_and_clean_data()
+    df['main_role'] = df['category'].map(PLAYER_ROLES)
+    df['npxg_percentile'] = df.groupby('main_role')['npxg_per_90'].rank(pct=True) * 100
+    df['shots_percentile'] = df.groupby('main_role')['shots_per_90'].rank(pct=True) * 100
+    df['sot_percentile'] = df.groupby('main_role')['sot_per_90'].rank(pct=True) * 100
+    df['headed_shots_percentile'] = df.groupby('main_role')['headed_shots_per_90'].rank(pct=True) * 100
+    df['xa_percentile'] = df.groupby('main_role')['xa_per_90'].rank(pct=True) * 100
+    df['succ_pass_percentile'] = df.groupby('main_role')['succ_pass_per_90'].rank(pct=True) * 100
+    df['succ_pass_rate_percentile'] = df.groupby('main_role')['succ_pass_rate'].rank(pct=True) * 100
+    df['acc_long_balls_percentile'] = df.groupby('main_role')['acc_long_balls_per_90'].rank(pct=True) * 100
+    df['succ_long_balls_rate_percentile'] = df.groupby('main_role')['succ_long_balls_rate'].rank(pct=True) * 100
+    df['chances_created_percentile'] = df.groupby('main_role')['chances_created_per_90'].rank(pct=True) * 100
+    df['big_chances_created_percentile'] = df.groupby('main_role')['big_chances_created_per_90'].rank(pct=True) * 100
+    df['succ_crosses_percentile'] = df.groupby('main_role')['succ_crosses_per_90'].rank(pct=True) * 100
+    df['succ_crosses_rate_percentile'] = df.groupby('main_role')['succ_crosses_rate'].rank(pct=True) * 100
+    df['succ_dribbles_percentile'] = df.groupby('main_role')['succ_dribbles_per_90'].rank(pct=True) * 100
+    df['succ_dribbles_rate_percentile'] = df.groupby('main_role')['succ_dribbles_rate'].rank(pct=True) * 100
+    df['duels_won_percentile'] = df.groupby('main_role')['duels_won_per_90'].rank(pct=True) * 100
+    df['duels_won_rate_percentile'] = df.groupby('main_role')['duels_won_rate'].rank(pct=True) * 100
+    df['aerials_won_percentile'] = df.groupby('main_role')['aerials_won_per_90'].rank(pct=True) * 100
+    df['aerials_won_rate_percentile'] = df.groupby('main_role')['aerials_won_rate'].rank(pct=True) * 100
+    df['touches_percentile'] = df.groupby('main_role')['touches_per_90'].rank(pct=True) * 100
+    df['touches_opp_box_percentile'] = df.groupby('main_role')['touches_opp_box_per_90'].rank(pct=True) * 100
+    df['dispossessed_percentile'] = df.groupby('main_role')['dispossessed_per_90'].rank(pct=True) * 100
+    df['fouls_won_percentile'] = df.groupby('main_role')['fouls_won_per_90'].rank(pct=True) * 100
+    df['defcon_percentile'] = df.groupby('main_role')['defcon_per_90'].rank(pct=True) * 100
+    df['tackles_percentile'] = df.groupby('main_role')['tackles_per_90'].rank(pct=True) * 100
+    df['interceptions_percentile'] = df.groupby('main_role')['interceptions_per_90'].rank(pct=True) * 100
+    df['blocks_percentile'] = df.groupby('main_role')['blocks_per_90'].rank(pct=True) * 100
+    df['fouls_committed_percentile'] = df.groupby('main_role')['fouls_committed_per_90'].rank(pct=True) * 100
+    df['recoveries_percentile'] = df.groupby('main_role')['recoveries_per_90'].rank(pct=True) * 100
+    df['poss_won_final_3rd_percentile'] = df.groupby('main_role')['poss_won_final_3rd_per_90'].rank(pct=True) * 100
+    df['succ_dribbles_def_percentile'] = df.groupby('main_role')['succ_dribbles_def_per_90'].rank(pct=True) * 100
+    df['clearances_percentile'] = df.groupby('main_role')['clearances_per_90'].rank(pct=True) * 100
+
+    # df.to_csv("data/processed/cleaned_player_dataset_with_roles.csv", index=False, encoding='utf-8')
+    return df
+
+def scale_features():
+    df = get_percentiles()
     scaler = StandardScaler()
     scaled_features = scaler.fit_transform(df[FEATURE_COLS])
 
@@ -82,6 +135,12 @@ def scale_features(df):
     pca_stats = pca.fit_transform(scaled_features)
 
     df['stats_vector'] = [str(list(vector.tolist())) for vector in pca_stats]
+
+    reducer = UMAP(n_neighbors=15, min_dist=0.1, n_components=2, random_state=42)
+    umap_embedding = reducer.fit_transform(pca_stats)
+
+    df['umap_x'] = umap_embedding[:, 0]
+    df['umap_y'] = umap_embedding[:, 1]
 
     os.makedirs(os.path.dirname("data/processed/processed_player_dataset.csv"), exist_ok=True)
     df.to_csv("data/processed/processed_player_dataset.csv", index=False, encoding='utf-8')
@@ -141,9 +200,7 @@ def insert_leagues(cur, country_id_map: dict[str, int]) -> dict[int, int]:
 def insert_clubs(cur, league_id_map: dict[int, int]) -> dict[int, int]:
     if not os.path.exists(CLUBS_PATH):
         raise FileNotFoundError(f"Clubs data file not found at {CLUBS_PATH}. Please ensure it exists.")
-    
-    print(league_id_map)
-    
+        
     df = safe_read_csv(CLUBS_PATH).fillna('')
     fotmob_map = {int(row['team_id']): row['team_name'] for _, row in df.iterrows()}
     rows = [(row['team_name'], league_id_map.get(row['league_id'], None), CLUB_IMAGE_URL + f"{row['team_id']}.png") for _, row in df.iterrows()]
@@ -259,6 +316,23 @@ def insert_player_season_stats(cur, df: pd.DataFrame, player_id_map: dict[str, i
             _float(row, 'interceptions_per_90'), _float(row, 'blocks_per_90'), 
             _float(row, 'fouls_committed_per_90'), _float(row, 'recoveries_per_90'), _float(row, 'poss_won_final_3rd_per_90'),
             _float(row, 'succ_dribbles_def_per_90'), _float(row, 'clearances_per_90'),
+            
+            _float(row, 'npxg_percentile'),  
+            _float(row, 'shots_percentile'), _float(row, 'sot_percentile'), _float(row, 'headed_shots_percentile'),
+            _float(row, 'xa_percentile'), _float(row, 'succ_pass_percentile'), _float(row, 'succ_pass_rate_percentile'),
+            _float(row, 'acc_long_balls_percentile'), _float(row, 'succ_long_balls_rate_percentile'),
+            _float(row, 'chances_created_percentile'), _float(row, 'big_chances_created_percentile'),
+            _float(row, 'succ_crosses_percentile'), _float(row, 'succ_crosses_rate_percentile'), 
+            _float(row, 'succ_dribbles_percentile'), _float(row, 'succ_dribbles_rate_percentile'),
+            _float(row, 'duels_won_percentile'), _float(row, 'duels_won_rate_percentile'), 
+            _float(row, 'aerials_won_percentile'), _float(row, 'aerials_won_rate_percentile'),
+            _float(row, 'touches_percentile'), _float(row, 'touches_opp_box_percentile'),
+            _float(row, 'dispossessed_percentile'), _float(row, 'fouls_won_percentile'), 
+            _float(row, 'defcon_percentile'), _float(row, 'tackles_percentile'), 
+            _float(row, 'interceptions_percentile'), _float(row, 'blocks_percentile'), 
+            _float(row, 'fouls_committed_percentile'), _float(row, 'recoveries_percentile'), _float(row, 'poss_won_final_3rd_percentile'),
+            _float(row, 'succ_dribbles_def_percentile'), _float(row, 'clearances_percentile'),       
+
             vec_string
         ))
 
@@ -266,7 +340,9 @@ def insert_player_season_stats(cur, df: pd.DataFrame, player_id_map: dict[str, i
         cur,
         """
             INSERT INTO player_season_stats (
-                player_id, season, minutes_played, npxg_per90, shots_per90, shots_on_target_per90, 
+                player_id, season, minutes_played, 
+                
+                npxg_per90, shots_per90, shots_on_target_per90, 
                 headed_shots_per90, xa_per90, successful_passes_per90, successful_pass_rate,
                 accurate_long_balls_per90, accurate_long_balls_rate, chances_created_per90,
                 big_chances_created_per90, successful_crosses_per90, successful_cross_rate,
@@ -276,7 +352,21 @@ def insert_player_season_stats(cur, df: pd.DataFrame, player_id_map: dict[str, i
                 fouls_won_per90, defcon_per90, tackles_per90, interceptions_per90,
                 blocks_per90, fouls_committed_per90, recoveries_per90,
                 possession_won_final_third_per90, dribbled_past_per90,
-                clearances_per90, stats_vector
+                clearances_per90, 
+
+                npxg_percentile, shots_percentile, shots_on_target_percentile, 
+                headed_shots_percentile, xa_percentile, successful_passes_percentile, successful_pass_rate_percentile,
+                accurate_long_balls_percentile, accurate_long_balls_rate_percentile, chances_created_percentile,
+                big_chances_created_percentile, successful_crosses_percentile, successful_cross_rate_percentile,
+                successful_dribbles_percentile, successful_dribble_rate_percentile, duels_won_percentile,
+                duel_success_rate_percentile, aerial_duels_won_percentile, aerial_duel_success_rate_percentile,
+                touches_percentile, opposition_box_touches_percentile, dispossessed_percentile,
+                fouls_won_percentile, defcon_percentile, tackles_percentile, interceptions_percentile,
+                blocks_percentile, fouls_committed_percentile, recoveries_percentile,
+                possession_won_final_third_percentile, dribbled_past_percentile,
+                clearances_percentile,
+
+                stats_vector
             ) VALUES %s
             ON CONFLICT DO NOTHING
         """,
@@ -290,8 +380,7 @@ def run():
  
     # --- Transform ---
     print("\n[1/2] Cleaning & vectorising...")
-    df = load_and_clean_data()
-    df = scale_features(df)
+    df = scale_features()
  
     # --- Load ---
     print("\n[2/2] Inserting into PostgreSQL...")

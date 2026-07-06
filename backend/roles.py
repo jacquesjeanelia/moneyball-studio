@@ -63,6 +63,27 @@ def role_positions(role: str) -> list[str]:
     return [k for k, v in _POSITION_TO_ROLE.items() if v == role]
 
 
+# Specific role groups — the five narrow roles the UI uses for role-specific
+# radar views.
+_SPECIFIC_ROLES = {
+    "ST": "Striker",
+    "LW": "Creative Attacker", "RW": "Creative Attacker",
+    "LM": "Creative Attacker", "RM": "Creative Attacker",
+    "AM": "Creative Attacker", "CAM": "Creative Attacker",
+    "CM": "Midfielder", "DM": "Midfielder", "CDM": "Midfielder",
+    "LB": "Fullback", "RB": "Fullback", "LWB": "Fullback", "RWB": "Fullback",
+    "CB": "Center Back",
+}
+
+
+def specific_role(main_position: str | None) -> str | None:
+    """Resolve a player's specific role group from their main position code.
+    Returns None when the position is not recognised."""
+    if not main_position:
+        return None
+    return _SPECIFIC_ROLES.get(main_position.strip().upper())
+
+
 def clean_position(code: str | None) -> str | None:
     """Normalise a main-position code, treating ingestion artifacts ("{}", "")
     as missing."""

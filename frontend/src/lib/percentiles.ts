@@ -1,46 +1,20 @@
-import type { MetricKey, PlayerStats, PlayerSummary } from '@/api/types'
+import type { MetricKey, PlayerStats } from '@/api/types'
 import { METRICS } from './metrics'
 
 // ============================================================================
-// Percentile engine
-// Radars are most meaningful when a player's raw stats are expressed as
-// percentile ranks against positional peers (the FBref/StatsBomb convention).
-// We compute these client-side from the full player list we already cache.
+// Percentile engine (database-backed)
+// Percentiles are pre-computed per-role in the database and served as
+// *_percentile fields on PlayerStats. No client-side cohort ranking needed.
 // ============================================================================
 
-export type PercentileTable = Map<MetricKey, number[]> // sorted ascending values per metric
-
-/** Build sorted value arrays per metric for a cohort (e.g. all Attackers). */
-export function buildPercentileTable(players: PlayerSummary[]): PercentileTable {
-  const table: PercentileTable = new Map()
-  for (const { key } of METRICS) {
-    const values: number[] = []
-    for (const p of players) {
-      const v = p.season_stats?.[key]
-      if (typeof v === 'number' && !Number.isNaN(v)) values.push(v) 
-    }
-    values.sort((a, b) => a - b)
-    table.set(key, values)
+/** Map a stat key to the corresponding percentile field name on PlayerStats.
+ *  Keys ending in `_per90` replace that suffix with `_percentile`;
+ *  everything else appends `_percentile`. */
+export function percentileKey(key: MetricKey): keyof PlayerStats {
+  if (key.endsWith('_per90')) {
+    return (key.replace('_per90', '_percentile') as keyof PlayerStats)
   }
-  return table
-}
-
-/** Percentile (0–100) of `value` within a sorted ascending array. */
-export function percentileOf(sorted: number[], value: number): number {
-  if (sorted.length === 0) return 0
-  // count of values strictly less + half of equal (mid-rank) for stability
-  let lo = 0
-  let hi = sorted.length
-  while (lo < hi) {
-    const mid = (lo + hi) >> 1
-    if (sorted[mid] < value) lo = mid + 1
-    else hi = mid
-  }
-  const below = lo
-  let equal = 0
-  while (below + equal < sorted.length && sorted[below + equal] === value) equal++
-  const rank = below + equal / 2
-  return Math.round((rank / sorted.length) * 100)
+  return (`${key}_percentile` as keyof PlayerStats)
 }
 
 export interface RadarPoint {
@@ -53,25 +27,17 @@ export interface RadarPoint {
   raw: number | null
 }
 
-/** Produce radar points for one player against a percentile table.
- *  When `keys` is provided, only those metrics are included (used for grouped
- *  radar charts). Otherwise all METRICS are returned. */
+/** Produce radar points for one player using database-stored percentiles.
+ *  When `keys` is provided, only those metrics are included. */
 export function radarFor(
   stats: PlayerStats | null,
-  table: PercentileTable,
   keys?: MetricKey[],
 ): RadarPoint[] {
   const metrics = keys ? METRICS.filter((m) => keys.includes(m.key)) : METRICS
   return metrics.map((m) => {
     const raw = stats?.[m.key] ?? null
-    const sorted = table.get(m.key) ?? []
-    const value = raw === null ? 0 : percentileOf(sorted, raw)
+    const pctKey = percentileKey(m.key)
+    const value = stats?.[pctKey] ?? 0
     return { key: m.key, label: m.label, short: m.short, value, raw }
   })
-}
-
-/** Average percentile across all metrics — a quick "overall" score. */
-export function overallRating(points: RadarPoint[]): number {
-  if (points.length === 0) return 0
-  return Math.round(points.reduce((s, p) => s + p.value, 0) / points.length)
 }

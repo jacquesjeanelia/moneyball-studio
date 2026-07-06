@@ -1,12 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
 import { api, DEFAULT_SEASON } from '@/api/client'
-import type { PlayerSummary } from '@/api/types'
 
 // ============================================================================
 // Query hooks
 // The full player list (≈1760 rows, with stats) is fetched once and cached
-// aggressively — this powers instant client-side search, filtering and
-// percentile radars without per-interaction round-trips.
+// aggressively — this powers instant client-side search and filtering
+// without per-interaction round-trips.
 // ============================================================================
 
 const HOUR = 1000 * 60 * 60
@@ -38,8 +37,4 @@ export function useSimilar(id: number | undefined, limit = 100) {
   })
 }
 
-/** Cohort = all players sharing a broad role/category (for percentile baselines). */
-export function cohortFor(all: PlayerSummary[] | undefined, category: string | null | undefined): PlayerSummary[] {
-  if (!all || !category) return []
-  return all.filter((p) => p.category === category && p.season_stats)
-}
+

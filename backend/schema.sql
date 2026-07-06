@@ -111,6 +111,8 @@ CREATE TABLE IF NOT EXISTS "player_season_stats" (
     "dribbled_past_percentile"                 FLOAT,
     "clearances_percentile"                    FLOAT,
 
+    "umap_x"                                   FLOAT,
+    "umap_y"                                   FLOAT,
     "stats_vector"                             VECTOR(17),
     PRIMARY KEY (player_id, season),
     FOREIGN KEY (player_id) REFERENCES players(id) ON DELETE CASCADE

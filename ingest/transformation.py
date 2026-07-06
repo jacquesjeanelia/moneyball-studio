@@ -8,7 +8,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 import psycopg2
 from psycopg2.extras import execute_values
-import umap as UMAP
+from umap import UMAP
 import csv
 
 PLAYER_ROLES = {
@@ -331,8 +331,9 @@ def insert_player_season_stats(cur, df: pd.DataFrame, player_id_map: dict[str, i
             _float(row, 'defcon_percentile'), _float(row, 'tackles_percentile'), 
             _float(row, 'interceptions_percentile'), _float(row, 'blocks_percentile'), 
             _float(row, 'fouls_committed_percentile'), _float(row, 'recoveries_percentile'), _float(row, 'poss_won_final_3rd_percentile'),
-            _float(row, 'succ_dribbles_def_percentile'), _float(row, 'clearances_percentile'),       
+            _float(row, 'succ_dribbles_def_percentile'), _float(row, 'clearances_percentile'),   
 
+            row['umap_x'], row['umap_y'],
             vec_string
         ))
 
@@ -366,6 +367,7 @@ def insert_player_season_stats(cur, df: pd.DataFrame, player_id_map: dict[str, i
                 possession_won_final_third_percentile, dribbled_past_percentile,
                 clearances_percentile,
 
+                umap_x, umap_y,
                 stats_vector
             ) VALUES %s
             ON CONFLICT DO NOTHING

@@ -125,7 +125,6 @@ export function PlayerPage() {
                   accent={accent}
                   // hint={`Average rank across all ${radarPoints.length} metrics vs. ${cohort.length.toLocaleString()} ${cohortLabel}. Top ${topPercent(rating)}% means this player rates ahead of ~${rating}% of positional peers overall.`}
                 />
-                <RibbonStat label="Minutes played" value={player.season_stats?.minutes_played?.toLocaleString() ?? '—'} accent={accent} />
               </div>
             </div>
 
@@ -149,6 +148,11 @@ export function PlayerPage() {
         {/* Stat table */}
         <div>
           <SectionTitle>Season breakdown</SectionTitle>
+          <div className="text-[11px] text-chalk-faint font-semibold uppercase tracking-wider mb-3">
+            {player.season_stats?.minutes_played
+              ? `${player.season_stats.minutes_played.toLocaleString()} minutes played`
+              : 'No minutes recorded'}
+          </div>
           {player.season_stats ? (
             <StatTable stats={player.season_stats} table={table} />
           ) : (

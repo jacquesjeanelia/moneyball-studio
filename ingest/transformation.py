@@ -6,6 +6,7 @@ import pandas as pd
 import numpy as np
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
+from sklearn.cluster import KMeans
 import psycopg2
 from psycopg2.extras import execute_values
 from umap import UMAP
@@ -128,14 +129,34 @@ def get_percentiles():
 
 def scale_features():
     df = get_percentiles()
+
+    # Scale using Z-score normalization (mean=0, std=1)
     scaler = StandardScaler()
     scaled_features = scaler.fit_transform(df[FEATURE_COLS])
 
+    #======================================================================================================================================
+    #TODO: Clustering to generate role tags
+    # z_cols = [f"{col}_z" for col in FEATURE_COLS]
+    # df[z_cols] = scaled_features
+
+    # creative_df = df[df['main_role'] == 'Creative Attacker'].copy()
+    # X = creative_df[['sot_per_90_z', 'xa_per_90_z', 'succ_crosses_per_90_z', 'succ_dribbles_per_90_z']]
+
+    # kmeans = KMeans(n_clusters=3, random_state=42, n_init=10)
+    # creative_df['cluster_id'] = kmeans.fit_predict(X)
+
+    # centroids = pd.DataFrame(kmeans.cluster_centers_, columns=['sot_per_90_z', 'xa_per_90_z', 'succ_crosses_per_90_z', 'succ_dribbles_per_90_z'])
+    # centroids.to_csv("data/processed/creative_attacker_centroids.csv", index=False, encoding='utf-8')
+    # return
+    #======================================================================================================================================
+
+    # PCA for dimensionality reduction to 17 dimensions (to remove overlap and redundancy in features)
     pca = PCA(n_components=17)
     pca_stats = pca.fit_transform(scaled_features)
 
     df['stats_vector'] = [str(list(vector.tolist())) for vector in pca_stats]
 
+    # UMAP for further dimensionality reduction to 2D for visualization and similarity search
     reducer = UMAP(n_neighbors=15, min_dist=0.1, n_components=2, random_state=42)
     umap_embedding = reducer.fit_transform(pca_stats)
 
@@ -230,7 +251,7 @@ def insert_players(cur, df: pd.DataFrame, club_id_map: dict[str, int], country_i
         dob = row['dob'] if pd.notna(row['dob']) else None
         value = int(row['value']) if pd.notna(row['value']) else 0
         height = int(row['height_cm']) if pd.notna(row['height_cm']) else None
-        # category = row['category'] if pd.notna(row['category']) else None
+        #category = row['category'] if pd.notna(row['category']) else None
         main_position = row['category']
         foot = row['preferred_foot'] if pd.notna(row['preferred_foot']) else None
         photo_url = PLAYER_IMAGE_URL + f"{row['fotmob_id']}.png" if pd.notna(row['fotmob_id']) else None
@@ -384,46 +405,46 @@ def run():
     print("\n[1/2] Cleaning & vectorising...")
     df = scale_features()
  
-    # --- Load ---
-    print("\n[2/2] Inserting into PostgreSQL...")
-    conn = _connect_db()
-    conn.autocommit = False
-    cur = conn.cursor()
+    # # --- Load ---
+    # print("\n[2/2] Inserting into PostgreSQL...")
+    # conn = _connect_db()
+    # conn.autocommit = False
+    # cur = conn.cursor()
  
-    try: 
-        print("  -> countries")
-        country_id_map = insert_countries(cur)
-        print(f"     {len(country_id_map)} countries")
+    # try: 
+    #     print("  -> countries")
+    #     country_id_map = insert_countries(cur)
+    #     print(f"     {len(country_id_map)} countries")
 
-        print("\n  -> leagues")
-        league_id_map = insert_leagues(cur, country_id_map)
-        print(f"     {len(league_id_map)} leagues")
+    #     print("\n  -> leagues")
+    #     league_id_map = insert_leagues(cur, country_id_map)
+    #     print(f"     {len(league_id_map)} leagues")
 
-        print("  -> clubs")
-        club_id_map = insert_clubs(cur, league_id_map)
-        print(f"     {len(club_id_map)} clubs")
+    #     print("  -> clubs")
+    #     club_id_map = insert_clubs(cur, league_id_map)
+    #     print(f"     {len(club_id_map)} clubs")
  
-        print("  -> players")
-        player_id_map = insert_players(cur, df, club_id_map, country_id_map)
-        print(f"     {len(player_id_map)} players")
+    #     print("  -> players")
+    #     player_id_map = insert_players(cur, df, club_id_map, country_id_map)
+    #     print(f"     {len(player_id_map)} players")
  
-        print("  -> player_alternate_positions")
-        insert_player_alternate_positions(cur, df, player_id_map)
+    #     print("  -> player_alternate_positions")
+    #     insert_player_alternate_positions(cur, df, player_id_map)
  
-        print("  -> player_season_stats")
-        insert_player_season_stats(cur, df, player_id_map)
+    #     print("  -> player_season_stats")
+    #     insert_player_season_stats(cur, df, player_id_map)
  
-        conn.commit()
-        print("\nOK: All data committed successfully.")
+    #     conn.commit()
+    #     print("\nOK: All data committed successfully.")
  
-    except Exception as exc:
-        conn.rollback()
-        print(f"\nError - transaction rolled back.\n  {exc}")
-        raise
+    # except Exception as exc:
+    #     conn.rollback()
+    #     print(f"\nError - transaction rolled back.\n  {exc}")
+    #     raise
  
-    finally:
-        cur.close()
-        conn.close()
+    # finally:
+    #     cur.close()
+    #     conn.close()
  
  
 if __name__ == "__main__":

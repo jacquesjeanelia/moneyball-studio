@@ -1,4 +1,4 @@
-league_id,country,league
+ï»¿league_id,country,league
 260,Albania,Kategoria Superiore
 516,Algeria,Algerian Ligue Professionnelle 1
 112,Argentina,Liga Profesional
@@ -12,11 +12,11 @@ league_id,country,league
 10443,Bangladesh,Bangladesh Premier League
 40,Belgium,First Division A
 264,Belgium,First Division B
-144,Bolivia,FBF División Profesional
+144,Bolivia,FBF DivisiÃ³n Profesional
 267,Bosnia-Herzegovina,Premier League of Bosnia and Herzegovina
-268,Brazil,Campeonato Brasileiro Série A
-8814,Brazil,Campeonato Brasileiro Série B
-8971,Brazil,Campeonato Brasileiro Série C
+268,Brazil,Campeonato Brasileiro SÃ©rie A
+8814,Brazil,Campeonato Brasileiro SÃ©rie B
+8971,Brazil,Campeonato Brasileiro SÃ©rie C
 10290,Brazil,Baiano
 10272,Brazil,Carioca
 10274,Brazil,GaÃºcho
@@ -45,7 +45,7 @@ league_id,country,league
 240,Denmark,3. Division
 246,Ecuador,LigaPro
 519,Egypt,Egyptian Premier League
-335,El Salvador,Primera División de Fútbol de El Salvador
+335,El Salvador,Primera DivisiÃ³n de FÃºtbol de El Salvador
 47,England,Premier League
 48,England,EFL Championship
 108,England,EFL League One

@@ -24,7 +24,6 @@ CREATE TABLE IF NOT EXISTS "players" (
     "id"                     SERIAL PRIMARY KEY,
     "name"                   VARCHAR(255) NOT NULL,
     "date_of_birth"          DATE,
-    "category"               VARCHAR(50) NULL,
     "main_position"          VARCHAR(50),
     "preferred_foot"         VARCHAR(10),
     "height_cm"              INT,

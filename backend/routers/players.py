@@ -122,6 +122,7 @@ async def list_players(
             p.club_id, cl.name AS club_name, cl.logo_url AS club_logo_url,
             l.id AS league_id, l.name AS league_name, l.logo_url AS league_logo_url, l.country_id AS league_country_id,
             lco.name AS league_country_name, lco.flag_url AS league_country_flag_url,
+            pss.umap_x, pss.umap_y,
             {_stat_select('pss')}
         FROM players p
         LEFT JOIN countries co ON p.country_id = co.id
@@ -165,6 +166,8 @@ async def list_players(
             ) if row["club_name"] else None,
             photo_url=row["photo_url"],
             season_stats=_build_stats(row),
+            umap_x=row["umap_x"] if "umap_x" in row else None,
+            umap_y=row["umap_y"] if "umap_y" in row else None,
         ) for row in rows
     ]
 

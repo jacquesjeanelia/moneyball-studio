@@ -6,6 +6,7 @@ from pprint import pprint
 import os
 import csv
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from itertools import combinations, permutations
 import kagglehub
 from kagglehub import KaggleDatasetAdapter
 from thefuzz import fuzz, process
@@ -31,12 +32,12 @@ POSITION_MAP = {
 os.environ["KAGGLE_USERNAME"] = "jacquessjeann"
 os.environ["KAGGLE_KEY"] = "KGAT_9aa93aefd03c5492ac8231cf8e479cee"
 
-with open(os.path.join('data', 'raw', 'fotmob_leagues.csv'), 'r') as f:
+with open(os.path.join('data', 'raw', 'total', 'fotmob_leagues.csv'), 'r') as f:
     reader = csv.reader(f)
     next(reader)
     LEAGUES = {int(rows[0]): (rows[1], rows[2]) for rows in reader} # league_id: (country_name, league_name)
 
-def get_league_season_id(league_id: int = 47):
+def get_league_season_id(league_id: int = 47) -> tuple:
     """
         Get the season IDs for the 2025/2026, 2024/2025, and 2023/2024 seasons for a given Fotmob league
         Input:
@@ -47,7 +48,6 @@ def get_league_season_id(league_id: int = 47):
             three: 2023/2024 season ID (int)
             is_two_year_season: True if the league has a two-year season format, False otherwise
     """
-
     url = f"https://www.fotmob.com/api/data/leagues?id={league_id}&ccode3=EGY"
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
@@ -56,11 +56,15 @@ def get_league_season_id(league_id: int = 47):
     response = requests.get(url, headers=headers)
     if response.status_code != 200:
         print(f"HTTP Connection failed: {response.status_code}")
-        return None
+        return (None, None, None, None)
     one = two = three = None
     json = response.json()
     is_two_year_season = json['allAvailableSeasons'][0].split('/')[0] != json['allAvailableSeasons'][0]
-    seasons = json['stats']['seasonStatLinks']
+    try:
+        seasons = json['stats']['seasonStatLinks']
+    except KeyError:
+        print("Error: 'seasonStatLinks' not found in JSON response")
+        return (None, None, None, None)
     if is_two_year_season:
         for season in seasons:
             if season['Name'] == "2025/2026":
@@ -101,6 +105,8 @@ def get_all_league_season_ids():
     df_one = pd.DataFrame(one_year_seasons, columns=['league_id', 'league_name', 'country_name', '2025-2026_season_id', '2024-2025_season_id', '2023-2024_season_id'])
     df_two = pd.DataFrame(two_year_seasons, columns=['league_id', 'league_name', 'country_name', '2025-2026_season_id', '2024-2025_season_id', '2023-2024_season_id'])
 
+    df_one.to_csv(os.path.join('data', 'raw', f'fotmob_league_season_ids_one_year.csv'), index=False)
+    df_two.to_csv(os.path.join('data', 'raw', f'fotmob_league_season_ids_two_year.csv'), index=False)
     return df_one, df_two
 
 
@@ -174,7 +180,7 @@ def get_player_ids(league_id: int = 47, season_id: int = 27110, is_two_year_seas
             season_id: Fotmob season ID (int)
             is_two_year_season: True if the league has a two-year season format, False otherwise
         Output:
-            df: DataFrame containing 'player_id', 'name', 'club_id', and 'season_type'
+            df: DataFrame containing 'player_id', 'name', and 'season_type'
     """
 
     url = f"https://www.fotmob.com/api/data/leagueseasondeepstats?id={league_id}&season={season_id}&type=players&stat=mins_played"
@@ -194,28 +200,21 @@ def get_player_ids(league_id: int = 47, season_id: int = 27110, is_two_year_seas
     season_type = 2 if is_two_year_season else 1
     player_data = [(player['id'], player['name'], player['teamId'], season_type) for player in stats_list]
 
-    df = pd.DataFrame(player_data, columns=['player_id', 'name', 'club_id', 'season_type'])
+    df = pd.DataFrame(player_data, columns=['player_id', 'name', 'team_id', 'season_type'])
     return df
 
 def get_all_players_ids():
     """
         Get all player IDs for all one and two-year leagues
         Output:
-            df: DataFrame containing 'player_id', 'name', 'club_id', and 'season_type'
+            df: DataFrame containing 'player_id', 'name', and 'season_type'
     """
-    # df_one, df_two = get_all_league_season_ids()
-    # dictionnary_one = {row['league_id']: row['2025-2026_season_id'] for _, row in df_one.iterrows()}
-    # dictionnary_two = {row['league_id']: row['2025-2026_season_id'] for _, row in df_two.iterrows()}
-    dictionnary_one = {}
 
-    dictionnary_two = {
-        47:  27110,
-        48: 27195,
-        108: 27196,
-        109: 27197,
-        117: 27309,
-        9084: 1000000327,
-    }
+    # df_one = pd.read_csv(os.path.join('data', 'raw', f'fotmob_league_season_ids_one_year.csv'))
+    df_two = pd.read_csv(os.path.join('data', 'raw', f'fotmob_league_season_ids_two_year_temp.csv'))
+    # dictionnary_one = {row['league_id']: row['2025-2026_season_id'] for _, row in df_one.iterrows()}
+    dictionnary_two = {row['league_id']: row['2025-2026_season_id'] for _, row in df_two.iterrows()}
+    dictionnary_one = {}
     
     df = pd.DataFrame()
     for league_id, season_id in dictionnary_one.items():
@@ -228,7 +227,7 @@ def get_all_players_ids():
             df = pd.concat([df, new_df], ignore_index=False)
         else:
             return None
-    
+
     for league_id, season_id in dictionnary_two.items():
         league_name, country_name = LEAGUES[league_id]
         print(f"League: {league_name}, Country: {country_name}, league_id: {league_id}, Season ID: {season_id}")
@@ -240,6 +239,7 @@ def get_all_players_ids():
         else:
             return None
     df.to_csv(os.path.join('data', 'raw', f'fotmob_players_ids.csv'), index=False)
+
     return df
 
 
@@ -297,6 +297,7 @@ def get_transfermarkt_player_ids():
         "TransferMarkt/player_list.csv"
     )
     df = df[['team_id', 'tmid', 'player']]
+    df.to_csv(os.path.join('data', 'raw', f'transfermarkt_players_TEMP.csv'), index=False)
     return df
 
 def merge_leagues():
@@ -313,7 +314,7 @@ def merge_leagues():
     tm_leagues_cleaned = {unidecode(name): name for name in tm_leagues}
     tm_leagues_dict = {row['competition_id']: row['competition'] for _, row in df_tm_leagues.iterrows()}
 
-    df_fotmob_leagues = pd.read_csv(os.path.join('data', 'raw', 'fotmob_leagues_test.csv'))
+    df_fotmob_leagues = pd.read_csv(os.path.join('data', 'raw', 'total', 'fotmob_leagues.csv'))
     df_mapping = pd.DataFrame(columns=['tm_competition_id', 'fotmob_league_id', 'score'])
 
     count = 0
@@ -340,6 +341,7 @@ def merge_leagues():
         # if score > 99:
         #     #print(f"Matched '{fotmob_league_name_cleaned}' with '{best_match_name}' (Score: {score})")
         original_name = tm_leagues_cleaned[best_match_name]
+        competition_id = None
         for k, v in tm_dict.items():
             if v == original_name:
                 competition_id = k
@@ -365,101 +367,283 @@ def merge_clubs():
         Output:
             Dictionary mapping Transfermarkt team_id to Fotmob Team ID
     """
-    league_mapping_df = pd.read_csv(os.path.join('data', 'raw', 'mapped_leagues.csv'))
+    league_mapping_df = pd.read_csv(os.path.join('data', 'raw', 'mapped_leagues_temp.csv'))
     league_map = {row['tm_competition_id']: row['fotmob_league_id'] for _, row in league_mapping_df.iterrows()}
 
     df_tm_clubs = get_transfermarkt_club_ids() # competition_id, team_id, team
 
     # df_fotmob_clubs = get_all_clubs()
-    df_fotmob_clubs = pd.read_csv(os.path.join('data', 'raw', 'fotmob_clubs.csv'))
-    tm_to_fotmob_mapping = {}
+    df_fotmob_clubs = pd.read_csv(os.path.join('data', 'raw', 'total', 'fotmob_clubs.csv'))
+    tm_to_fotmob_mapping = pd.DataFrame(columns=['tm_team_id', 'fotmob_team_id', 'tm_name', 'fotmob_name', 'status'])
 
-    for tm_id, fotmob_id in league_map.items():
+    for tm_id, fotmob_id in league_map.items(): # iterate over leagues
+        print(f"Processing TM League ID: {tm_id} | FotMob League ID: {fotmob_id}")
         df_temp_tm = df_tm_clubs[df_tm_clubs['competition_id'] == tm_id]
-        df_temp_fotmob = df_fotmob_clubs[df_fotmob_clubs['League ID'] == fotmob_id]
+        df_temp_fotmob = df_fotmob_clubs[df_fotmob_clubs['league_id'] == fotmob_id]
+        print(df_temp_fotmob)
+        print(df_temp_tm)
         tm_clubs = df_temp_tm['team'].tolist()
         tm_clubs_cleaned = {unidecode(name): name for name in tm_clubs}
         tm_clubs_dict = {row['team']: row['team_id'] for _, row in df_temp_tm.iterrows()}
-        for idx, row in df_temp_fotmob.iterrows():
-            fotmob_club_name = row['Team Name']
+        for idx, row in df_temp_fotmob.iterrows(): # iterate over clubs in the league
+            fotmob_club_name = row['team_name']
             fotmob_club_name_cleaned = unidecode(fotmob_club_name)
             best_match_name, score = process.extractOne(fotmob_club_name_cleaned, list(tm_clubs_cleaned), scorer=fuzz.token_sort_ratio)
+            first_best_match = best_match_name
             if score > 99:
-                print(f"Matched '{fotmob_club_name_cleaned}' with '{best_match_name}' (Score: {score})")
+                print(f"Matched '{fotmob_club_name}' with '{best_match_name}' (Score: {score})")
                 team_id = tm_clubs_dict[tm_clubs_cleaned[best_match_name]]
-                tm_to_fotmob_mapping[team_id] = row['Team ID']
-            else:
-                # print(f"No good match for '{fotmob_club_name_cleaned}' (Best match: '{best_match_name}', Score: {score})")
-                tm_updated_clubs = [f"{club.replace('FC ', '').replace('AFC', '')}" for club in tm_clubs_cleaned]
-                best_match_name, score = process.extractOne(fotmob_club_name_cleaned, tm_updated_clubs, scorer=fuzz.token_sort_ratio)
-                if score > 99:
-                    print(f"Matched '{fotmob_club_name_cleaned}' with '{best_match_name}' (Score: {score})")
-                    index = tm_updated_clubs.index(best_match_name)
-                    original_name = tm_clubs[index]
-                    team_id = tm_clubs_dict[original_name]
-                    tm_to_fotmob_mapping[team_id] = row['Team ID']
-                else:
-                    # print(f"No good match for '{fotmob_club_name_cleaned}' (Best match: '{best_match_name}', Score: {score})")
-                    tm_updated_clubs = [f"{club.split()[0]}" for club in tm_clubs_cleaned]
-                    best_match_name, score = process.extractOne(fotmob_club_name_cleaned, tm_updated_clubs, scorer=fuzz.token_sort_ratio)
-                    if score > 99:
-                        print(f"Matched '{fotmob_club_name_cleaned}' with '{best_match_name}' (Score: {score})")
-                        index = tm_updated_clubs.index(best_match_name)
-                        original_name = tm_clubs[index]
-                        team_id = tm_clubs_dict[original_name]
-                        tm_to_fotmob_mapping[team_id] = row['Team ID']
-                    else:
-                        fotmob_updated_club_name = fotmob_club_name_cleaned.split()[0]
-                        best_match_name, score = process.extractOne(fotmob_updated_club_name, tm_updated_clubs, scorer=fuzz.token_sort_ratio)
-                        if score > 99:
-                            print(f"Matched '{fotmob_club_name_cleaned}' with '{best_match_name}' (Score: {score})")
-                            index = tm_updated_clubs.index(best_match_name)
-                            original_name = tm_clubs[index]
-                            team_id = tm_clubs_dict[original_name]
-                            tm_to_fotmob_mapping[team_id] = row['Team ID']
-                        else:
-                            fotmob_updated_club_name = fotmob_club_name_cleaned.split()[-1]
-                            best_match_name, score = process.extractOne(fotmob_updated_club_name, tm_updated_clubs, scorer=fuzz.token_sort_ratio)
-                            if score > 99:
-                                print(f"Matched '{fotmob_club_name_cleaned}' with '{best_match_name}' (Score: {score})")
-                                index = tm_updated_clubs.index(best_match_name)
-                                original_name = tm_clubs[index]
-                                team_id = tm_clubs_dict[original_name]
-                                tm_to_fotmob_mapping[team_id] = row['Team ID']
-                            else:
-                                # print(f"No good match for '{fotmob_club_name_cleaned}' (Best match: '{best_match_name}', Score: {score})")
-                                tm_updated_clubs = [f"{club.split()[-1]}" for club in tm_clubs_cleaned]
-                                best_match_name, score = process.extractOne(fotmob_club_name_cleaned, tm_updated_clubs, scorer=fuzz.token_sort_ratio)
-                                if score > 99:
-                                    print(f"Matched '{fotmob_club_name_cleaned}' with '{best_match_name}' (Score: {score})")
-                                    index = tm_updated_clubs.index(best_match_name)
-                                    original_name = tm_clubs[index]
-                                    team_id = tm_clubs_dict[original_name]
-                                    tm_to_fotmob_mapping[team_id] = row['Team ID']
-                                else:
-                                    fotmob_updated_club_name = fotmob_club_name_cleaned.split()[0]
-                                    best_match_name, score = process.extractOne(fotmob_updated_club_name, tm_updated_clubs, scorer=fuzz.token_sort_ratio)
-                                    if score > 99:
-                                        print(f"Matched '{fotmob_club_name_cleaned}' with '{best_match_name}' (Score: {score})")
-                                        index = tm_updated_clubs.index(best_match_name)
-                                        original_name = tm_clubs[index]
-                                        team_id = tm_clubs_dict[original_name]
-                                        tm_to_fotmob_mapping[team_id] = row['Team ID']
-                                    else:
-                                        # print(f"No good match for '{fotmob_club_name_cleaned}' (Best match: '{best_match_name}', Score: {score})")
-                                        fotmob_updated_club_name = fotmob_club_name_cleaned.split()[-1]
-                                        best_match_name, score = process.extractOne(fotmob_updated_club_name, tm_updated_clubs, scorer=fuzz.token_sort_ratio)
-                                        if score > 99:
-                                            print(f"Matched '{fotmob_club_name_cleaned}' with '{best_match_name}' (Score: {score})")
-                                            index = tm_updated_clubs.index(best_match_name)
-                                            original_name = tm_clubs[index]
-                                            team_id = tm_clubs_dict[original_name]
-                                            tm_to_fotmob_mapping[team_id] = row['Team ID']
-                                        else:
-                                            print(f"No good match for '{fotmob_club_name_cleaned}' (Best match: '{best_match_name}', Score: {score})")
-    final_df = pd.DataFrame(list(tm_to_fotmob_mapping.items()), columns=['tm_team_id', 'fotmob_team_id'])
-    final_df.to_csv(os.path.join('data', 'raw', 'mapped_clubs.csv'), index=False)
+                tm_to_fotmob_mapping.loc[len(tm_to_fotmob_mapping)] = [team_id, row['team_id'], tm_clubs_cleaned[best_match_name], fotmob_club_name, 'matched']
+                continue
+
+            # Try removing the middle word of the club name and matching again
+            temp_fotmob_name = fotmob_club_name_cleaned.split()[0] + ' ' + fotmob_club_name_cleaned.split()[-1] if len(fotmob_club_name_cleaned.split()) > 2 else fotmob_club_name_cleaned
+            best_match_name, score = process.extractOne(temp_fotmob_name, list(tm_clubs_cleaned), scorer=fuzz.token_sort_ratio)
+            if score > 99:
+                print(f"Matched '{fotmob_club_name}' with '{best_match_name}' (Score: {score})")
+                print(tm_updated_clubs)
+                print(best_match_name)
+                index = tm_updated_clubs.index(best_match_name)
+                original_name = tm_clubs[index]
+                team_id = tm_clubs_dict[original_name]
+                tm_to_fotmob_mapping.loc[len(tm_to_fotmob_mapping)] = [team_id, row['team_id'], original_name, fotmob_club_name, 'matched']
+                continue            
+            
+            # Try matching with the first word of the club name
+            tm_updated_clubs = [f"{club.split()[0]}" for club in tm_clubs_cleaned]
+            best_match_name, score = process.extractOne(fotmob_club_name_cleaned, tm_updated_clubs, scorer=fuzz.token_sort_ratio)
+            if score > 99:
+                print(f"Matched '{fotmob_club_name}' with '{best_match_name}' (Score: {score})")
+                index = tm_updated_clubs.index(best_match_name)
+                original_name = tm_clubs[index]
+                team_id = tm_clubs_dict[original_name]
+                tm_to_fotmob_mapping.loc[len(tm_to_fotmob_mapping)] = [team_id, row['team_id'], original_name, fotmob_club_name, 'matched']
+                continue
+            
+            # Try matching with the second word of the club name
+            tm_updated_clubs = [f"{club.split()[1]}" if len(club.split()) > 1 else club for club in tm_clubs_cleaned]
+            best_match_name, score = process.extractOne(fotmob_club_name_cleaned, tm_updated_clubs, scorer=fuzz.token_sort_ratio)
+            if score > 99:
+                print(f"Matched '{fotmob_club_name}' with '{best_match_name}' (Score: {score})")
+                index = tm_updated_clubs.index(best_match_name)
+                original_name = tm_clubs[index]
+                team_id = tm_clubs_dict[original_name]
+                tm_to_fotmob_mapping.loc[len(tm_to_fotmob_mapping)] = [team_id, row['team_id'], original_name, fotmob_club_name, 'matched']
+                continue
+
+            # Try matching with the last word of the club name
+            tm_updated_clubs = [f"{club.split()[-1]}" for club in tm_clubs_cleaned]
+            best_match_name, score = process.extractOne(fotmob_club_name_cleaned, tm_updated_clubs, scorer=fuzz.token_sort_ratio)
+            if score > 99:
+                print(f"Matched '{fotmob_club_name}' with '{best_match_name}' (Score: {score})")
+                index = tm_updated_clubs.index(best_match_name)
+                original_name = tm_clubs[index]
+                team_id = tm_clubs_dict[original_name]
+                tm_to_fotmob_mapping.loc[len(tm_to_fotmob_mapping)] = [team_id, row['team_id'], original_name, fotmob_club_name, 'matched']
+                continue
+
+            # Try removing the last word of the club name and matching again
+            tm_updated_clubs = [f"{' '.join(club.split()[:-1])}" if len(club.split()) > 1 else club for club in tm_clubs_cleaned]
+            best_match_name, score = process.extractOne(fotmob_club_name_cleaned, tm_updated_clubs, scorer=fuzz.token_sort_ratio)
+            if score > 99:
+                print(f"Matched '{fotmob_club_name}' with '{best_match_name}' (Score: {score})")
+                index = tm_updated_clubs.index(best_match_name)
+                original_name = tm_clubs[index]
+                team_id = tm_clubs_dict[original_name]
+                tm_to_fotmob_mapping.loc[len(tm_to_fotmob_mapping)] = [team_id, row['team_id'], original_name, fotmob_club_name, 'matched']
+                continue
+
+            # Try removing the first word of the club name and matching again
+            tm_updated_clubs = [f"{' '.join(club.split()[1:])}" if len(club.split()) > 1 else club for club in tm_clubs_cleaned]
+            best_match_name, score = process.extractOne(fotmob_club_name_cleaned, tm_updated_clubs, scorer=fuzz.token_sort_ratio)
+            if score > 99:
+                print(f"Matched '{fotmob_club_name}' with '{best_match_name}' (Score: {score})")
+                index = tm_updated_clubs.index(best_match_name)
+                original_name = tm_clubs[index]
+                team_id = tm_clubs_dict[original_name]
+                tm_to_fotmob_mapping.loc[len(tm_to_fotmob_mapping)] = [team_id, row['team_id'], original_name, fotmob_club_name, 'matched']
+                continue
+            
+            tm_updated_clubs = [f"{' '.join(club.split()[0:2:2])}" if len(club.split()) > 2 else club for club in tm_clubs_cleaned]
+            best_match_name, score = process.extractOne(fotmob_club_name_cleaned, tm_updated_clubs, scorer=fuzz.token_sort_ratio)
+            if score > 99:
+                print(f"Matched '{fotmob_club_name}' with '{best_match_name}' (Score: {score})")
+                index = tm_updated_clubs.index(best_match_name)
+                original_name = tm_clubs[index]
+                team_id = tm_clubs_dict[original_name]
+                tm_to_fotmob_mapping.loc[len(tm_to_fotmob_mapping)] = [team_id, row['team_id'], original_name, fotmob_club_name, 'matched']
+                continue
+            
+            # Check if the Fotmob club name is a substring of the best match name
+            if fotmob_club_name in first_best_match:
+                print(f"Matched '{fotmob_club_name}' with '{first_best_match}' (Score: {score})")
+                team_id = tm_clubs_dict[tm_clubs_cleaned[first_best_match]]
+                tm_to_fotmob_mapping.loc[len(tm_to_fotmob_mapping)] = [team_id, row['team_id'], tm_clubs_cleaned[first_best_match], fotmob_club_name, 'substring']
+                continue
+
+            print(f"No good match for '{fotmob_club_name}' (Best match: '{best_match_name}', Score: {score})")
+            index = tm_updated_clubs.index(best_match_name)
+            original_name = tm_clubs[index]
+            team_id = tm_clubs_dict[original_name]
+            tm_to_fotmob_mapping.loc[len(tm_to_fotmob_mapping)] = [team_id, row['team_id'], original_name, fotmob_club_name, 'unmatched']
+
+    tm_to_fotmob_mapping.to_csv(os.path.join('data', 'raw', 'mapped_clubs.csv'), index=False)
     return tm_to_fotmob_mapping
+
+EQUIVALENT_NAMES = {
+    "Daniel": ["Dan", "Danny", "Dani"],
+    "Matthew": ["Matt", "Matty", "Mattie"],
+    "Joshua": ["Josh"],
+    "Josh": ["Joshua"],
+    "Joseph": ["Joe"],
+    "Andrew": ["Andy"],
+    "Andy": ["Andrew"],
+    "Alexander": ["Alex"],
+    "Benjamin": ["Ben"],
+    "William": ["Will", "Willy"],
+    "Dan": ["Danny"],
+    "Max": ["Maximilian"],
+    "Robert": ["Rob", "Robbie"],
+    "Thomas": ["Tom"],
+    "Tomas": ["Tommy"],
+    "Ollie": ["Oliver"],
+    "Oliver": ["Ollie"],
+    "Odel": ["Odeluga"],
+    "Alistair": ["Ali"],
+    "Olutayo": ["Tayo"],
+    "Ajibola": ["Aji"],
+    "Nathaniel": ["Nat"],
+    "Michael": ["Mikey"],
+    "Gregory": ["Greg"],
+    "Omotayo": ["Tayo"],
+    "Bradley": ["Brad"],
+    "Tobias": ["Toby"],
+    "Dominic": ["Dom"],
+    "Nikola": ["Nik"],
+    "Adedeji": ["Deji"],
+    "Jonathan": ["Jon", "Johnny", "Jonny"],
+    "Babajide": ["Baba"],
+    "Edward": ["Ed", "Eddie"],
+    "Mitchell": ["Mitch"],
+    "Kelland": ["Kell"],
+    "Rodney": ["Rod"],
+    "Zachary": ["Zach"],
+    "Cheyenne": ["Chey"],
+    "Douglas": ["Doug"],
+    "Shaqai": ["Shaq"],
+    "Malvind": ["Mal"],
+    "Samuel": ["Sam"],
+    "Gaga": ["Gabriel"],
+    "Chibby": ["Chibuzo"],
+    "Afolami": ["Fola"],
+    "Zac": ["Zach"],
+    "Bubbacar": ["Buba"],
+    "Wes": ["Wesley"],
+    "Valentino": ["Tino"],
+    "Carlos": ["Charly"],
+    "Solomon": ["Sol"],
+    "Thelonius": ["Theo"],
+    "Bahereba": ["Herba"],
+    "Antoine": ["Anto"],
+    "Aboubakar": ["Abou"],
+    "Abde": ["Abdessamad", "Abderrahman"],
+    "Abdelkabir": ["Abdel"],
+    "Enrique": ["Kike"],
+    "Ismael": ["Isma"],
+    "Redruello": ["Redru"],
+    "Petxarroman": ["Petxa"],
+    "Arnucio": ["Arnu"],
+    "Rafael": ["Rafa"],
+    "Antonio": ["Toni"],
+    "Yannmael": ["Yann"],
+    "Alejandro": ["Ale"],
+    "Isaac": ["Iza"]
+}
+
+NICKNAME_LOOKUP = {}
+for formal_name, nicknames in EQUIVALENT_NAMES.items():
+    NICKNAME_LOOKUP.setdefault(formal_name, set()).update(nicknames)
+    for nickname in nicknames:
+        NICKNAME_LOOKUP.setdefault(nickname, set()).add(formal_name)
+
+
+def _normalize_name(name: str) -> str:
+    return " ".join(unidecode(str(name)).split())
+
+
+def _generate_name_variants(name: str, allow_permutations: bool = False) -> list[str]:
+    # Build progressively shorter name variants by removing one or more words.
+    # When allow_permutations is enabled, also try reordered tokens from those subsets.
+    tokens = _normalize_name(name).split()
+    if not tokens:
+        return []
+
+    variants = []
+    seen = set()
+
+    def add_variant(candidate_tokens):
+        candidate = " ".join(candidate_tokens)
+        if candidate and candidate not in seen:
+            seen.add(candidate)
+            variants.append(candidate)
+
+    add_variant(tokens)
+
+    for size in range(len(tokens) - 1, 0, -1):
+        for token_indexes in combinations(range(len(tokens)), size):
+            subset = [tokens[index] for index in token_indexes]
+            add_variant(subset)
+            if allow_permutations and len(subset) > 1:
+                for permuted_subset in permutations(subset):
+                    add_variant(permuted_subset)
+
+    if allow_permutations and len(tokens) > 1:
+        for permuted_tokens in permutations(tokens):
+            add_variant(permuted_tokens)
+
+    return variants
+
+
+def _generate_nickname_variants(name: str) -> list[str]:
+    # Expand a name by swapping formal names for nicknames and vice versa.
+    tokens = _normalize_name(name).split()
+    if not tokens:
+        return []
+
+    variants = []
+    seen = set()
+    stack = [tuple(tokens)]
+
+    while stack:
+        current = stack.pop()
+        candidate = " ".join(current)
+        if candidate in seen:
+            continue
+
+        seen.add(candidate)
+        variants.append(candidate)
+
+        for index, token in enumerate(current):
+            for replacement in NICKNAME_LOOKUP.get(token, set()):
+                if replacement == token:
+                    continue
+                next_tokens = list(current)
+                next_tokens[index] = replacement
+                stack.append(tuple(next_tokens))
+
+    return variants
+
+
+def _extract_best_match(query: str, choices: list[str]):
+    # Return the single strongest fuzzy match for a query against a candidate list.
+    if not query or not choices:
+        return None, None
+
+    result = process.extractOne(query, choices, scorer=fuzz.token_sort_ratio)
+    if result is None:
+        return None, None
+
+    return result
 
 def merge_players():
     """
@@ -470,144 +654,123 @@ def merge_players():
         Output:
             Dictionary mapping Transfermarkt tmid to Fotmob player_id
     """
-    club_mapping_df = pd.read_csv(os.path.join('data', 'raw', 'mapped_clubs.csv'))
+    club_mapping_df = pd.read_csv(os.path.join('data', 'raw', 'total', 'mapped_clubs_TOTAL.csv'))
     # pprint(club_mapping_df)
     club_map = {row['tm_team_id']: row['fotmob_team_id'] for _, row in club_mapping_df.iterrows()}
 
     df_tm_players = get_transfermarkt_player_ids() # team_id, tmid, player
 
-    df_fotmob_players = pd.read_csv(os.path.join('data', 'raw', 'fotmob_players_ids.csv')) # player_id, name, club_id, season_type
-    tm_to_fotmob_mapping = pd.DataFrame(columns=['tm_player_id', 'fotmob_player_id', 'player'])
+    df_fotmob_players = pd.read_csv(os.path.join('data', 'raw', 'fotmob_players_ids.csv')) # plafotmob_id, team_id, name, dob, height_cm, preferred_foot, country, positions
+    tm_to_fotmob_mapping = pd.DataFrame(columns=['tm_player_id', 'fotmob_player_id', 'fotmob_name', 'tm_name', 'status'])
+
+    all_tm_players = df_tm_players['player'].tolist()
+    all_tm_players_list = [_normalize_name(name) for name in all_tm_players]
+
+    matched = nickname_matched = unmatched = 0
+
+    def append_mapping(tm_player_id, fotmob_player_id, fotmob_name, tm_name, status):
+        tm_to_fotmob_mapping.loc[len(tm_to_fotmob_mapping)] = [
+            tm_player_id,
+            fotmob_player_id,
+            fotmob_name,
+            tm_name,
+            status,
+        ]
 
     for tm_id, fotmob_id in club_map.items(): # iterate over clubs
         print('='*50)
         print(tm_id, fotmob_id)
         df_temp_tm = df_tm_players[df_tm_players['team_id'] == tm_id]
-        df_temp_fotmob = df_fotmob_players[df_fotmob_players['club_id'] == fotmob_id]
+        df_temp_fotmob = df_fotmob_players[df_fotmob_players['team_id'] == fotmob_id]
         tm_players = df_temp_tm['player'].tolist()
-        tm_players_cleaned = {unidecode(name): name for name in tm_players}
+        tm_players_cleaned = {_normalize_name(name): name for name in tm_players}
         tm_players_dict = {row['player']: row['tmid'] for _, row in df_temp_tm.iterrows()}
-        # pprint(list(tm_players_cleaned.keys()))
-        # print(df_temp_fotmob)
         tm_players_list = list(tm_players_cleaned.keys())
-        for idx, row in df_temp_fotmob.iterrows(): # iterate over fotmob players in the club
-                fotmob_name = row['name']
-                fotmob_name_cleaned = unidecode(fotmob_name)
-                # print(fotmob_name_cleaned)
-                
-                best_match_name, score = process.extractOne(fotmob_name_cleaned, tm_players_list, scorer=fuzz.token_sort_ratio)
-                if score > 95:
-                    # tm_row = df_tm_players[df_tm_players['player'] == tm_players_cleaned[best_match_name]].iloc[0]
-                    # fotmob_df.at[idx, 'transfermarkt_player_id'] = tm_row['tmid']
-                    # print(f"Matched '{fotmob_name_cleaned}' with '{best_match_name}' (Score: {score})")
-                    tm_player_id = tm_players_dict[tm_players_cleaned[best_match_name]]
-                    tm_to_fotmob_mapping.loc[len(tm_to_fotmob_mapping)] = [tm_player_id, row['player_id'], row['name']]
-                else:
-                    # print(f"No good match for '{fotmob_name_cleaned}' (Best match: '{best_match_name}', Score: {score}) - trying alternative matching strategies...")
-                    parts = fotmob_name_cleaned.split()
-                    parts = fotmob_name_cleaned.split()
-                    if len(parts) > 2:
-                        fotmob_name_cleaned = f"{parts[0]} {parts[1]}"
-                        best_match_name, score = process.extractOne(fotmob_name_cleaned, tm_players_list, scorer=fuzz.token_sort_ratio)
-                        # print(f"Trying first + middle: '{fotmob_name_cleaned}' and '{best_match_name}' (Score: {score})")
-                        if score > 95:
-                            # tm_row = df_tm_players[df_tm_players['player'] == tm_players_cleaned[best_match_name]].iloc[0]
-                            # fotmob_df.at[idx, 'transfermarkt_player_id'] = tm_row['tmid']
-                            # print(f"Matched '{fotmob_name_cleaned}' with '{best_match_name}' (Score: {score})")
-                            tm_player_id = tm_players_dict[tm_players_cleaned[best_match_name]]
-                            tm_to_fotmob_mapping.loc[len(tm_to_fotmob_mapping)] = [tm_player_id, row['player_id'], row['name']]
-                        else:
-                            fotmob_name_cleaned = f"{parts[1]} {parts[2]}"
-                            best_match_name, score = process.extractOne(fotmob_name_cleaned, tm_players_list, scorer=fuzz.token_sort_ratio)
-                            # print(f"Trying middle + last: '{fotmob_name_cleaned}' and '{best_match_name}' (Score: {score})")    
-                            if score > 95:
-                                # tm_row = df_tm_players[df_tm_players['player'] == tm_players_cleaned[best_match_name]].iloc[0]
-                                # fotmob_df.at[idx, 'transfermarkt_player_id'] = tm_row['tmid']
-                                # print(f"Matched '{fotmob_name_cleaned}' with '{best_match_name}' (Score: {score})")
-                                tm_player_id = tm_players_dict[tm_players_cleaned[best_match_name]]
-                                tm_to_fotmob_mapping.loc[len(tm_to_fotmob_mapping)] = [tm_player_id, row['player_id'], row['name']]
-                            else:
-                                fotmob_name_cleaned = f"{parts[0]} {parts[2]}"
-                                best_match_name, score = process.extractOne(fotmob_name_cleaned, tm_players_list, scorer=fuzz.token_sort_ratio)
-                                # print(f"Trying first + last: '{fotmob_name_cleaned}' and '{best_match_name}' (Score: {score})")     
-                                if score > 95:
-                                    # tm_row = df_tm_players[df_tm_players['player'] == tm_players_cleaned[best_match_name]].iloc[0]
-                                    # fotmob_df.at[idx, 'transfermarkt_player_id'] = tm_row['tmid']
-                                    # print(f"Matched '{fotmob_name_cleaned}' with '{best_match_name}' (Score: {score})")
-                                    tm_player_id = tm_players_dict[tm_players_cleaned[best_match_name]]
-                                    tm_to_fotmob_mapping.loc[len(tm_to_fotmob_mapping)] = [tm_player_id, row['player_id'], row['name']]
-                    elif len(parts) > 1:
-                        fotmob_name_cleaned = parts[0]
-                        best_match_name, score = process.extractOne(fotmob_name_cleaned, tm_players_list, scorer=fuzz.token_sort_ratio)
-                        # print(f"Trying first name only: '{fotmob_name_cleaned}' and '{best_match_name}' (Score: {score})")
-                        if score > 95:
-                            # tm_row = df_tm_players[df_tm_players['player'] == tm_players_cleaned[best_match_name]].iloc[0]
-                            # fotmob_df.at[idx, 'transfermarkt_player_id'] = tm_row['tmid']
-                            # print(f"Matched '{fotmob_name_cleaned}' with '{best_match_name}' (Score: {score})")
-                            tm_player_id = tm_players_dict[tm_players_cleaned[best_match_name]]
-                            tm_to_fotmob_mapping.loc[len(tm_to_fotmob_mapping)] = [tm_player_id, row['player_id'], row['name']]
-                        else:
-                            if len(parts) > 1:
-                                fotmob_name_cleaned = parts[-1]
-                            best_match_name, score = process.extractOne(fotmob_name_cleaned, tm_players_list, scorer=fuzz.token_sort_ratio)
-                            # print(f"Trying last name only: '{fotmob_name_cleaned}' and '{best_match_name}' (Score: {score})")
-                            if score > 95:
-                                # tm_row = df_tm_players[df_tm_players['player'] == tm_players_cleaned[best_match_name]].iloc[0]
-                                # fotmob_df.at[idx, 'transfermarkt_player_id'] = tm_row['tmid']
-                                # print(f"Matched '{fotmob_name_cleaned}' with '{best_match_name}' (Score: {score})")
-                                tm_player_id = tm_players_dict[tm_players_cleaned[best_match_name]]
-                                tm_to_fotmob_mapping.loc[len(tm_to_fotmob_mapping)] = [tm_player_id, row['player_id'], row['name']]
+        # Precompute all Transfermarkt-side variants once per club so the per-player loop stays flat.
+        tm_variant_lookup = {}
+        for tm_name in tm_players:
+            for variant in _generate_name_variants(tm_name, allow_permutations=True):
+                tm_variant_lookup.setdefault(variant, tm_name)
 
+        tm_variant_list = list(tm_variant_lookup.keys())
 
-                            else:
-                                fotmob_name_cleaned = ' '.join(parts)
-                                # print(f"No good match for '{fotmob_name_cleaned}' (Best match: '{best_match_name}', Score: {score})")
+        for _, row in df_temp_fotmob.iterrows(): # iterate over fotmob players in the club
+            fotmob_name = row['name']
+            fotmob_name_cleaned = _normalize_name(fotmob_name)
 
-                                # print(f"No good match for '{fotmob_name_cleaned}' (Best match: '{best_match_name}', Score: {score}) - try keeping first name in TM")
-                                temp_players_list = [name.split()[0] for name in tm_players_list]
-                                # temp_df = df_temp_tm['player'].str.replace(r'^(\S+)\s+.*\s+(\S+)$', r'\1 \2', regex=True)
-                                # tm = temp_df.tolist()
-                                # tm_players_cleaned = {unidecode(name): name for name in tm}
-                                best_match_name, score = process.extractOne(fotmob_name_cleaned, temp_players_list, scorer=fuzz.token_sort_ratio)
-                                if score > 95:
-                                    # tm_row = df_tm_players[df_tm_players['player'] == tm_players_cleaned[best_match_name]].iloc[0]
-                                    # fotmob_df.at[idx, 'transfermarkt_player_id'] = tm_row['tmid']
-                                    # print(f"Matched '{fotmob_name_cleaned}' with '{best_match_name}' (Score: {score})")
-                                    tm_player_id = tm_players_dict[tm_players_cleaned[best_match_name]]
-                                    tm_to_fotmob_mapping.loc[len(tm_to_fotmob_mapping)] = [tm_player_id, row['player_id'], row['name']]
-                                else:
-                                    temp_players_list = [name.split()[-1] for name in tm_players_list]
-                                    # temp_df['player'] = df_temp_tm['player'].str.replace(r'^(\S+)\s+(\S+).*$', r'\1 \2', regex=True)
-                                    # tm = temp_df['player'].tolist()
-                                    # tm_players_cleaned = {unidecode(name): name for name in tm}
-                                    best_match_name, score = process.extractOne(fotmob_name_cleaned, temp_players_list, scorer=fuzz.token_sort_ratio)
-                                    # print(f"No good match for '{fotmob_name_cleaned}' (Best match: '{best_match_name}', Score: {score}) - try keeping last name in TM")
-                                    if score > 95:
-                                        # tm_row = df_tm_players[df_tm_players['player'] == tm_players_cleaned[best_match_name]].iloc[0]
-                                        # fotmob_df.at[idx, 'transfermarkt_player_id'] = tm_row['tmid']
-                                        # print(f"Matched '{fotmob_name_cleaned}' with '{best_match_name}' (Score: {score})")
-                                        tm_player_id = tm_players_dict[tm_players_cleaned[best_match_name]]
-                                        tm_to_fotmob_mapping.loc[len(tm_to_fotmob_mapping)] = [tm_player_id, row['player_id'], row['name']]
-                                    elif len(parts) > 2:
-                                            # print(f"No good match for '{fotmob_name_cleaned}' (Best match: '{best_match_name}', Score: {score}) - try keeping first name in TM")
-                                            temp_players_list = [name.split()[0:1] for name in tm_players_list]
-                                            # temp_df['player'] = df_temp_tm['player'].str.replace(r'^\S+\s+(\S+)(?:\s+.*\s+|\s+)(\S+)$', r'\1 \2', regex=True)
-                                            # tm = temp_df['player'].tolist()
-                                            # tm_players_cleaned = {unidecode(name): name for name in tm}
-                                            best_match_name, score = process.extractOne(fotmob_name_cleaned, temp_players_list, scorer=fuzz.token_sort_ratio)
-                                            # print(f"No good match for '{fotmob_name_cleaned}' (Best match: '{best_match_name}', Score: {score}) - try removing first name in TM")    
-                                            if score > 95:
-                                                # tm_row = df_tm_players[df_tm_players['player'] == tm_players_cleaned[best_match_name]].iloc[0]
-                                                # fotmob_df.at[idx, 'transfermarkt_player_id'] = tm_row['tmid']
-                                                # print(f"Matched '{fotmob_name_cleaned}' with '{best_match_name}' (Score: {score})")
-                                                tm_player_id = tm_players_dict[tm_players_cleaned[best_match_name]]
-                                                tm_to_fotmob_mapping.loc[len(tm_to_fotmob_mapping)] = [tm_player_id, row['player_id'], row['name']]
-                                            else:
-                                                print(f"No good match for '{fotmob_name_cleaned}' (Best match: '{best_match_name}', Score: {score})")
-                                                # fotmob_df.at[idx, 'transfermarkt_player_id'] = None
-                                    else:
-                                        print(f"No good match for '{fotmob_name_cleaned}' (Best match: '{best_match_name}', Score: {score})")
-                                        # fotmob_df.at[idx, 'transfermarkt_player_id'] = None
+            best_candidate = {
+                'score': -1,
+                'tm_player_id': None,
+                'tm_name': None,
+            }
+
+            def remember_candidate(candidate_name: str):
+                best_match_name, score = _extract_best_match(candidate_name, tm_players_list)
+                if score is None or best_match_name is None:
+                    return None, None
+
+                tm_player_name = tm_players_cleaned[best_match_name]
+                tm_player_id = tm_players_dict[tm_player_name]
+                if score > best_candidate['score']:
+                    best_candidate['score'] = score
+                    best_candidate['tm_player_id'] = tm_player_id
+                    best_candidate['tm_name'] = tm_player_name
+                return best_match_name, score
+
+            # 1. Direct fuzzy match on the raw FotMob name.
+            best_match_name, score = remember_candidate(fotmob_name_cleaned)
+            if score is not None and score > 95:
+                append_mapping(best_candidate['tm_player_id'], row['player_id'], row['name'], best_candidate['tm_name'], 'matched')
+                matched += 1
+                continue
+
+            # 2. Try nickname substitutions in both directions, then use the first strong hit.
+            nickname_found = False
+            for nickname_candidate in _generate_nickname_variants(fotmob_name_cleaned):
+                best_match_name, score = remember_candidate(nickname_candidate)
+                if score is not None and score > 95:
+                    append_mapping(best_candidate['tm_player_id'], row['player_id'], row['name'], best_candidate['tm_name'], 'nickname')
+                    matched += 1
+                    nickname_matched += 1
+                    nickname_found = True
+                    print(f"NICKNAME MATCH: Matched '{fotmob_name_cleaned}' (as '{nickname_candidate}') with '{best_match_name}' (Score: {score})")
+                    break
+            if nickname_found:
+                continue
+
+            # 3. Reduce the FotMob name by removing one or more words and retry.
+            subset_found = False
+            for subset_candidate in _generate_name_variants(fotmob_name_cleaned):
+                if subset_candidate == fotmob_name_cleaned:
+                    continue
+                best_match_name, score = remember_candidate(subset_candidate)
+                if score is not None and score > 95:
+                    append_mapping(best_candidate['tm_player_id'], row['player_id'], row['name'], best_candidate['tm_name'], 'matched')
+                    matched += 1
+                    subset_found = True
+                    break
+            if subset_found:
+                continue
+
+            # 4. If that still fails, try all generated Transfermarkt-side permutations.
+            best_match_name, score = _extract_best_match(fotmob_name_cleaned, tm_variant_list)
+            if score is not None and score > 95:
+                tm_player_name = tm_variant_lookup[best_match_name]
+                tm_player_id = tm_players_dict[tm_player_name]
+                append_mapping(tm_player_id, row['player_id'], row['name'], tm_player_name, 'matched')
+                matched += 1
+                continue
+            if score is not None and score > best_candidate['score']:
+                tm_player_name = tm_variant_lookup[best_match_name]
+                best_candidate['score'] = score
+                best_candidate['tm_player_id'] = tm_players_dict[tm_player_name]
+                best_candidate['tm_name'] = tm_player_name
+
+            # Keep the strongest TM candidate we saw, even when the row stays unmatched.
+            append_mapping(best_candidate['tm_player_id'], row['player_id'], row['name'], best_candidate['tm_name'], 'unmatched')
+            unmatched += 1
+
+    print(f"Matched: {matched}, Nickname: {nickname_matched}, Unmatched: {unmatched}")        
     tm_to_fotmob_mapping.to_csv(os.path.join('data', 'raw', 'mapped_players.csv'), index=False)
     return tm_to_fotmob_mapping
 
@@ -636,7 +799,6 @@ def get_player_price(tm_id: int = 937958):
 
 def _get_single_player_price(player_data):
     player_id, tm_id = player_data
-    print(f"Fetching price for FotMob ID: {player_id}, Transfermarkt ID: {tm_id}")
     try:
         price = get_player_price(tm_id)
         print(price)
@@ -648,8 +810,8 @@ def _get_single_player_price(player_data):
         return None
     
 def get_all_players_prices():
-    fotmob_df = merge_clubs()
-    players_list = [(row['player_id'], row['transfermarkt_player_id']) for _, row in fotmob_df.iterrows() if pd.notnull(row['transfermarkt_player_id'])]
+    fotmob_df = pd.read_csv(os.path.join('data', 'raw', 'mapped_players.csv'))
+    players_list = [(row['fotmob_player_id'], row['tm_player_id']) for _, row in fotmob_df.iterrows() if pd.notnull(row['tm_player_id'])]
     out_file_path = os.path.join('data', 'raw', 'transfermarkt_players_values.csv')
 
     processed_ids = set()
@@ -690,16 +852,16 @@ def get_all_players_prices():
     return pd.read_csv(out_file_path)
 
 
-def get_player_info(fotmob_id: int = 292462, tm_id: int = 937958):
+def get_player_info(fotmob_id: int = 292462):
     """
     Get detailed player information for a given Fotmob player ID
     Input:
         fotmob_id: Fotmob player ID (int)
-        tm_id: Transfermarkt player ID (int)
+        team_id: Fotmob team ID (int)
     Output:
-        tuple: (fotmob_id, name, date_of_birth, height_in_cm, preferred_foot, country_of_citizenship, primary_position, positions)
+        tuple: (fotmob_id, club_id, name, date_of_birth, height_in_cm, preferred_foot, country_of_citizenship, primary_position, positions)
     """
-    price = get_player_price(tm_id)
+    # price = get_player_price(tm_id)
     url = f"https://www.fotmob.com/api/data/playerData?id={fotmob_id}"
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
@@ -737,23 +899,27 @@ def get_player_info(fotmob_id: int = 292462, tm_id: int = 937958):
     for p in position_info:
         positions.append(POSITION_MAP[p['label']] if p['label'] in POSITION_MAP.keys() else p['label'])
     positions = ','.join(positions) if positions else None
-    return (fotmob_id, tm_id, name, dob, height_cm, foot, country, primary_position, positions, price)
+    team_id = json['primaryTeam']['teamId']
+    return (fotmob_id, team_id, name, dob, height_cm, foot, country, primary_position, positions)
 
 
 def _process_single_player_info(player_data):
-    fotmob_id, tm_id, name = player_data
+    fotmob_id, name, season_type = player_data
     try:
-        player_info = get_player_info(fotmob_id=fotmob_id, tm_id=tm_id)
+        player_info = get_player_info(fotmob_id=fotmob_id)
         if player_info is None:
-            print(f"Failed: (Fotmob ID: {fotmob_id}, Transfermarkt ID: {tm_id}) - No data returned.")
+            print(f"Failed: (Fotmob ID: {fotmob_id}) - No data returned.")
         return player_info
     except Exception as e:
-        print(f"Error: (Fotmob ID: {fotmob_id}, Transfermarkt ID: {tm_id}) - {e}")
+        print(f"Error: (Fotmob ID: {fotmob_id}) - {e}")
         return None
     
 def get_all_players_info():
-    df_mapped = pd.read_csv(os.path.join('data', 'raw', 'mapped_players.csv'))
-    players_list = [(row['fotmob_player_id'], row['tm_player_id'], row['player']) for _, row in df_mapped.iterrows()]
+    # df_mapped = pd.read_csv(os.path.join('data', 'raw', 'mapped_players.csv'))
+    # players_list = [(row['fotmob_player_id'], row['tm_player_id'], row['team_id'], row['player']) for _, row in df_mapped.iterrows()]
+
+    df_mapped = pd.read_csv(os.path.join('data', 'raw', 'fotmob_players_ids.csv'))
+    players_list = [(row['player_id'], row['name'], row['season_type']) for _, row in df_mapped.iterrows()]
 
     processed_ids = set()
     if os.path.exists(os.path.join('data', 'raw', 'fotmob_players_info.csv')):
@@ -781,21 +947,21 @@ def get_all_players_info():
 
             if stats is not None:
                 write_header = not os.path.exists(os.path.join('data', 'raw', 'fotmob_players_info.csv'))
-                pd.DataFrame([stats], columns=['fotmob_id', 'tm_id', 'name', 'dob', 'height_cm', 'preferred_foot', 'country', 'category', 'positions', 'value']).to_csv(
+                pd.DataFrame([stats], columns=['fotmob_id', 'team_id', 'name', 'dob', 'height_cm', 'preferred_foot', 'country', 'category', 'positions']).to_csv(
                     os.path.join('data', 'raw', 'fotmob_players_info.csv'), 
                     mode='a', 
                     header=write_header, 
                     index=False
                 )
-                print(f"Successfully processed: {stats[1]} (ID: {stats[0]})")
+                print(f"Successfully processed: {stats[2]} (ID: {stats[0]})")
     print("All players processed. Data saved to data/raw/fotmob_players_info.csv")
     return pd.read_csv(os.path.join('data', 'raw', 'fotmob_players_info.csv'))
 
 
-def get_player_stats(player_id: int = 292462, club_id: int = 8650, is_two_year_season: bool = True):
+def get_player_stats(player_id: int = 292462, team_id: int = 8650, is_two_year_season: bool = True):
     player = {
         "player_id": player_id,
-        "club_id": club_id,
+        "team_id": team_id,
         "minutes_played": None,
         "npxg_per_90": None,
         "shots_per_90": None,
@@ -888,8 +1054,8 @@ def get_player_stats(player_id: int = 292462, club_id: int = 8650, is_two_year_s
         # return None
 
 
-    print({player_id, scraped_team_id, club_id})
-    if is_two_year_season and scraped_team_id != club_id:
+    print({player_id, scraped_team_id, team_id, is_two_year_season})
+    if is_two_year_season and scraped_team_id != team_id:
         url = f"https://www.fotmob.com/api/data/playerStats?playerId={player_id}&seasonId=1-0&isFirstSeason=false"
         response = requests.get(url, headers=headers)
         if response.status_code != 200:
@@ -1041,13 +1207,13 @@ def get_player_stats(player_id: int = 292462, club_id: int = 8650, is_two_year_s
 
 def _process_single_player_stats(player_data):
     """Helper function to process a single player for the thread pool."""
-    player_id, club_id, season_type = player_data
+    player_id, team_id, season_type = player_data
     is_two_year_season = True if season_type == 2 else False
     
     try:
         player_stats = get_player_stats(
             player_id=int(player_id), 
-            club_id=int(club_id), 
+            team_id=int(team_id), 
             is_two_year_season=is_two_year_season
         )
         
@@ -1061,11 +1227,8 @@ def _process_single_player_stats(player_data):
 
 def get_all_players_stats():
     # 1. Read input data
-    with open(os.path.join('data', 'raw', 'fotmob_players_ids.csv'), 'r', encoding='utf-8') as f:
-        reader = csv.reader(f)
-        next(reader) # Skip header
-        players_list = [(int(rows[0]), int(rows[2]), int(rows[3])) for rows in reader]
-
+    players_info_df = pd.read_csv(os.path.join('data', 'raw', 'fotmob_players_ids.csv'))
+    players_list = [(int(row['player_id']), int(row['team_id']), row['season_type']) for _, row in players_info_df.iterrows()]
     out_file_path = os.path.join('data', 'raw', 'fotmob_players_stats.csv')
     
     # 2. Check existing data to enable resuming
@@ -1113,20 +1276,40 @@ def get_all_players_stats():
     print("\nScraping complete!")
     return pd.read_csv(out_file_path)
 
+def join_value_and_info():
+    df_values = pd.read_csv(os.path.join('data', 'raw', 'transfermarkt_players_values.csv'))
+    df_info = pd.read_csv(os.path.join('data', 'raw', 'fotmob_players_info.csv'))
+
+    df_values.fillna(0, inplace=True)
+
+    # Merge on FotMob ID
+    merged_df = pd.merge(df_info, df_values, left_on='fotmob_id', right_on='player_id', how='left')
+
+    # Drop the redundant player_id column from df_values
+    merged_df.drop(columns=['player_id'], inplace=True)
+
+    # Save the merged DataFrame to a new CSV file
+    merged_df.to_csv(os.path.join('data', 'raw', 'fotmob_players_full_info.csv'), index=False)
+    print("Merged player info and values saved to data/raw/fotmob_players_full_info.csv")
+    return merged_df
+
 
 
 def run():
-    print("Getting all players IDs...")
-    get_all_players_ids()
-    print("Getting all players information...")
-    get_all_players_info()
+    # print("Getting all players IDs...")
+    # get_all_players_ids()
+    # print("Getting all players information...")
+    # get_all_players_info()
+    # print("Merging FotMob and Transfermarkt players...")
+    # merge_players()
+    # print("Getting all players prices...")
+    # get_all_players_prices()
+    # print("Combining player info and values...")
+    # join_value_and_info()
     print("Getting all players statistics...")
     get_all_players_stats()
 
 if __name__ == "__main__":
-    # run()
-    # get_all_players_ids()
-    # merge_clubs()
-    get_all_players_info()
-    # get_all_players_stats()
-    # print(get_player_stats(player_id=966026, club_id=10252, is_two_year_season=True))
+    run()
+    
+    

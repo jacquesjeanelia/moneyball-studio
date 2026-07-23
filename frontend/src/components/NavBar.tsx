@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 export function NavBar() {
   const location = useLocation()
   const onHome = location.pathname === '/'
+  const onMap = location.pathname === '/map'
 
   return (
     <header className="sticky top-0 z-50 glass border-b border-ink-700">
@@ -20,6 +21,9 @@ export function NavBar() {
         <nav className="flex items-center gap-1 text-sm font-semibold">
           <NavLink to="/" active={onHome}>
             Search
+          </NavLink>
+          <NavLink to="/map" active={onMap}>
+            Map
           </NavLink>
         </nav>
       </div>

@@ -112,6 +112,8 @@ export interface PlayerSummary {
   photo_url: string | null
   current_market_value_eur: number | null
   season_stats: PlayerStats | null
+  umap_x: number | null
+  umap_y: number | null
 }
 
 export interface PlayerDetail extends PlayerSummary {

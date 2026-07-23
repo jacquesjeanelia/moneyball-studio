@@ -9,6 +9,7 @@ import { Spinner } from '@/components/states'
 const PlayerPage = lazy(() => import('@/pages/PlayerPage').then((m) => ({ default: m.PlayerPage })))
 const SimilarPage = lazy(() => import('@/pages/SimilarPage').then((m) => ({ default: m.SimilarPage })))
 const ComparePage = lazy(() => import('@/pages/ComparePage').then((m) => ({ default: m.ComparePage })))
+const UmapPage = lazy(() => import('@/pages/UmapPage').then((m) => ({ default: m.UmapPage })))
 const NotFoundPage = lazy(() => import('@/pages/NotFoundPage').then((m) => ({ default: m.NotFoundPage })))
 
 export default function App() {
@@ -24,6 +25,7 @@ export default function App() {
               <Route path="/players/:id" element={<PlayerPage />} />
               <Route path="/players/:id/similar" element={<SimilarPage />} />
               <Route path="/compare/:idA/:idB" element={<ComparePage />} />
+              <Route path="/map" element={<UmapPage />} />
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </AnimatePresence>

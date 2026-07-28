@@ -48,7 +48,7 @@ async def get_similar_players(
     target_positions = list(set(target_positions))
 
     rows = await conn.fetch("""
-        SELECT p.id, p.name, p.category, p.main_position, p.photo_url,
+        SELECT p.id, p.name, p.main_position, p.photo_url,
             p.current_market_value_eur,
             DATE_PART('year', AGE(p.date_of_birth))::int AS age,
             COALESCE(ap.positions, ARRAY[]::text[]) AS alternate_positions,
@@ -84,7 +84,7 @@ async def get_similar_players(
             player=PlayerSummary(
                 id=row['id'],
                 name=row['name'],
-                category=broad_role(row['category'], row['main_position']),
+                category=broad_role(row['main_position']),
                 main_position=clean_position(row['main_position']),
                 alternate_positions=list(row['alternate_positions']),
                 age=row['age'],

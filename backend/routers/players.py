@@ -87,14 +87,13 @@ async def list_players(
     idx = 2
 
     if category:
-        # `category` is a broad role (Attack/Midfield/Defender). The dataset
-        # stores specific labels, so match the label set for the role, falling
-        # back to the position code when the label is missing/unrecognised.
+        # `category` is a broad role (Attack/Midfield/Defender). Match
+        # main_position against both the full-label and short-code maps.
         labels = role_categories(category)
         codes = role_positions(category)
         filters.append(
-            f"(LOWER(p.category) = ANY(${idx}::text[])"
-            f" OR (p.category IS NULL AND UPPER(p.main_position) = ANY(${idx + 1}::text[])))"
+            f"(LOWER(p.main_position) = ANY(${idx}::text[])"
+            f" OR UPPER(p.main_position) = ANY(${idx + 1}::text[]))"
         )
         args.append(labels)
         args.append(codes)
@@ -114,7 +113,7 @@ async def list_players(
 
     rows = await conn.fetch(f"""
         SELECT
-            p.id, p.name, p.category, p.main_position, p.photo_url, p.country_id,
+            p.id, p.name, p.main_position, p.photo_url, p.country_id,
             p.current_market_value_eur,
             DATE_PART('year', AGE(p.date_of_birth)) AS age,
             COALESCE(ap.positions, ARRAY[]::text[]) AS alternate_positions,
@@ -143,7 +142,7 @@ async def list_players(
             id=row["id"],
             name=row["name"],
             country=Country(id=row["country_id"], name=row["country_name"], flag_url=row["country_flag_url"]) if row["country_name"] else None,
-            category=broad_role(row["category"], row["main_position"]),
+            category=broad_role(row["main_position"]),
             role=specific_role(row["main_position"]),
             main_position=clean_position(row["main_position"]),
             alternate_positions=list(row["alternate_positions"]),
@@ -161,7 +160,7 @@ async def list_players(
                         id=row["league_country_id"],
                         name=row["league_country_name"],
                         flag_url=row["league_country_flag_url"]
-                    )
+                    ) if row["league_country_name"] else None
                 ) if row["league_name"] else None
             ) if row["club_name"] else None,
             photo_url=row["photo_url"],
@@ -184,7 +183,7 @@ async def get_player(
 ):
     row = await conn.fetchrow(f"""
         SELECT
-            p.id, p.name, p.category, p.main_position, p.photo_url,
+            p.id, p.name, p.main_position, p.photo_url,
             DATE_PART('year', AGE(p.date_of_birth)) AS age,
             p.date_of_birth, p.preferred_foot, p.height_cm, p.current_market_value_eur,
             COALESCE(ap.positions, ARRAY[]::text[]) AS alternate_positions,
@@ -213,7 +212,7 @@ async def get_player(
         id=row["id"],
         name=row["name"],
         age=int(row["age"]) if row["age"] else None,
-        category=broad_role(row["category"], row["main_position"]),
+        category=broad_role(row["main_position"]),
         role=specific_role(row["main_position"]),
         main_position=clean_position(row["main_position"]),
         alternate_positions=list(row["alternate_positions"]),
@@ -232,7 +231,7 @@ async def get_player(
                     id=row["league_country_id"], 
                     name=row["league_country_name"], 
                     flag_url=row["league_country_flag_url"]
-                )
+                ) if row["league_country_name"] else None
             ) if row["league_name"] else None
         ) if row["club_name"] else None,
         photo_url=row["photo_url"],

@@ -966,6 +966,11 @@ def get_player_stats(player_id: int = 292462, team_id: int = 568727, is_two_year
         "shots_per_90": None,
         "sot_per_90": None,
         "headed_shots_per_90": None,
+        "top_speed": None,
+        "distance_covered_per_90": None,
+        "running_distance_per_90": None,
+        "sprint_distance_per_90": None,
+        "sprints_per_90": None,
         "xa_per_90": None,
         "succ_pass_per_90": None,
         "succ_pass_rate": None,
@@ -1068,138 +1073,82 @@ def get_player_stats(player_id: int = 292462, team_id: int = 568727, is_two_year
         print(f" {player_id}: No stats found for player")
         return None
 
-    shooting_stats = all_stats[0] 
-
-    for stat in shooting_stats['items']:
-        if stat['localizedTitleId'] == "non_penalty_xg":
-            player["npxg_per_90"] = stat['per90']
-        elif stat['localizedTitleId'] == "shots":
-            player["shots_per_90"] = stat['per90']
-        elif stat['localizedTitleId'] == "ShotsOnTarget":
-            player["sot_per_90"] = stat['per90']
-        elif stat['localizedTitleId'] == "headed_shots":
-            player["headed_shots_per_90"] = stat['per90']
-
-    passing_stats = all_stats[1]
-    i = 1
-
-    if len(passing_stats['items']) > i and passing_stats['items'][i]['localizedTitleId'] == "expected_assists":
-        player["xa_per_90"] = passing_stats['items'][i]['per90']
-        i += 1
-
-    if len(passing_stats['items']) > i and passing_stats['items'][i]['localizedTitleId'] == "successful_passes":
-        player["succ_pass_per_90"] = passing_stats['items'][i]['per90']
-        i += 1
-
-    if len(passing_stats['items']) > i and passing_stats['items'][i]['localizedTitleId'] == "successful_passes_accuracy":
-        player["succ_pass_rate"] = passing_stats['items'][i]['per90']
-        i += 1
-
-    if len(passing_stats['items']) > i and passing_stats['items'][i]['localizedTitleId'] == "long_balls_accurate":
-        player["acc_long_balls_per_90"] = passing_stats['items'][i]['per90']
-        i += 1
-
-    if len(passing_stats['items']) > i and passing_stats['items'][i]['localizedTitleId'] == "long_ball_succeeeded_accuracy":
-        player["succ_long_balls_rate"] = passing_stats['items'][i]['per90']
-        i += 1
-
-    if len(passing_stats['items']) > i and passing_stats['items'][i]['localizedTitleId'] == "chances_created":
-        player["chances_created_per_90"] = passing_stats['items'][i]['per90']
-        i += 1
-
-    if len(passing_stats['items']) > i and passing_stats['items'][i]['localizedTitleId'] == "big_chance_created_team_title":
-        player["big_chances_created_per_90"] = passing_stats['items'][i]['per90']
-        i += 1
-
-    if len(passing_stats['items']) > i and passing_stats['items'][i]['localizedTitleId'] == "crosses_succeeeded":
-        player["succ_crosses_per_90"] = passing_stats['items'][i]['per90']
-        i += 1
-
-    if len(passing_stats['items']) > i and passing_stats['items'][i]['localizedTitleId'] == "crosses_succeeeded_accuracy":
-        player["succ_crosses_rate"] = passing_stats['items'][i]['per90']
-    
-    
-    possession_stats = all_stats[2]
-    i = 0
-
-    if len(possession_stats['items']) > i and possession_stats['items'][i]['localizedTitleId'] == "dribbles_succeeded":
-        player["succ_dribbles_per_90"] = possession_stats['items'][i]['per90']
-        i += 1
-
-    if len(possession_stats['items']) > i and possession_stats['items'][i]['localizedTitleId'] == "won_contest_subtitle":
-        player["succ_dribbles_rate"] = possession_stats['items'][i]['per90'] 
-        i += 1
-
-    if len(possession_stats['items']) > i and possession_stats['items'][i]['localizedTitleId'] == "duel_won":
-        player["duels_won_per_90"] = possession_stats['items'][i]['per90']
-        i += 1
-
-    if len(possession_stats['items']) > i and possession_stats['items'][i]['localizedTitleId'] == "duel_won_percent":
-        player["duels_won_rate"] = possession_stats['items'][i]['per90']
-        i += 1
-
-    if len(possession_stats['items']) > i and possession_stats['items'][i]['localizedTitleId'] == "aerials_won":
-        player["aerials_won_per_90"] = possession_stats['items'][i]['per90']
-        i += 1
-
-    if len(possession_stats['items']) > i and possession_stats['items'][i]['localizedTitleId'] == "aerials_won_percent":
-        player["aerials_won_rate"] = possession_stats['items'][i]['per90']
-        i += 1
-
-    if len(possession_stats['items']) > i and possession_stats['items'][i]['localizedTitleId'] == "touches":
-        player["touches_per_90"] = possession_stats['items'][i]['per90']
-        i += 1
-
-    if len(possession_stats['items']) > i and possession_stats['items'][i]['localizedTitleId'] == "touches_opp_box":
-        player["touches_opp_box_per_90"] = possession_stats['items'][i]['per90']
-        i += 1
-
-    if len(possession_stats['items']) > i and possession_stats['items'][i]['localizedTitleId'] == "dispossessed":
-        player["dispossessed_per_90"] = possession_stats['items'][i]['per90']
-        i += 1
-
-    if len(possession_stats['items']) > i and possession_stats['items'][i]['localizedTitleId'] == "fouls_won":
-        player["fouls_won_per_90"] = possession_stats['items'][i]['per90']
-    
-
-    defending_stats = all_stats[3]
-    i = 0
-
-    if len(defending_stats['items']) > i and defending_stats['items'][i]['localizedTitleId'] == "defensive_actions":
-        player["defcon_per_90"] = defending_stats['items'][i]['per90'] 
-        i += 1
-
-    if len(defending_stats['items']) > i and defending_stats['items'][i]['localizedTitleId'] == "matchstats.headers.tackles":
-        player["tackles_per_90"] = defending_stats['items'][i]['per90']
-        i += 1
-
-    if len(defending_stats['items']) > i and defending_stats['items'][i]['localizedTitleId'] == "interceptions":
-        player["interceptions_per_90"] = defending_stats['items'][i]['per90']
-        i += 1
-
-    if len(defending_stats['items']) > i and defending_stats['items'][i]['localizedTitleId'] == "blocked_shots":
-        player["blocks_per_90"] = defending_stats['items'][i]['per90']
-        i += 1
-
-    if len(defending_stats['items']) > i and defending_stats['items'][i]['localizedTitleId'] == "fouls":
-        player["fouls_committed_per_90"] = defending_stats['items'][i]['per90']
-        i += 1
-    
-    if len(defending_stats['items']) > i and defending_stats['items'][i]['localizedTitleId'] == "recoveries":
-        player["recoveries_per_90"] = defending_stats['items'][i]['per90']
-        i += 1
-    
-    if len(defending_stats['items']) > i and defending_stats['items'][i]['localizedTitleId'] == "poss_won_att_3rd_team_title":
-        player["poss_won_final_3rd_per_90"] = defending_stats['items'][i]['per90']
-        i += 1
-    
-    if len(defending_stats['items']) > i and defending_stats['items'][i]['localizedTitleId'] == "dribbled_past":
-        player["succ_dribbles_def_per_90"] = defending_stats['items'][i]['per90']
-        i += 1
-    
-    if len(defending_stats['items']) > i and defending_stats['items'][i]['localizedTitleId'] == "clearances":
-        player["clearances_per_90"] = defending_stats['items'][i]['per90']
-        i += 1
+    for stat_type in all_stats:
+        for stat in stat_type['items']:
+            if stat['localizedTitleId'] == "non_penalty_xg":
+                player["npxg_per_90"] = stat['per90']
+            elif stat['localizedTitleId'] == "shots":
+                player["shots_per_90"] = stat['per90']
+            elif stat['localizedTitleId'] == "ShotsOnTarget":
+                player["sot_per_90"] = stat['per90']
+            elif stat['localizedTitleId'] == "headed_shots":
+                player["headed_shots_per_90"] = stat['per90']
+            elif stat['localizedTitleId'] == "physical_metrics_topspeed":
+                player["top_speed"] = stat['per90']
+            elif stat['localizedTitleId'] == "physical_metrics_distance_covered":
+                player["distance_covered_per_90"] = stat['per90']
+            elif stat['localizedTitleId'] == "physical_metrics_running":
+                player["running_distance_per_90"] = stat['per90']
+            elif stat['localizedTitleId'] == "physical_metrics_sprinting":
+                player["sprint_distance_per_90"] = stat['per90']
+            elif stat['localizedTitleId'] == "physical_metrics_number_of_sprints":
+                player["sprints_per_90"] = stat['per90']
+            elif stat['localizedTitleId'] == "expected_assists":
+                player["xa_per_90"] = stat['per90']
+            elif stat['localizedTitleId'] == "successful_passes":
+                player["succ_pass_per_90"] = stat['per90']
+            elif stat['localizedTitleId'] == "successful_passes_accuracy":
+                player["succ_pass_rate"] = stat['per90']
+            elif stat['localizedTitleId'] == "long_balls_accurate":
+                player["acc_long_balls_per_90"] = stat['per90']
+            elif stat['localizedTitleId'] == "long_ball_succeeeded_accuracy":
+                player["succ_long_balls_rate"] = stat['per90']
+            elif stat['localizedTitleId'] == "chances_created":
+                player["chances_created_per_90"] = stat['per90']
+            elif stat['localizedTitleId'] == "big_chance_created_team_title":
+                player["big_chances_created_per_90"] = stat['per90']
+            elif stat['localizedTitleId'] == "crosses_succeeeded":
+                player["succ_crosses_per_90"] = stat['per90']
+            elif stat['localizedTitleId'] == "crosses_succeeeded_accuracy":
+                player["succ_crosses_rate"] = stat['per90']
+            elif stat['localizedTitleId'] == "dribbles_succeeded":
+                player["succ_dribbles_per_90"] = stat['per90']
+            elif stat['localizedTitleId'] == "won_contest_subtitle":
+                player["succ_dribbles_rate"] = stat['per90'] 
+            elif stat['localizedTitleId'] == "duel_won":
+                player["duels_won_per_90"] = stat['per90']
+            elif stat['localizedTitleId'] == "duel_won_percent":
+                player["duels_won_rate"] = stat['per90']
+            elif stat['localizedTitleId'] == "aerials_won":
+                player["aerials_won_per_90"] = stat['per90']
+            elif stat['localizedTitleId'] == "aerials_won_percent":
+                player["aerials_won_rate"] = stat['per90']
+            elif stat['localizedTitleId'] == "touches":
+                player["touches_per_90"] = stat['per90']
+            elif stat['localizedTitleId'] == "touches_opp_box":
+                player["touches_opp_box_per_90"] = stat['per90']
+            elif stat['localizedTitleId'] == "dispossessed":
+                player["dispossessed_per_90"] = stat['per90']
+            elif stat['localizedTitleId'] == "fouls_won":
+                player["fouls_won_per_90"] = stat['per90']
+            elif stat['localizedTitleId'] == "defensive_actions":
+                player["defcon_per_90"] = stat['per90'] 
+            elif stat['localizedTitleId'] == "matchstats.headers.tackles":
+                player["tackles_per_90"] = stat['per90']
+            elif stat['localizedTitleId'] == "interceptions":
+                player["interceptions_per_90"] = stat['per90']
+            elif stat['localizedTitleId'] == "blocked_shots":
+                player["blocks_per_90"] = stat['per90']
+            elif stat['localizedTitleId'] == "fouls":
+                player["fouls_committed_per_90"] = stat['per90']
+            elif stat['localizedTitleId'] == "recoveries":
+                player["recoveries_per_90"] = stat['per90']
+            elif stat['localizedTitleId'] == "poss_won_att_3rd_team_title":
+                player["poss_won_final_3rd_per_90"] = stat['per90']
+            elif stat['localizedTitleId'] == "dribbled_past":
+                player["succ_dribbles_def_per_90"] = stat['per90']
+            elif stat['localizedTitleId'] == "clearances":
+                player["clearances_per_90"] = stat['per90']
     
     return player
 

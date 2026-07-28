@@ -1,10 +1,10 @@
 """Map the dataset's granular position vocabulary to the three broad roles the
 UI colour-codes, groups (percentile cohorts) and filters by.
 
-The source data stores `category` as a specific role label (e.g. "Center Back",
-"Striker") and `main_position` as a short code (e.g. "CB", "ST"). The frontend
-contract expects `category` to be one of "Attack" / "Midfield" / "Defender",
-so we normalise here and leave `main_position` untouched as the specific code.
+The `main_position` column stores the full category label (e.g. "Center Back",
+"Striker").  `broad_role()` resolves it to one of "Attack" / "Midfield" /
+"Defender" for the frontend, and falls back to the short position code map
+only when the label is absent or unrecognised.
 """
 
 ATTACK = "Attack"
@@ -41,15 +41,19 @@ _POSITION_TO_ROLE = {
 }
 
 
-def broad_role(category: str | None, main_position: str | None) -> str | None:
-    """Resolve a player's broad role from their specific category, falling back
-    to the main-position code. Returns None when neither is recognised."""
-    if category:
-        role = _CATEGORY_TO_ROLE.get(category.strip().lower())
+def broad_role(main_position: str | None) -> str | None:
+    """Resolve a player's broad role from their main_position value.
+
+    ``main_position`` stores the full label (e.g. "Center Back", "Striker")
+    which is looked up in ``_CATEGORY_TO_ROLE`` first.  If that fails we
+    treat the value as a short code (e.g. "CB", "ST") via ``_POSITION_TO_ROLE``.
+    """
+    if main_position:
+        val = main_position.strip()
+        role = _CATEGORY_TO_ROLE.get(val.lower())
         if role:
             return role
-    if main_position:
-        return _POSITION_TO_ROLE.get(main_position.strip().upper())
+        return _POSITION_TO_ROLE.get(val.upper())
     return None
 
 

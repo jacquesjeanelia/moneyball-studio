@@ -198,16 +198,16 @@ def get_player_ids(league_id: int = 47, season_id: int = 27110, is_two_year_seas
     data = response.json()
     stats_list = data['statsData']
     season_type = 2 if is_two_year_season else 1
-    player_data = [(player['id'], player['name'], player['teamId'], season_type) for player in stats_list]
+    player_data = [(player['id'], player['teamId'], player['name'], season_type) for player in stats_list]
 
-    df = pd.DataFrame(player_data, columns=['player_id', 'name', 'team_id', 'season_type'])
+    df = pd.DataFrame(player_data, columns=['player_id', 'team_id', 'name', 'season_type'])
     return df
 
 def get_all_players_ids():
     """
         Get all player IDs for all one and two-year leagues
         Output:
-            df: DataFrame containing 'player_id', 'name', and 'season_type'
+            df: DataFrame containing 'player_id', 'team_id', 'name', and 'season_type'
     """
 
     # df_one = pd.read_csv(os.path.join('data', 'raw', f'fotmob_league_season_ids_one_year.csv'))
@@ -238,8 +238,8 @@ def get_all_players_ids():
             df = pd.concat([df, new_df], ignore_index=False)
         else:
             return None
+    df = df.drop_duplicates(subset=['player_id'], keep='first')
     df.to_csv(os.path.join('data', 'raw', f'fotmob_players_ids.csv'), index=False)
-
     return df
 
 
@@ -660,7 +660,7 @@ def merge_players():
 
     df_tm_players = get_transfermarkt_player_ids() # team_id, tmid, player
 
-    df_fotmob_players = pd.read_csv(os.path.join('data', 'raw', 'fotmob_players_ids.csv')) # plafotmob_id, team_id, name, dob, height_cm, preferred_foot, country, positions
+    df_fotmob_players = pd.read_csv(os.path.join('data', 'raw', 'fotmob_players_info.csv')) # plafotmob_id, team_id, name, dob, height_cm, preferred_foot, country, positions
     tm_to_fotmob_mapping = pd.DataFrame(columns=['tm_player_id', 'fotmob_player_id', 'fotmob_name', 'tm_name', 'status'])
 
     all_tm_players = df_tm_players['player'].tolist()
@@ -720,7 +720,7 @@ def merge_players():
             # 1. Direct fuzzy match on the raw FotMob name.
             best_match_name, score = remember_candidate(fotmob_name_cleaned)
             if score is not None and score > 95:
-                append_mapping(best_candidate['tm_player_id'], row['player_id'], row['name'], best_candidate['tm_name'], 'matched')
+                append_mapping(best_candidate['tm_player_id'], row['fotmob_id'], row['name'], best_candidate['tm_name'], 'matched')
                 matched += 1
                 continue
 
@@ -729,7 +729,7 @@ def merge_players():
             for nickname_candidate in _generate_nickname_variants(fotmob_name_cleaned):
                 best_match_name, score = remember_candidate(nickname_candidate)
                 if score is not None and score > 95:
-                    append_mapping(best_candidate['tm_player_id'], row['player_id'], row['name'], best_candidate['tm_name'], 'nickname')
+                    append_mapping(best_candidate['tm_player_id'], row['fotmob_id'], row['name'], best_candidate['tm_name'], 'nickname')
                     matched += 1
                     nickname_matched += 1
                     nickname_found = True
@@ -745,7 +745,7 @@ def merge_players():
                     continue
                 best_match_name, score = remember_candidate(subset_candidate)
                 if score is not None and score > 95:
-                    append_mapping(best_candidate['tm_player_id'], row['player_id'], row['name'], best_candidate['tm_name'], 'matched')
+                    append_mapping(best_candidate['tm_player_id'], row['fotmob_id'], row['name'], best_candidate['tm_name'], 'matched')
                     matched += 1
                     subset_found = True
                     break
@@ -757,7 +757,7 @@ def merge_players():
             if score is not None and score > 95:
                 tm_player_name = tm_variant_lookup[best_match_name]
                 tm_player_id = tm_players_dict[tm_player_name]
-                append_mapping(tm_player_id, row['player_id'], row['name'], tm_player_name, 'matched')
+                append_mapping(tm_player_id, row['fotmob_id'], row['name'], tm_player_name, 'matched')
                 matched += 1
                 continue
             if score is not None and score > best_candidate['score']:
@@ -767,7 +767,7 @@ def merge_players():
                 best_candidate['tm_name'] = tm_player_name
 
             # Keep the strongest TM candidate we saw, even when the row stays unmatched.
-            append_mapping(best_candidate['tm_player_id'], row['player_id'], row['name'], best_candidate['tm_name'], 'unmatched')
+            append_mapping(best_candidate['tm_player_id'], row['fotmob_id'], row['name'], best_candidate['tm_name'], 'unmatched')
             unmatched += 1
 
     print(f"Matched: {matched}, Nickname: {nickname_matched}, Unmatched: {unmatched}")        
@@ -958,10 +958,9 @@ def get_all_players_info():
     return pd.read_csv(os.path.join('data', 'raw', 'fotmob_players_info.csv'))
 
 
-def get_player_stats(player_id: int = 292462, team_id: int = 8650, is_two_year_season: bool = True):
+def get_player_stats(player_id: int = 292462, team_id: int = 568727, is_two_year_season: bool = True):
     player = {
         "player_id": player_id,
-        "team_id": team_id,
         "minutes_played": None,
         "npxg_per_90": None,
         "shots_per_90": None,
@@ -1212,8 +1211,8 @@ def _process_single_player_stats(player_data):
     
     try:
         player_stats = get_player_stats(
-            player_id=int(player_id), 
-            team_id=int(team_id), 
+            player_id=int(player_id),
+            team_id=int(team_id),
             is_two_year_season=is_two_year_season
         )
         
@@ -1306,7 +1305,7 @@ def run():
     # get_all_players_prices()
     # print("Combining player info and values...")
     # join_value_and_info()
-    print("Getting all players statistics...")
+    # print("Getting all players statistics...")
     get_all_players_stats()
 
 if __name__ == "__main__":

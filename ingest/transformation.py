@@ -14,8 +14,8 @@ import csv
 
 PLAYER_ROLES = {
     "ST": "Striker",
-    "LW": "Creative Attacker", "RW": "Creative Attacker",
-    "LM": "Creative Attacker", "RM": "Creative Attacker",
+    "LW": "Winger", "RW": "Winger",
+    "LM": "Wide Midfielder", "RM": "Wide Midfielder",
     "AM": "Creative Attacker",
     "CM": "Midfielder", "DM": "Midfielder",
     "LWB": "Fullback", "RWB": "Fullback", 
@@ -39,11 +39,11 @@ DB_CONFIG = {
     "password": os.getenv("DB_PASSWORD", "postgres"),
 }
 
-PLAYER_INFO_PATH = "data/raw/fotmob_players_info.csv"
+PLAYER_INFO_PATH = "data/raw/fotmob_players_full_info.csv"
 PLAYER_STATS_PATH = "data/raw/fotmob_players_stats.csv"
-COUNTRIES_PATH = "data/raw/countries_data.csv"
-LEAGUES_PATH = "data/raw/fotmob_leagues.csv"
-CLUBS_PATH = "data/raw/fotmob_clubs.csv"
+COUNTRIES_PATH = "data/raw/total/countries_data.csv"
+LEAGUES_PATH = "data/raw/total/fotmob_leagues.csv"
+CLUBS_PATH = "data/raw/total/fotmob_clubs.csv"
 PROCESSED_DATA_PATH = "data/processed/combined_player_dataset.csv"
 
 PLAYER_IMAGE_URL = "https://images.fotmob.com/image_resources/playerimages/" # add {player_id}.png to get the image
@@ -71,10 +71,11 @@ def merge_player_data():
         raise FileNotFoundError(f"Player stats file not found at {PLAYER_STATS_PATH}. Please run the ingestion script first.")
 
     df_info = safe_read_csv(PLAYER_INFO_PATH)
+    df_info = df_info.rename(columns={'fotmob_id': 'player_id'})
     df_stats = safe_read_csv(PLAYER_STATS_PATH)
 
     # Merge dataframes on player_id
-    df_merged = pd.merge(df_info, df_stats, left_on='fotmob_id', right_on='player_id', how='inner')
+    df_merged = pd.merge(df_info, df_stats, on='player_id', how='inner')
     return df_merged
 
 def load_and_clean_data():
@@ -112,13 +113,13 @@ def get_percentiles():
     df['aerials_won_rate_percentile'] = df.groupby('main_role')['aerials_won_rate'].rank(pct=True) * 100
     df['touches_percentile'] = df.groupby('main_role')['touches_per_90'].rank(pct=True) * 100
     df['touches_opp_box_percentile'] = df.groupby('main_role')['touches_opp_box_per_90'].rank(pct=True) * 100
-    df['dispossessed_percentile'] = df.groupby('main_role')['dispossessed_per_90'].rank(pct=True) * 100
+    df['dispossessed_percentile'] = df.groupby('main_role')['dispossessed_per_90'].rank(pct=True, ascending=False) * 100
     df['fouls_won_percentile'] = df.groupby('main_role')['fouls_won_per_90'].rank(pct=True) * 100
     df['defcon_percentile'] = df.groupby('main_role')['defcon_per_90'].rank(pct=True) * 100
     df['tackles_percentile'] = df.groupby('main_role')['tackles_per_90'].rank(pct=True) * 100
     df['interceptions_percentile'] = df.groupby('main_role')['interceptions_per_90'].rank(pct=True) * 100
     df['blocks_percentile'] = df.groupby('main_role')['blocks_per_90'].rank(pct=True) * 100
-    df['fouls_committed_percentile'] = df.groupby('main_role')['fouls_committed_per_90'].rank(pct=True) * 100
+    df['fouls_committed_percentile'] = df.groupby('main_role')['fouls_committed_per_90'].rank(pct=True, ascending=False) * 100
     df['recoveries_percentile'] = df.groupby('main_role')['recoveries_per_90'].rank(pct=True) * 100
     df['poss_won_final_3rd_percentile'] = df.groupby('main_role')['poss_won_final_3rd_per_90'].rank(pct=True) * 100
     df['succ_dribbles_def_percentile'] = df.groupby('main_role')['succ_dribbles_def_per_90'].rank(pct=True) * 100
@@ -134,21 +135,36 @@ def scale_features():
     scaler = StandardScaler()
     scaled_features = scaler.fit_transform(df[FEATURE_COLS])
 
-    #======================================================================================================================================
-    #TODO: Clustering to generate role tags
+    # # ======================================================================================================================================
+    # # TODO: Clustering to generate role tags
     # z_cols = [f"{col}_z" for col in FEATURE_COLS]
-    # df[z_cols] = scaled_features
+    # scaled_df = pd.DataFrame(scaled_features, columns=z_cols, index=df.index)
+    # df = pd.concat([df, scaled_df], axis=1)
 
-    # creative_df = df[df['main_role'] == 'Creative Attacker'].copy()
-    # X = creative_df[['sot_per_90_z', 'xa_per_90_z', 'succ_crosses_per_90_z', 'succ_dribbles_per_90_z']]
+    # striker_df = df[df['main_role'] == 'Striker'].copy()
+
+    # striker_highlight_cols = [
+    #     'shots_per_90_z', 
+    #     'touches_opp_box_per_90_z', 
+    #     'succ_dribbles_per_90_z',  
+    #     'chances_created_per_90_z',
+    #     'headed_shots_per90_z',
+    #     'xa_per90_z',
+    # ]
+
+    # X = striker_df[striker_highlight_cols]
 
     # kmeans = KMeans(n_clusters=3, random_state=42, n_init=10)
-    # creative_df['cluster_id'] = kmeans.fit_predict(X)
+    # striker_df['cluster_id'] = kmeans.fit_predict(X)
 
-    # centroids = pd.DataFrame(kmeans.cluster_centers_, columns=['sot_per_90_z', 'xa_per_90_z', 'succ_crosses_per_90_z', 'succ_dribbles_per_90_z'])
-    # centroids.to_csv("data/processed/creative_attacker_centroids.csv", index=False, encoding='utf-8')
+    # centroids = pd.DataFrame(kmeans.cluster_centers_, columns=striker_highlight_cols)
+    # centroids.to_csv("data/processed/striker_centroids.csv", index=False, encoding='utf-8')
+
+    # # creative_df = df[df['main_role'] == 'Creative Attacker'].copy()
+    # # X = creative_df[['sot_per_90_z', 'xa_per_90_z', 'succ_crosses_per_90_z', 'succ_dribbles_per_90_z', 'tackles_per_90_z']]
+
     # return
-    #======================================================================================================================================
+    # # ======================================================================================================================================
 
     # PCA for dimensionality reduction to 17 dimensions (to remove overlap and redundancy in features)
     pca = PCA(n_components=17)
@@ -240,21 +256,26 @@ def insert_clubs(cur, league_id_map: dict[int, int]) -> dict[int, int]:
     return out_map
 
 
-def insert_players(cur, df: pd.DataFrame, club_id_map: dict[str, int], country_id_map: dict[str, int]) -> dict[str, int]:
+def insert_players(cur, df: pd.DataFrame, club_id_map: dict[str, int], country_id_map: dict[str, int]) -> dict[int, int]:
     rows = []
+    fotmob_player_ids = []
+    df = df.drop_duplicates(subset=['player_id'], keep='first').copy()
     df['dob'] = df['dob'].astype(str).str.strip()
     df['dob'] = pd.to_datetime(df['dob'], dayfirst=True, format='mixed', errors='coerce').dt.date
     for _, row in df.iterrows():
+        fotmob_player_id = int(row['player_id']) if pd.notna(row['player_id']) else None
+        if fotmob_player_id is None:
+            continue
+
         country_id = country_id_map.get(row['country'], None)
-        club_id = club_id_map.get(row['club_id'], None)
+        club_id = club_id_map.get(row['team_id'], None)
         name = row['name'] if pd.notna(row['name']) else None
         dob = row['dob'] if pd.notna(row['dob']) else None
-        value = int(row['value']) if pd.notna(row['value']) else 0
+        value = int(row['transfermarkt_value']) if pd.notna(row['transfermarkt_value']) else 0
         height = int(row['height_cm']) if pd.notna(row['height_cm']) else None
-        #category = row['category'] if pd.notna(row['category']) else None
         main_position = row['category']
         foot = row['preferred_foot'] if pd.notna(row['preferred_foot']) else None
-        photo_url = PLAYER_IMAGE_URL + f"{row['fotmob_id']}.png" if pd.notna(row['fotmob_id']) else None
+        photo_url = PLAYER_IMAGE_URL + f"{fotmob_player_id}.png"
 
         rows.append((
             name,
@@ -263,28 +284,30 @@ def insert_players(cur, df: pd.DataFrame, club_id_map: dict[str, int], country_i
             foot,
             height,
             club_id,
-            country_id, 
-            photo_url, 
+            country_id,
+            photo_url,
             value
         ))
+        fotmob_player_ids.append(fotmob_player_id)
 
-    execute_values(
+    inserted_rows = execute_values(
         cur,
         """
             INSERT INTO players (
                 name, date_of_birth, main_position, preferred_foot, height_cm, club_id, country_id, photo_url, current_market_value_eur
             ) VALUES %s
-            ON CONFLICT DO NOTHING
+            RETURNING id
         """,
-        rows
+        rows,
+        fetch=True
     )
-    cur.execute("SELECT id, name FROM players")
-    return {name: id for id, name in cur.fetchall()}
+    return {fotmob_player_id: db_id for fotmob_player_id, (db_id,) in zip(fotmob_player_ids, inserted_rows)}
 
-def insert_player_alternate_positions(cur, df: pd.DataFrame, player_id_map: dict[str, int]):
+def insert_player_alternate_positions(cur, df: pd.DataFrame, player_id_map: dict[int, int]):
     rows = []
     for _, row in df.iterrows():
-        player_id = player_id_map.get(row['name'], None)
+        fotmob_player_id = int(row['player_id']) if pd.notna(row['player_id']) else None
+        player_id = player_id_map.get(fotmob_player_id, None)
         if player_id is None:
             continue
 
@@ -304,10 +327,11 @@ def insert_player_alternate_positions(cur, df: pd.DataFrame, player_id_map: dict
         rows
     )
 
-def insert_player_season_stats(cur, df: pd.DataFrame, player_id_map: dict[str, int]):
+def insert_player_season_stats(cur, df: pd.DataFrame, player_id_map: dict[int, int], club_id_map: dict[int, int]):
     rows = []
     for _, row in df.iterrows():
-        player_id = player_id_map.get(row['name'], None)
+        fotmob_player_id = int(row['player_id']) if pd.notna(row['player_id']) else None
+        player_id = player_id_map.get(fotmob_player_id, None)
         if player_id is None:
             continue
 
@@ -405,46 +429,46 @@ def run():
     print("\n[1/2] Cleaning & vectorising...")
     df = scale_features()
  
-    # # --- Load ---
-    # print("\n[2/2] Inserting into PostgreSQL...")
-    # conn = _connect_db()
-    # conn.autocommit = False
-    # cur = conn.cursor()
+    # --- Load ---
+    print("\n[2/2] Inserting into PostgreSQL...")
+    conn = _connect_db()
+    conn.autocommit = False
+    cur = conn.cursor()
  
-    # try: 
-    #     print("  -> countries")
-    #     country_id_map = insert_countries(cur)
-    #     print(f"     {len(country_id_map)} countries")
+    try: 
+        print("  -> countries")
+        country_id_map = insert_countries(cur)
+        print(f"     {len(country_id_map)} countries")
 
-    #     print("\n  -> leagues")
-    #     league_id_map = insert_leagues(cur, country_id_map)
-    #     print(f"     {len(league_id_map)} leagues")
+        print("\n  -> leagues")
+        league_id_map = insert_leagues(cur, country_id_map)
+        print(f"     {len(league_id_map)} leagues")
 
-    #     print("  -> clubs")
-    #     club_id_map = insert_clubs(cur, league_id_map)
-    #     print(f"     {len(club_id_map)} clubs")
+        print("  -> clubs")
+        club_id_map = insert_clubs(cur, league_id_map)
+        print(f"     {len(club_id_map)} clubs")
  
-    #     print("  -> players")
-    #     player_id_map = insert_players(cur, df, club_id_map, country_id_map)
-    #     print(f"     {len(player_id_map)} players")
+        print("  -> players")
+        player_id_map = insert_players(cur, df, club_id_map, country_id_map)
+        print(f"     {len(player_id_map)} players")
  
-    #     print("  -> player_alternate_positions")
-    #     insert_player_alternate_positions(cur, df, player_id_map)
+        print("  -> player_alternate_positions")
+        insert_player_alternate_positions(cur, df, player_id_map)
  
-    #     print("  -> player_season_stats")
-    #     insert_player_season_stats(cur, df, player_id_map)
+        print("  -> player_season_stats")
+        insert_player_season_stats(cur, df, player_id_map, club_id_map)
  
-    #     conn.commit()
-    #     print("\nOK: All data committed successfully.")
+        conn.commit()
+        print("\nOK: All data committed successfully.")
  
-    # except Exception as exc:
-    #     conn.rollback()
-    #     print(f"\nError - transaction rolled back.\n  {exc}")
-    #     raise
+    except Exception as exc:
+        conn.rollback()
+        print(f"\nError - transaction rolled back.\n  {exc}")
+        raise
  
-    # finally:
-    #     cur.close()
-    #     conn.close()
+    finally:
+        cur.close()
+        conn.close()
  
  
 if __name__ == "__main__":

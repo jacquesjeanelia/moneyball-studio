@@ -172,16 +172,16 @@ def scale_features():
 
     df['stats_vector'] = [str(list(vector.tolist())) for vector in pca_stats]
 
-    # Separate volume and rate columns
-    rate_cols = [c for c in FEATURE_COLS if 'rate' in c]
-    volume_cols = [c for c in FEATURE_COLS if 'rate' not in c]
+    # # Separate volume and rate columns
+    # rate_cols = [c for c in FEATURE_COLS if 'rate' in c]
+    # volume_cols = [c for c in FEATURE_COLS if 'rate' not in c]
 
-    # 1. Volume stats: 0 really means 0
-    df[volume_cols] = df[volume_cols].fillna(0)
+    # # 1. Volume stats: 0 really means 0
+    # df[volume_cols] = df[volume_cols].fillna(0)
 
-    # 2. Rate stats: If NaN (0/0 attempts), fill with positional average/median
-    for col in rate_cols:
-        df[col] = df.groupby('main_role')[col].transform(lambda x: x.fillna(x.median()))
+    # # 2. Rate stats: If NaN (0/0 attempts), fill with positional average/median
+    # for col in rate_cols:
+    #     df[col] = df.groupby('main_role')[col].transform(lambda x: x.fillna(x.median()))
 
     # UMAP for further dimensionality reduction to 2D for visualization and similarity search
     reducer = UMAP(n_neighbors=15, min_dist=0.1, n_components=2, random_state=42)
@@ -189,10 +189,6 @@ def scale_features():
 
     df['umap_x'] = umap_embedding[:, 0]
     df['umap_y'] = umap_embedding[:, 1]
-
-    # 1. Split the dataset by the UMAP x-axis gap (adjust threshold if needed)
-    left_island = df[df['umap_x'] < -1]
-    left_island.to_csv("data/processed/left_island_players.csv", index=False, encoding='utf-8')
 
     os.makedirs(os.path.dirname("data/processed/processed_player_dataset.csv"), exist_ok=True)
     df.to_csv("data/processed/processed_player_dataset.csv", index=False, encoding='utf-8')

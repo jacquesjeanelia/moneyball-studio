@@ -7,10 +7,20 @@ import { METRICS } from './metrics'
 // *_percentile fields on PlayerStats. No client-side cohort ranking needed.
 // ============================================================================
 
-/** Map a stat key to the corresponding percentile field name on PlayerStats.
- *  Keys ending in `_per90` replace that suffix with `_percentile`;
+/** Map a stat key to the per90-percentile field name on PlayerStats.
+ *  Keys ending in `_per90` replace that suffix with `_per_90_percentile`;
  *  everything else appends `_percentile`. */
 export function percentileKey(key: MetricKey): keyof PlayerStats {
+  if (key.endsWith('_per90')) {
+    return (key.replace('_per90', '_per_90_percentile') as keyof PlayerStats)
+  }
+  return (`${key}_percentile` as keyof PlayerStats)
+}
+
+/** Map a stat key to the total-percentile field name on PlayerStats.
+ *  Keys ending in `_per90` replace that suffix with `_percentile`;
+ *  everything else appends `_percentile`. */
+export function totalPercentileKey(key: MetricKey): keyof PlayerStats {
   if (key.endsWith('_per90')) {
     return (key.replace('_per90', '_percentile') as keyof PlayerStats)
   }

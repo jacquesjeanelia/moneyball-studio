@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import type { PlayerStats } from '@/api/types'
-import { percentileKey } from '@/lib/percentiles'
+import { percentileKey, totalPercentileKey } from '@/lib/percentiles'
 import { METRIC_GROUPS, METRICS } from '@/lib/metrics'
 import { formatStat, topPercent, categoryColor } from '@/lib/format'
 import { StatBar } from './primitives'
@@ -73,8 +73,8 @@ export function StatTable({ stats }: StatTableProps) {
               {group.keys.map((key) => {
                 const meta = METRICS.find((m) => m.key === key)!
                 const raw = stats?.[key] ?? null
-                const pctKey = percentileKey(key)
-                const pct = view === 'per90' ? (stats?.[pctKey] ?? 0) : 0
+                const pctKey = view === 'per90' ? percentileKey(key) : totalPercentileKey(key)
+                const pct = stats?.[pctKey] ?? 0
                 const displayValue = view === 'total' && !meta.isPercent
                   ? formatTotal(toTotal(raw, minutes))
                   : formatStat(raw, meta.isPercent)
@@ -105,16 +105,12 @@ export function StatTable({ stats }: StatTableProps) {
                         </motion.span>
                       </AnimatePresence>
                     </div>
-                    {view === 'per90' && (
-                      <>
-                        <div className="flex-1 min-w-0">
-                          <StatBar value={pct} />
-                        </div>
-                        <div className="hidden sm:block w-16 text-right">
-                          <span className="text-xs font-bold text-chalk-dim tnum">Top {topPercent(pct)}%</span>
-                        </div>
-                      </>
-                    )}
+                    <div className="flex-1 min-w-0">
+                      <StatBar value={pct} />
+                    </div>
+                    <div className="hidden sm:block w-16 text-right">
+                      <span className="text-xs font-bold text-chalk-dim tnum">Top {topPercent(pct)}%</span>
+                    </div>
                   </motion.div>
                 )
               })}

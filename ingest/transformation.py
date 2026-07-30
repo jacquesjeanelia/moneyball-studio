@@ -17,7 +17,7 @@ PLAYER_ROLES = {
     "LW": "Winger", "RW": "Winger",
     "LM": "Wide Midfielder", "RM": "Wide Midfielder",
     "AM": "Creative Attacker",
-    "CM": "Midfielder", "DM": "Midfielder",
+    "CM": "Central Midfielder", "DM": "Central Midfielder",
     "LWB": "Fullback", "RWB": "Fullback", 
     "LB": "Fullback", "RB": "Fullback",
     "CB": "Center Back",
@@ -80,7 +80,7 @@ def merge_player_data():
 
 def load_and_clean_data():
     df = merge_player_data()
-    df = df[df['minutes_played'] >= 450]
+    df = df[df['minutes_played'] >= 900]
     df = df[df['name'].notnull()]
     df[FEATURE_COLS] = df[FEATURE_COLS].fillna(0)
     df['dob'] = df['dob'].str.slice(0, 10)
@@ -91,41 +91,103 @@ def load_and_clean_data():
 
 def get_percentiles():
     df = load_and_clean_data()
-    df['main_role'] = df['category'].map(PLAYER_ROLES)
-    df['npxg_percentile'] = df.groupby('main_role')['npxg_per_90'].rank(pct=True) * 100
-    df['shots_percentile'] = df.groupby('main_role')['shots_per_90'].rank(pct=True) * 100
-    df['sot_percentile'] = df.groupby('main_role')['sot_per_90'].rank(pct=True) * 100
-    df['headed_shots_percentile'] = df.groupby('main_role')['headed_shots_per_90'].rank(pct=True) * 100
-    df['xa_percentile'] = df.groupby('main_role')['xa_per_90'].rank(pct=True) * 100
-    df['succ_pass_percentile'] = df.groupby('main_role')['succ_pass_per_90'].rank(pct=True) * 100
-    df['succ_pass_rate_percentile'] = df.groupby('main_role')['succ_pass_rate'].rank(pct=True) * 100
-    df['acc_long_balls_percentile'] = df.groupby('main_role')['acc_long_balls_per_90'].rank(pct=True) * 100
-    df['succ_long_balls_rate_percentile'] = df.groupby('main_role')['succ_long_balls_rate'].rank(pct=True) * 100
-    df['chances_created_percentile'] = df.groupby('main_role')['chances_created_per_90'].rank(pct=True) * 100
-    df['big_chances_created_percentile'] = df.groupby('main_role')['big_chances_created_per_90'].rank(pct=True) * 100
-    df['succ_crosses_percentile'] = df.groupby('main_role')['succ_crosses_per_90'].rank(pct=True) * 100
-    df['succ_crosses_rate_percentile'] = df.groupby('main_role')['succ_crosses_rate'].rank(pct=True) * 100
-    df['succ_dribbles_percentile'] = df.groupby('main_role')['succ_dribbles_per_90'].rank(pct=True) * 100
-    df['succ_dribbles_rate_percentile'] = df.groupby('main_role')['succ_dribbles_rate'].rank(pct=True) * 100
-    df['duels_won_percentile'] = df.groupby('main_role')['duels_won_per_90'].rank(pct=True) * 100
-    df['duels_won_rate_percentile'] = df.groupby('main_role')['duels_won_rate'].rank(pct=True) * 100
-    df['aerials_won_percentile'] = df.groupby('main_role')['aerials_won_per_90'].rank(pct=True) * 100
-    df['aerials_won_rate_percentile'] = df.groupby('main_role')['aerials_won_rate'].rank(pct=True) * 100
-    df['touches_percentile'] = df.groupby('main_role')['touches_per_90'].rank(pct=True) * 100
-    df['touches_opp_box_percentile'] = df.groupby('main_role')['touches_opp_box_per_90'].rank(pct=True) * 100
-    df['dispossessed_percentile'] = df.groupby('main_role')['dispossessed_per_90'].rank(pct=True, ascending=False) * 100
-    df['fouls_won_percentile'] = df.groupby('main_role')['fouls_won_per_90'].rank(pct=True) * 100
-    df['defcon_percentile'] = df.groupby('main_role')['defcon_per_90'].rank(pct=True) * 100
-    df['tackles_percentile'] = df.groupby('main_role')['tackles_per_90'].rank(pct=True) * 100
-    df['interceptions_percentile'] = df.groupby('main_role')['interceptions_per_90'].rank(pct=True) * 100
-    df['blocks_percentile'] = df.groupby('main_role')['blocks_per_90'].rank(pct=True) * 100
-    df['fouls_committed_percentile'] = df.groupby('main_role')['fouls_committed_per_90'].rank(pct=True, ascending=False) * 100
-    df['recoveries_percentile'] = df.groupby('main_role')['recoveries_per_90'].rank(pct=True) * 100
-    df['poss_won_final_3rd_percentile'] = df.groupby('main_role')['poss_won_final_3rd_per_90'].rank(pct=True) * 100
-    df['succ_dribbles_def_percentile'] = df.groupby('main_role')['succ_dribbles_def_per_90'].rank(pct=True) * 100
-    df['clearances_percentile'] = df.groupby('main_role')['clearances_per_90'].rank(pct=True) * 100
 
-    # df.to_csv("data/processed/cleaned_player_dataset_with_roles.csv", index=False, encoding='utf-8')
+    minutes = df['minutes_played'] / 90
+    total = {
+        'npxg': df['npxg_per_90'] * minutes,
+        'shots': df['shots_per_90'] * minutes,
+        'sot': df['sot_per_90'] * minutes,
+        'headed_shots': df['headed_shots_per_90'] * minutes,
+        'xa': df['xa_per_90'] * minutes,
+        'succ_pass': df['succ_pass_per_90'] * minutes,
+        'acc_long_balls': df['acc_long_balls_per_90'] * minutes,
+        'chances_created': df['chances_created_per_90'] * minutes,
+        'big_chances_created': df['big_chances_created_per_90'] * minutes,
+        'succ_crosses': df['succ_crosses_per_90'] * minutes,
+        'succ_dribbles': df['succ_dribbles_per_90'] * minutes,
+        'duels_won': df['duels_won_per_90'] * minutes,
+        'aerials_won': df['aerials_won_per_90'] * minutes,
+        'touches': df['touches_per_90'] * minutes,
+        'touches_opp_box': df['touches_opp_box_per_90'] * minutes,
+        'dispossessed': df['dispossessed_per_90'] * minutes,
+        'fouls_won': df['fouls_won_per_90'] * minutes,
+        'defcon': df['defcon_per_90'] * minutes,
+        'tackles': df['tackles_per_90'] * minutes,
+        'interceptions': df['interceptions_per_90'] * minutes,
+        'blocks': df['blocks_per_90'] * minutes,
+        'fouls_committed': df['fouls_committed_per_90'] * minutes,
+        'recoveries': df['recoveries_per_90'] * minutes,
+        'poss_won_final_3rd': df['poss_won_final_3rd_per_90'] * minutes,
+        'succ_dribbles_def': df['succ_dribbles_def_per_90'] * minutes,
+        'clearances': df['clearances_per_90'] * minutes,
+    }
+
+    main_role = df['category'].map(PLAYER_ROLES)
+
+    pct = {
+        'main_role': main_role,
+        'npxg_per_90_percentile': df['npxg_per_90'].groupby(main_role).rank(pct=True) * 100,
+        'shots_per_90_percentile': df['shots_per_90'].groupby(main_role).rank(pct=True) * 100,
+        'sot_per_90_percentile': df['sot_per_90'].groupby(main_role).rank(pct=True) * 100,
+        'headed_shots_per_90_percentile': df['headed_shots_per_90'].groupby(main_role).rank(pct=True) * 100,
+        'xa_per_90_percentile': df['xa_per_90'].groupby(main_role).rank(pct=True) * 100,
+        'succ_pass_per_90_percentile': df['succ_pass_per_90'].groupby(main_role).rank(pct=True) * 100,
+        'succ_pass_rate_percentile': df['succ_pass_rate'].groupby(main_role).rank(pct=True) * 100,
+        'acc_long_balls_per_90_percentile': df['acc_long_balls_per_90'].groupby(main_role).rank(pct=True) * 100,
+        'succ_long_balls_rate_percentile': df['succ_long_balls_rate'].groupby(main_role).rank(pct=True) * 100,
+        'chances_created_per_90_percentile': df['chances_created_per_90'].groupby(main_role).rank(pct=True) * 100,
+        'big_chances_created_per_90_percentile': df['big_chances_created_per_90'].groupby(main_role).rank(pct=True) * 100,
+        'succ_crosses_per_90_percentile': df['succ_crosses_per_90'].groupby(main_role).rank(pct=True) * 100,
+        'succ_crosses_rate_percentile': df['succ_crosses_rate'].groupby(main_role).rank(pct=True) * 100,
+        'succ_dribbles_per_90_percentile': df['succ_dribbles_per_90'].groupby(main_role).rank(pct=True) * 100,
+        'succ_dribbles_rate_percentile': df['succ_dribbles_rate'].groupby(main_role).rank(pct=True) * 100,
+        'duels_won_per_90_percentile': df['duels_won_per_90'].groupby(main_role).rank(pct=True) * 100,
+        'duels_won_rate_percentile': df['duels_won_rate'].groupby(main_role).rank(pct=True) * 100,
+        'aerials_won_per_90_percentile': df['aerials_won_per_90'].groupby(main_role).rank(pct=True) * 100,
+        'aerials_won_rate_percentile': df['aerials_won_rate'].groupby(main_role).rank(pct=True) * 100,
+        'touches_per_90_percentile': df['touches_per_90'].groupby(main_role).rank(pct=True) * 100,
+        'touches_opp_box_per_90_percentile': df['touches_opp_box_per_90'].groupby(main_role).rank(pct=True) * 100,
+        'dispossessed_per_90_percentile': df['dispossessed_per_90'].groupby(main_role).rank(pct=True, ascending=False) * 100,
+        'fouls_won_per_90_percentile': df['fouls_won_per_90'].groupby(main_role).rank(pct=True) * 100,
+        'defcon_per_90_percentile': df['defcon_per_90'].groupby(main_role).rank(pct=True) * 100,
+        'tackles_per_90_percentile': df['tackles_per_90'].groupby(main_role).rank(pct=True) * 100,
+        'interceptions_per_90_percentile': df['interceptions_per_90'].groupby(main_role).rank(pct=True) * 100,
+        'blocks_per_90_percentile': df['blocks_per_90'].groupby(main_role).rank(pct=True) * 100,
+        'fouls_committed_per_90_percentile': df['fouls_committed_per_90'].groupby(main_role).rank(pct=True, ascending=False) * 100,
+        'recoveries_per_90_percentile': df['recoveries_per_90'].groupby(main_role).rank(pct=True) * 100,
+        'poss_won_final_3rd_per_90_percentile': df['poss_won_final_3rd_per_90'].groupby(main_role).rank(pct=True) * 100,
+        'succ_dribbles_def_per_90_percentile': df['succ_dribbles_def_per_90'].groupby(main_role).rank(pct=True) * 100,
+        'clearances_per_90_percentile': df['clearances_per_90'].groupby(main_role).rank(pct=True) * 100,
+
+        'npxg_percentile': total['npxg'].groupby(main_role).rank(pct=True) * 100,
+        'shots_percentile': total['shots'].groupby(main_role).rank(pct=True) * 100,
+        'sot_percentile': total['sot'].groupby(main_role).rank(pct=True) * 100,
+        'headed_shots_percentile': total['headed_shots'].groupby(main_role).rank(pct=True) * 100,
+        'xa_percentile': total['xa'].groupby(main_role).rank(pct=True) * 100,
+        'succ_pass_percentile': total['succ_pass'].groupby(main_role).rank(pct=True) * 100,
+        'acc_long_balls_percentile': total['acc_long_balls'].groupby(main_role).rank(pct=True) * 100,
+        'chances_created_percentile': total['chances_created'].groupby(main_role).rank(pct=True) * 100,
+        'big_chances_created_percentile': total['big_chances_created'].groupby(main_role).rank(pct=True) * 100,
+        'succ_crosses_percentile': total['succ_crosses'].groupby(main_role).rank(pct=True) * 100,
+        'succ_dribbles_percentile': total['succ_dribbles'].groupby(main_role).rank(pct=True) * 100,
+        'duels_won_percentile': total['duels_won'].groupby(main_role).rank(pct=True) * 100,
+        'aerials_won_percentile': total['aerials_won'].groupby(main_role).rank(pct=True) * 100,
+        'touches_percentile': total['touches'].groupby(main_role).rank(pct=True) * 100,
+        'touches_opp_box_percentile': total['touches_opp_box'].groupby(main_role).rank(pct=True) * 100,
+        'dispossessed_percentile': total['dispossessed'].groupby(main_role).rank(pct=True, ascending=False) * 100,
+        'fouls_won_percentile': total['fouls_won'].groupby(main_role).rank(pct=True) * 100,
+        'defcon_percentile': total['defcon'].groupby(main_role).rank(pct=True) * 100,
+        'tackles_percentile': total['tackles'].groupby(main_role).rank(pct=True) * 100,
+        'interceptions_percentile': total['interceptions'].groupby(main_role).rank(pct=True) * 100,
+        'blocks_percentile': total['blocks'].groupby(main_role).rank(pct=True) * 100,
+        'fouls_committed_percentile': total['fouls_committed'].groupby(main_role).rank(pct=True, ascending=False) * 100,
+        'recoveries_percentile': total['recoveries'].groupby(main_role).rank(pct=True) * 100,
+        'poss_won_final_3rd_percentile': total['poss_won_final_3rd'].groupby(main_role).rank(pct=True) * 100,
+        'succ_dribbles_def_percentile': total['succ_dribbles_def'].groupby(main_role).rank(pct=True) * 100,
+        'clearances_percentile': total['clearances'].groupby(main_role).rank(pct=True) * 100,
+    }
+
+    df = pd.concat([df, pd.DataFrame({**total, **pct}, index=df.index)], axis=1)
     return df
 
 def scale_features():
@@ -170,25 +232,15 @@ def scale_features():
     pca = PCA(n_components=17)
     pca_stats = pca.fit_transform(scaled_features)
 
-    df['stats_vector'] = [str(list(vector.tolist())) for vector in pca_stats]
-
-    # # Separate volume and rate columns
-    # rate_cols = [c for c in FEATURE_COLS if 'rate' in c]
-    # volume_cols = [c for c in FEATURE_COLS if 'rate' not in c]
-
-    # # 1. Volume stats: 0 really means 0
-    # df[volume_cols] = df[volume_cols].fillna(0)
-
-    # # 2. Rate stats: If NaN (0/0 attempts), fill with positional average/median
-    # for col in rate_cols:
-    #     df[col] = df.groupby('main_role')[col].transform(lambda x: x.fillna(x.median()))
-
     # UMAP for further dimensionality reduction to 2D for visualization and similarity search
     reducer = UMAP(n_neighbors=15, min_dist=0.1, n_components=2, random_state=42)
     umap_embedding = reducer.fit_transform(pca_stats)
 
-    df['umap_x'] = umap_embedding[:, 0]
-    df['umap_y'] = umap_embedding[:, 1]
+    df = pd.concat([df, pd.DataFrame({
+        'stats_vector': [str(list(vector.tolist())) for vector in pca_stats],
+        'umap_x': umap_embedding[:, 0],
+        'umap_y': umap_embedding[:, 1],
+    }, index=df.index)], axis=1)
 
     os.makedirs(os.path.dirname("data/processed/processed_player_dataset.csv"), exist_ok=True)
     df.to_csv("data/processed/processed_player_dataset.csv", index=False, encoding='utf-8')
@@ -372,16 +424,32 @@ def insert_player_season_stats(cur, df: pd.DataFrame, player_id_map: dict[int, i
             _float(row, 'interceptions_per_90'), _float(row, 'blocks_per_90'), 
             _float(row, 'fouls_committed_per_90'), _float(row, 'recoveries_per_90'), _float(row, 'poss_won_final_3rd_per_90'),
             _float(row, 'succ_dribbles_def_per_90'), _float(row, 'clearances_per_90'),
-            
+
+            _float(row, 'npxg_per_90_percentile'),  
+            _float(row, 'shots_per_90_percentile'), _float(row, 'sot_per_90_percentile'), _float(row, 'headed_shots_per_90_percentile'),
+            _float(row, 'xa_per_90_percentile'), _float(row, 'succ_pass_per_90_percentile'), _float(row, 'succ_pass_rate_percentile'),
+            _float(row, 'acc_long_balls_per_90_percentile'), _float(row, 'succ_long_balls_rate_percentile'),
+            _float(row, 'chances_created_per_90_percentile'), _float(row, 'big_chances_created_per_90_percentile'),
+            _float(row, 'succ_crosses_per_90_percentile'), _float(row, 'succ_crosses_rate_percentile'), 
+            _float(row, 'succ_dribbles_per_90_percentile'), _float(row, 'succ_dribbles_rate_percentile'),
+            _float(row, 'duels_won_per_90_percentile'), _float(row, 'duels_won_rate_percentile'), 
+            _float(row, 'aerials_won_per_90_percentile'), _float(row, 'aerials_won_rate_percentile'),
+            _float(row, 'touches_per_90_percentile'), _float(row, 'touches_opp_box_per_90_percentile'),
+            _float(row, 'dispossessed_per_90_percentile'), _float(row, 'fouls_won_per_90_percentile'), 
+            _float(row, 'defcon_per_90_percentile'), _float(row, 'tackles_per_90_percentile'), 
+            _float(row, 'interceptions_per_90_percentile'), _float(row, 'blocks_per_90_percentile'), 
+            _float(row, 'fouls_committed_per_90_percentile'), _float(row, 'recoveries_per_90_percentile'), _float(row, 'poss_won_final_3rd_per_90_percentile'),
+            _float(row, 'succ_dribbles_def_per_90_percentile'), _float(row, 'clearances_per_90_percentile'),   
+
             _float(row, 'npxg_percentile'),  
             _float(row, 'shots_percentile'), _float(row, 'sot_percentile'), _float(row, 'headed_shots_percentile'),
-            _float(row, 'xa_percentile'), _float(row, 'succ_pass_percentile'), _float(row, 'succ_pass_rate_percentile'),
-            _float(row, 'acc_long_balls_percentile'), _float(row, 'succ_long_balls_rate_percentile'),
+            _float(row, 'xa_percentile'), _float(row, 'succ_pass_percentile'),
+            _float(row, 'acc_long_balls_percentile'),
             _float(row, 'chances_created_percentile'), _float(row, 'big_chances_created_percentile'),
-            _float(row, 'succ_crosses_percentile'), _float(row, 'succ_crosses_rate_percentile'), 
-            _float(row, 'succ_dribbles_percentile'), _float(row, 'succ_dribbles_rate_percentile'),
-            _float(row, 'duels_won_percentile'), _float(row, 'duels_won_rate_percentile'), 
-            _float(row, 'aerials_won_percentile'), _float(row, 'aerials_won_rate_percentile'),
+            _float(row, 'succ_crosses_percentile'),
+            _float(row, 'succ_dribbles_percentile'),
+            _float(row, 'duels_won_percentile'), 
+            _float(row, 'aerials_won_percentile'), 
             _float(row, 'touches_percentile'), _float(row, 'touches_opp_box_percentile'),
             _float(row, 'dispossessed_percentile'), _float(row, 'fouls_won_percentile'), 
             _float(row, 'defcon_percentile'), _float(row, 'tackles_percentile'), 
@@ -411,12 +479,24 @@ def insert_player_season_stats(cur, df: pd.DataFrame, player_id_map: dict[int, i
                 possession_won_final_third_per90, dribbled_past_per90,
                 clearances_per90, 
 
+                npxg_per_90_percentile, shots_per_90_percentile, shots_on_target_per_90_percentile, 
+                headed_shots_per_90_percentile, xa_per_90_percentile, successful_passes_per_90_percentile, successful_pass_rate_percentile,
+                accurate_long_balls_per_90_percentile, accurate_long_balls_rate_percentile, chances_created_per_90_percentile,
+                big_chances_created_per_90_percentile, successful_crosses_per_90_percentile, successful_cross_rate_percentile,
+                successful_dribbles_per_90_percentile, successful_dribble_rate_percentile, duels_won_per_90_percentile,
+                duel_success_rate_percentile, aerial_duels_won_per_90_percentile, aerial_duel_success_rate_percentile,
+                touches_per_90_percentile, opposition_box_touches_per_90_percentile, dispossessed_per_90_percentile,
+                fouls_won_per_90_percentile, defcon_per_90_percentile, tackles_per_90_percentile, interceptions_per_90_percentile,
+                blocks_per_90_percentile, fouls_committed_per_90_percentile, recoveries_per_90_percentile,
+                possession_won_final_third_per_90_percentile, dribbled_past_per_90_percentile,
+                clearances_per_90_percentile,
+
                 npxg_percentile, shots_percentile, shots_on_target_percentile, 
-                headed_shots_percentile, xa_percentile, successful_passes_percentile, successful_pass_rate_percentile,
-                accurate_long_balls_percentile, accurate_long_balls_rate_percentile, chances_created_percentile,
-                big_chances_created_percentile, successful_crosses_percentile, successful_cross_rate_percentile,
-                successful_dribbles_percentile, successful_dribble_rate_percentile, duels_won_percentile,
-                duel_success_rate_percentile, aerial_duels_won_percentile, aerial_duel_success_rate_percentile,
+                headed_shots_percentile, xa_percentile, successful_passes_percentile,
+                accurate_long_balls_percentile, chances_created_percentile,
+                big_chances_created_percentile, successful_crosses_percentile,
+                successful_dribbles_percentile, duels_won_percentile,
+                aerial_duels_won_percentile,
                 touches_percentile, opposition_box_touches_percentile, dispossessed_percentile,
                 fouls_won_percentile, defcon_percentile, tackles_percentile, interceptions_percentile,
                 blocks_percentile, fouls_committed_percentile, recoveries_percentile,

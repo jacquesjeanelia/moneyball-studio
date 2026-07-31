@@ -201,6 +201,7 @@ def get_player_ids(league_id: int = 47, season_id: int = 27110, is_two_year_seas
     player_data = [(player['id'], player['teamId'], player['name'], season_type) for player in stats_list]
 
     df = pd.DataFrame(player_data, columns=['player_id', 'team_id', 'name', 'season_type'])
+    
     return df
 
 def get_all_players_ids():
@@ -210,11 +211,10 @@ def get_all_players_ids():
             df: DataFrame containing 'player_id', 'team_id', 'name', and 'season_type'
     """
 
-    # df_one = pd.read_csv(os.path.join('data', 'raw', f'fotmob_league_season_ids_one_year.csv'))
-    df_two = pd.read_csv(os.path.join('data', 'raw', f'fotmob_league_season_ids_two_year_temp.csv'))
-    # dictionnary_one = {row['league_id']: row['2025-2026_season_id'] for _, row in df_one.iterrows()}
+    df_one = pd.read_csv(os.path.join('data', 'raw', 'fotmob_league_season_ids_one_year_temp.csv'))
+    df_two = pd.read_csv(os.path.join('data', 'raw', 'fotmob_league_season_ids_two_year_temp.csv'))
+    dictionnary_one = {row['league_id']: row['2025-2026_season_id'] for _, row in df_one.iterrows()}
     dictionnary_two = {row['league_id']: row['2025-2026_season_id'] for _, row in df_two.iterrows()}
-    dictionnary_one = {}
     
     df = pd.DataFrame()
     for league_id, season_id in dictionnary_one.items():
@@ -235,6 +235,7 @@ def get_all_players_ids():
             continue
         new_df = get_player_ids(league_id=league_id, season_id=season_id, is_two_year_season=True)
         if new_df is not None:
+            print(new_df)
             df = pd.concat([df, new_df], ignore_index=False)
         else:
             return None
@@ -297,7 +298,6 @@ def get_transfermarkt_player_ids():
         "TransferMarkt/player_list.csv"
     )
     df = df[['team_id', 'tmid', 'player']]
-    df.to_csv(os.path.join('data', 'raw', f'transfermarkt_players_TEMP.csv'), index=False)
     return df
 
 def merge_leagues():
@@ -557,7 +557,8 @@ EQUIVALENT_NAMES = {
     "Antonio": ["Toni"],
     "Yannmael": ["Yann"],
     "Alejandro": ["Ale"],
-    "Isaac": ["Iza"]
+    "Isaac": ["Iza"],
+    "Pablo": ["Rai"]
 }
 
 NICKNAME_LOOKUP = {}
@@ -644,6 +645,74 @@ def _extract_best_match(query: str, choices: list[str]):
         return None, None
 
     return result
+
+def merge_players_fallback():
+    club_mapping_df = pd.read_csv(os.path.join('data', 'raw', 'total', 'mapped_clubs_TOTAL.csv'))
+    # pprint(club_mapping_df)
+    club_map = {row['tm_team_id']: row['fotmob_team_id'] for _, row in club_mapping_df.iterrows()}
+
+    df_tm_players = get_transfermarkt_player_ids() # team_id, tmid, player
+
+    df_fotmob_players = pd.read_csv(os.path.join('data', 'raw', 'test.csv')) # plafotmob_id, team_id, name, dob, height_cm, preferred_foot, country, positions
+    tm_to_fotmob_mapping = pd.DataFrame(columns=['tm_player_id', 'fotmob_player_id', 'fotmob_name', 'tm_name', 'status'])
+
+    all_tm_players = df_tm_players['player'].tolist()
+    all_tm_players_list = [_normalize_name(name) for name in all_tm_players]
+
+    matched = nickname_matched = unmatched = 0
+
+    def append_mapping(tm_player_id, fotmob_player_id, fotmob_name, tm_name, status):
+        tm_to_fotmob_mapping.loc[len(tm_to_fotmob_mapping)] = [
+            tm_player_id,
+            fotmob_player_id,
+            fotmob_name,
+            tm_name,
+            status,
+        ]
+
+    for _, row in df_fotmob_players.iterrows(): # iterate over fotmob players in the club
+        fotmob_name = row['name']
+        fotmob_name_cleaned = _normalize_name(fotmob_name)
+
+        best_candidate = {
+            'score': -1,
+            'tm_player_id': None,
+            'tm_name': None,
+        }
+
+        def remember_candidate(candidate_name: str):
+            best_match_name, score = _extract_best_match(candidate_name, all_tm_players_list)
+            if score is None or best_match_name is None:
+                return None, None
+
+            tm_player_name = all_tm_players[all_tm_players_list.index(best_match_name)]
+            tm_player_id = df_tm_players[df_tm_players['player'] == tm_player_name]['tmid'].values[0]
+            if score > best_candidate['score']:
+                best_candidate['score'] = score
+                best_candidate['tm_player_id'] = tm_player_id
+                best_candidate['tm_name'] = tm_player_name
+            return best_match_name, score
+
+        # 1. Direct fuzzy match on the raw FotMob name.
+        best_match_name, score = remember_candidate(fotmob_name_cleaned)
+        if score is not None and score > 95:
+            if (df_tm_players['player'] == best_candidate['tm_name']).sum() <= 1:
+                print(f"Matched '{fotmob_name_cleaned}' with '{best_candidate['tm_name']}' (Score: {score})")
+                append_mapping(best_candidate['tm_player_id'], row['fotmob_id'], row['name'], best_candidate['tm_name'], 'fallback')
+                matched += 1
+                continue
+            else:
+                print(f"Multiple Transfermarkt players found for '{best_candidate['tm_name']}'. Skipping match.")
+                append_mapping(best_candidate['tm_player_id'], row['fotmob_id'], row['name'], best_candidate['tm_name'], 'multiple_matches')
+                unmatched += 1
+                continue
+        else:
+            print(f"No good match for '{fotmob_name_cleaned}' (Best match: '{best_match_name}', Score: {score})")
+            append_mapping(None, row['fotmob_id'], row['name'], None, 'unmatched')
+            unmatched += 1
+
+    tm_to_fotmob_mapping.to_csv(os.path.join('data', 'raw', 'mapped_players_fallback.csv'), index=False)
+
 
 def merge_players():
     """

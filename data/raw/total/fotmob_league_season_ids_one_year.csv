@@ -32,12 +32,9 @@ league_id,League Name,2025-2026_season_id,2024-2025_season_id,2023-2024_season_i
 10226,Iceland 2. Deild,32107,24868,22622
 126,Ireland Premier Division,30076,24496,22578
 218,Ireland First Division,30079,24497,22579
-8974,Japan J. League 2,,24507,22618
-9136,Japan J. League 3,,24508,22619
 225,Kazakhstan Premier League,31896,25085,22952
 226,Latvia Virsliga,1000000325,1000000236,22912
 228,Lithuania Toplyga,31522,25079,22907
-8870,New Zealand Championship,,28380,24212
 59,Norway Eliteserien,30202,24542,22600
 203,Norway OBOS-ligaen,30205,24540,22601
 204,Norway PostNord-ligaen,31051,24588,22624
@@ -54,7 +51,10 @@ league_id,League Name,2025-2026_season_id,2024-2025_season_id,2023-2024_season_i
 8972,United States USL Championship,30301,24597,22596
 9296,United States USL League One,30272,24600,22361
 10282,United States MLS Next Pro,1000000329,1000000224,22893
-10084,United States NISA,,27064,22982
 161,Uruguay Primera Division,31239,24939,22871
 9122,Uruguay Segunda Division,31898,25319,22989
 339,Venezuela Primera Division,1000000466,24425,22700
+8974,Japan J. League 2,,24507,22618
+9136,Japan J. League 3,,24508,22619
+8870,New Zealand Championship,,28380,24212
+10084,United States NISA,,27064,22982

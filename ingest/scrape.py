@@ -121,7 +121,8 @@ def get_club(league_id: int = 47, season: str = "2025/2026"):
     """
 
     f, s = season.split('/')
-    url = f"https://www.fotmob.com/api/data/leagues?id={league_id}&ccode3=EGY&season={f}%2F{s}"
+    # url = f"https://www.fotmob.com/api/data/leagues?id={league_id}&ccode3=EGY&season={f}%2F{s}"
+    url = f"https://www.fotmob.com/api/data/leagues?id=230&ccode3=EGY&season=2025%2F2026"
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
     }
@@ -162,6 +163,7 @@ def get_all_clubs():
     """
     Get all clubs for all leagues in the LEAGUES dictionary
     """
+    print(LEAGUES)
     df = pd.DataFrame()
     for league_id, (league_name, country_name) in LEAGUES.items():
         new_df = get_club(league_id=league_id, season="2025/2026")
@@ -185,7 +187,10 @@ def get_player_ids(league_id: int = 47, season_id: int = 27110, is_two_year_seas
 
     url = f"https://www.fotmob.com/api/data/leagueseasondeepstats?id={league_id}&season={season_id}&type=players&stat=mins_played"
     headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+        "accept": "*/*",
+        "accept-encoding": "gzip, deflate, br",
+        "accept-language": "en-US,en;q=0.9",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
     }
     
     print(f"Connecting to user-facing endpoint: {url}")
@@ -201,7 +206,38 @@ def get_player_ids(league_id: int = 47, season_id: int = 27110, is_two_year_seas
     player_data = [(player['id'], player['teamId'], player['name'], season_type) for player in stats_list]
 
     df = pd.DataFrame(player_data, columns=['player_id', 'team_id', 'name', 'season_type'])
-    
+
+    if df.empty:
+        url_apertura = f"https://www.fotmob.com/api/data/leagueseasondeepstats?id={league_id}&season={season_id}-Apertura&type=players&stat=mins_played"
+        print(f"Connecting to user-facing endpoint: {url_apertura}")
+        response = requests.get(url_apertura, headers=headers)
+        if response.status_code != 200:
+            print(f"HTTP Connection failed: {response.status_code}")
+            return None
+            
+        data = response.json()
+        stats_list = data['statsData']
+        season_type = 2 if is_two_year_season else 1
+        player_data_apertura = [(player['id'], player['teamId'], player['name'], season_type) for player in stats_list]
+
+        df_apertura = pd.DataFrame(player_data_apertura, columns=['player_id', 'team_id', 'name', 'season_type'])
+        return df_apertura
+
+    # url_clausura = f"https://www.fotmob.com/api/data/leagueseasondeepstats?id={league_id}&season={season_id}-Clausura&type=players&stat=mins_played"
+    # print(f"Connecting to user-facing endpoint: {url_clausura}")
+    # response = requests.get(url_clausura, headers=headers)
+    # if response.status_code != 200:
+    #     print(f"HTTP Connection failed: {response.status_code}")
+    #     return None
+
+    # data = response.json()
+    # stats_list = data['statsData']
+    # season_type = 2 if is_two_year_season else 1
+    # player_data_clausura = [(player['id'], player['teamId'], player['name'], season_type) for player in stats_list]
+    # df_clausura = pd.DataFrame(player_data_clausura, columns=['player_id', 'team_id', 'name', 'season_type'])
+
+    #     df = pd.concat([df_apertura, df_clausura]).groupby(['player_id', 'team_id', 'name', 'season_type'], as_index=False).sum()
+    #     return df
     return df
 
 def get_all_players_ids():
@@ -217,16 +253,6 @@ def get_all_players_ids():
     dictionnary_two = {row['league_id']: row['2025-2026_season_id'] for _, row in df_two.iterrows()}
     
     df = pd.DataFrame()
-    for league_id, season_id in dictionnary_one.items():
-        league_name, country_name = LEAGUES[league_id]
-        print(f"League: {league_name}, Country: {country_name}, league_id: {league_id}, Season ID: {season_id}")
-        if season_id is None:
-            continue
-        new_df = get_player_ids(league_id=league_id, season_id=season_id, is_two_year_season=False)
-        if new_df is not None:
-            df = pd.concat([df, new_df], ignore_index=False)
-        else:
-            return None
 
     for league_id, season_id in dictionnary_two.items():
         league_name, country_name = LEAGUES[league_id]
@@ -234,6 +260,18 @@ def get_all_players_ids():
         if season_id is None:
             continue
         new_df = get_player_ids(league_id=league_id, season_id=season_id, is_two_year_season=True)
+        if new_df is not None:
+            print(new_df)
+            df = pd.concat([df, new_df], ignore_index=False)
+        else:
+            return None
+
+    for league_id, season_id in dictionnary_one.items():
+        league_name, country_name = LEAGUES[league_id]
+        print(f"League: {league_name}, Country: {country_name}, league_id: {league_id}, Season ID: {season_id}")
+        if season_id is None:
+            continue
+        new_df = get_player_ids(league_id=league_id, season_id=season_id, is_two_year_season=False)
         if new_df is not None:
             print(new_df)
             df = pd.concat([df, new_df], ignore_index=False)
@@ -767,6 +805,10 @@ def merge_players():
             fotmob_name = row['name']
             fotmob_name_cleaned = _normalize_name(fotmob_name)
 
+            fotmob_club = row['team_id']
+
+            print(fotmob_name_cleaned, fotmob_club)
+
             best_candidate = {
                 'score': -1,
                 'tm_player_id': None,
@@ -1126,9 +1168,13 @@ def get_player_stats(player_id: int = 292462, team_id: int = 568727, is_two_year
         # print(f" {player_id}: Error: 'firstSeasonStats' or 'statsSection' not found in JSON response")
         # return None
 
+    try:
+        is_next_season = json['mainLeague']['season'] == "2026/2027"
+    except KeyError:
+        is_next_season = False
 
     print({player_id, scraped_team_id, team_id, is_two_year_season})
-    if is_two_year_season and scraped_team_id != team_id:
+    if (is_two_year_season and scraped_team_id != team_id) or is_next_season:
         url = f"https://www.fotmob.com/api/data/playerStats?playerId={player_id}&seasonId=1-0&isFirstSeason=false"
         response = requests.get(url, headers=headers)
         if response.status_code != 200:
@@ -1318,15 +1364,14 @@ def run():
     # print("Getting all players information...")
     # get_all_players_info()
     # print("Merging FotMob and Transfermarkt players...")
-    # merge_players()
+    merge_players()
     # print("Getting all players prices...")
     # get_all_players_prices()
     # print("Combining player info and values...")
     # join_value_and_info()
     # print("Getting all players statistics...")
-    get_all_players_stats()
+    # get_all_players_stats()
 
 if __name__ == "__main__":
     run()
-    
     

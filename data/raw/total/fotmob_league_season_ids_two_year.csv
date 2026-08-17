@@ -1,105 +1,46 @@
 league_id,League Name,2025-2026_season_id,2024-2025_season_id,2023-2024_season_id
-260,Albania Kategoria Superiore,27441,23886,21664
-516,Algeria Ligue 1,27707,23877,21873
-118,Armenia Premier League,27437,23879,21371
 113,Australia A-League,27536,23989,21861
 38,Austria Bundesliga,27185,23776,21107
-119,Austria 2. Liga,27186,23779,21108
-262,Azerbaijan Premier League,27446,23902,21362
-10443,Bangladesh Premier League,28496,24422,22605
 40,Belgium First Division A,27152,23650,20957
 264,Belgium First Division B,1000000353,,
-267,Bosnia-Herzegovina Premier League,27227,23812,21214
-270,Bulgaria First Professional League,26937,23666,20952
-9096,Bulgaria Second Professional League,26938,23667,20953
-121,Costa Rica Primera Division,27304,23715,20970
 252,Croatia HNL,27123,23618,20941
-136,Cyprus 1. Division,27425,23811,21469
-9100,Cyprus 2. Division,27779,23955,21700
 122,Czech Republic 1. Liga,27145,23728,20955
-253,Czech Republic FNL,1000000233,23729,21051
-46,Denmark Superligaen,27018,23624,20962
 85,Denmark 1. Division,27117,23688,21015
-239,Denmark 2. Division,27191,23741,21124
-240,Denmark 3. Division,27192,23742,21125
+46,Denmark Superligaen,27018,23624,20962
 519,Egypt Premier League,27525,24306,22011
-335,El Salvador Primera Division,27368,23919,21728
-47,England Premier League,27110,23685,20720
 48,England Championship,27195,23744,20721
 108,England League One,27196,23745,20722
 109,England League Two,27197,23746,20723
-117,England National League,27309,23859,21256
-8944,England National North & South,27311,23860,21257
-8947,England Premier Division,27443,23914,21354
+47,England Premier League,27110,23685,20720
 9084,England Premier League 2,1000000327,,
-10176,England Premier League 2 Div 2,,,
-10068,England Premier League U18,27572,23988,21692
 53,France Ligue 1,27212,23724,20868
 110,France Ligue 2,27215,23725,20971
-8970,France National,27431,23908,21144
-54,Germany Bundesliga,26891,23794,20946
 146,Germany 2. Bundesliga,26892,23795,20947
 208,Germany 3. Liga,26894,23847,20949
-512,Germany Regionalliga,26940,23743,20950
-522,Ghana Premier League,27965,23980,21541
+54,Germany Bundesliga,26891,23794,20946
 135,Greece Super League 1,27184,23900,21439
-8815,Greece Super League 2,28248,24189,22009
-336,Guatemala Liga Nacional,27158,23580,20967
-212,Hungary Nemzeti BajnoksÃ¡g I,27120,23720,21055
 9478,India Indian Super League,31204,24127,21961
-8982,India Indian Football League,31585,24333,22101
-8983,Indonesia Super League,27434,23975,20743
-523,Iran Persian Gulf,1000000238,23939,21462
-9372,Iran Azadegan League,27885,24134,21845
-524,Iraq Stars League,28316,24211,
 55,Italy Serie A,27044,23819,20956
 86,Italy Serie B,27577,23861,21310
-147,Italy Serie C,27539,23883,21361
 223,Japan J. League,30641,24506,22617
-229,Luxembourg National Division,27297,23751,20964
-249,Macedonia Prva Liga,27581,23963,21561
-8985,Malaysia Liga Super,27383,23088,
-8976,Mexico Liga de ExpansiÃ³n MX,27381,23873,21270
-9906,Mexico Liga MX Femenil,27105,23676,21079
-232,Montenegro 1. CFL,27316,23763,21059
-530,Morocco Botola Pro,27455,24074,21762
-57,Netherlands Eredivisie,27131,23691,21111
+230,Mexico Liga MX,27048,23651,20894
 111,Netherlands Eerste Divisie,27206,23696,21112
-9195,Netherlands Tweede Divisie,27416,23865,21341
-533,Nigeria Professional Football League,27578,23899,21886
-129,Northern Ireland Premiership,27223,23752,21114
+57,Netherlands Eredivisie,27131,23691,21111
 196,Poland Ekstraklasa,27045,23622,20954
-197,Poland I Liga,27140,23664,20959
-8935,Poland II Liga,27226,23690,20960
 61,Portugal Liga Portugal,27181,23826,21251
-185,Portugal Liga Portugal 2,27182,23834,21252
-9112,Portugal Liga 3,27482,23867,21283
 189,Romania Liga I,27193,23796,21109
-9113,Romania Liga II,27486,23904,19096
 63,Russia Premier League,27157,23727,21085
-338,Russia 1. Division,27315,23813,21254
+10721,Saudi First Division,1000000351,,
+536,Saudi Pro League,27963,23876,21460
 64,Scotland Premiership,27153,23758,21119
-123,Scotland Championship,27154,23759,21118
-124,Scotland League One,27155,23761,21117
-125,Scotland League Two,27156,23762,21116
-9545,Scotland Highland / Lowland,1000000349,,
-182,Serbia Super Liga,1000000234,,
-461,Singapore Premier League,27489,23092,
-173,Slovenia Prva Liga,27222,23766,21056
+176,Slovak First Football League,27172,23730,21106
 537,South Africa Premier Soccer League,27774,23981,21358
 87,Spain LaLiga,27233,23686,21053
 140,Spain LaLiga2,27234,23755,21113
-8968,Spain Primera FederaciÃ³n,27418,23931,21475
-9138,Spain Segunda FederaciÃ³n,27419,23934,21499
-69,Switzerland Super League,27163,23693,21045
 163,Switzerland Challenge League,27164,23694,21046
-9066,Tanzania Premier League,28201,24059,21714
-8984,Thailand Thai League,1000000373,23782,21294
-9498,Thailand Thai League 2,1000000257,1000000177,
-544,Tunisia Ligue I,27456,24090,21715
-71,TÃ¼rkiye SÃ¼per Lig,27244,23864,21459
+69,Switzerland Super League,27163,23693,21045
 165,TÃ¼rkiye 1. Lig,27413,23935,21476
-441,Ukraine Premier League,27187,23786,21263
+71,TÃ¼rkiye SÃ¼per Lig,27244,23864,21459
+8984,Thailand Thai League,1000000373,23782,21294
 538,United Arab Emirates Pro League,27424,23846,21096
-9088,Vietnam V-League,27433,24008,22055
-116,Wales Cymru Premier,27317,23726,21017
+182,Serbia Super Liga,1000000234,,

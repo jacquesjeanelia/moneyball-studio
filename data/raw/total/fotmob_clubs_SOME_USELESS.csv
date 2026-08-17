@@ -1,0 +1,3179 @@
+﻿league_id,team_id,team_name
+112,10077,Boca Juniors
+112,213596,Central Cordoba de Santiago
+112,10089,Club Atletico Platense
+112,161730,Defensa y Justicia
+112,298629,Deportivo Riestra
+112,10094,Estudiantes
+112,568727,Gimnasia Mendoza
+112,10078,Independiente
+112,10090,Instituto
+112,10082,Lanus
+112,10201,Newell's Old Boys
+112,10083,San Lorenzo
+112,10101,Talleres
+112,10096,Union
+112,10079,Velez Sarsfield
+112,161728,Aldosivi
+112,10086,Argentinos Juniors
+112,161727,Atletico Tucuman
+112,10087,Banfield
+112,213534,Barracas Central
+112,10092,Belgrano
+112,213591,Estudiantes de Rio Cuarto
+112,10103,Gimnasia LP
+112,10081,Huracan
+112,161729,Independiente Rivadavia
+112,10080,Racing Club
+112,10076,River Plate
+112,10084,Rosario Central
+112,202757,Sarmiento
+112,89396,Tigre
+113,6454,Newcastle Jets
+113,8008,Adelaide United
+113,1642068,Auckland FC
+113,6230,Melbourne Victory
+113,10164,Sydney FC
+113,203576,Melbourne City FC
+113,1209973,Macarthur FC
+113,78785,Wellington Phoenix
+113,8164,Central Coast Mariners
+113,7961,Perth Glory
+113,8118,Brisbane Roar FC
+113,323834,Western Sydney Wanderers FC
+38,9977,LASK
+38,10014,Sturm Graz
+38,10013,Salzburg
+38,10011,Austria Wien
+38,10015,Rapid Wien
+38,10056,Hartberg
+38,10017,Ried
+38,1954,Wolfsberger AC
+38,10008,Altach
+38,10012,Grazer AK
+38,1583,WSG Tirol
+38,2433,BW Linz
+40,8342,Club Brugge
+40,7978,Union St.Gilloise
+40,9997,St.Truiden
+40,8635,Anderlecht
+40,9991,Gent
+40,8203,KV Mechelen
+40,9987,Genk
+40,9985,Standard Liege
+40,9986,Sporting Charleroi
+40,10001,Westerlo
+40,9988,Royal Antwerp
+40,1773,OH Leuven
+40,10000,Zulte Waregem
+40,9984,Cercle Brugge
+40,1218969,RAAL La Louviere
+40,7947,FCV Dender EH
+264,8475,SK Beveren
+264,8571,Kortrijk
+264,583877,Beerschot
+264,6363,FC Liege
+264,6702,Lommel
+264,274583,Patro Eisden
+264,6351,Eupen
+264,213307,KSC Lokeren
+264,1379188,Gent U23
+264,465631,K. Lierse SK
+264,149408,RFC Seraing
+264,96953,Francs Borains
+264,9992,RWDM Brussels
+264,1378461,Anderlecht Futures
+264,1378463,Genk U23
+264,1173026,Club Brugge NXT
+264,4137,Olympic de Charleroi
+144,805913,Always Ready
+144,2527,The Strongest
+144,49720,Aurora
+144,5983,Bolivar
+144,49678,Blooming
+144,958325,Independiente Petrolero
+144,114830,Guabira
+144,879029,Universitario de Vinto
+144,1844,Oriente Petrolero
+144,1297346,ABB
+144,164353,Nacional Potosi
+144,1297060,San Antonio Bulo Bulo
+144,1846,Real Potosi
+144,1504766,CDT Real Oruro
+144,1074622,Real Tomayapo
+144,1504770,GV San Jose
+268,10283,Palmeiras
+268,9770,Flamengo
+268,9863,Fluminense
+268,10273,Athletico Paranaense
+268,109705,Red Bull Bragantino
+268,7877,Bahia
+268,9767,Coritiba
+268,10277,Sao Paulo
+268,10272,Atletico MG
+268,9808,Corinthians
+268,9781,Cruzeiro
+268,8517,Botafogo RJ
+268,7733,Vitoria
+268,8702,Internacional
+268,8514,Santos FC
+268,9769,Gremio
+268,10276,Vasco da Gama
+268,1626,Remo
+268,163782,Mirassol
+268,197693,Chapecoense AF
+8814,109706,Vila Nova
+8814,231931,Sao Bernardo
+8814,6305,Sport Recife
+8814,10274,Juventude
+8814,197429,Operario Ferroviario
+8814,8287,Fortaleza
+8814,581838,Novorizontino
+8814,7729,Criciuma
+8814,2369,Nautico
+8814,197815,Cuiaba
+8814,1221604,Athletic Club
+8814,9862,Goias
+8814,165545,Atletico GO
+8814,172341,Ceara
+8814,8355,Botafogo SP
+8814,104821,CRB
+8814,298660,Londrina EC
+8814,104822,Avai FC
+8814,8630,Ponte Preta
+8814,1757,America MG
+10272,581912,Portuguesa RJ
+10272,581903,Sampaio Correa RJ
+10272,238505,Nova Iguacu
+10272,1328537,Marica FC
+10272,9863,Fluminense
+10272,10276,Vasco da Gama
+10272,198135,Volta Redonda
+10272,198133,Bangu
+10272,8517,Botafogo RJ
+10272,111117,Madureira RJ
+10272,198132,Boavista
+10272,9770,Flamengo
+10274,1320332,Guarany de Bage
+10274,1698776,Monsoon
+10274,197888,Avenida
+10274,197884,Inter de Santa Maria
+10274,8702,Internacional
+10274,10274,Juventude
+10274,9769,Gremio
+10274,197889,EC Sao Jose
+10274,172206,Caxias
+10274,197885,Ypiranga RS
+10274,197890,Sao Luiz
+10274,197883,Novo Hamburgo
+10273,10272,Atletico MG
+10273,510793,Uniao Recreativa dos Trabalhadores
+10273,197808,Uberlandia
+10273,197805,Democrata GV
+10273,1757,America MG
+10273,1221708,Pouso Alegre
+10273,414725,Tombense FC
+10273,104815,Betim EC
+10273,9781,Cruzeiro
+10273,1860734,North Esporte Clube
+10273,1593280,Itabirito
+10273,1221604,Athletic Club
+10244,581838,Novorizontino
+10244,10283,Palmeiras
+10244,109705,Red Bull Bragantino
+10244,6065,Portuguesa
+10244,9808,Corinthians
+10244,10277,Sao Paulo
+10244,581830,Capivariano
+10244,8514,Santos FC
+10244,7817,Guarani
+10244,8355,Botafogo SP
+10244,163782,Mirassol
+10244,581877,Primavera SP
+10244,231931,Sao Bernardo
+10244,163784,Noroeste
+10244,606359,Velo Clube
+10244,8630,Ponte Preta
+9986,1022955,Forge FC
+9986,1022952,Cavalry FC
+9986,1135780,AtlÃ©tico Ottawa
+9986,1022954,Inter Toronto FC
+9986,1899648,Supra du Quebec
+9986,1436202,Vancouver FC
+9986,1022948,HFX Wanderers FC
+9986,1022953,Pacific FC
+273,7815,Colo Colo
+273,6458,Universidad Catolica
+273,6310,Universidad de Chile
+273,4062,Coquimbo Unido
+273,6455,Palestino
+273,4056,Huachipato
+273,1890,Everton CD
+273,49559,Ã‘ublense
+273,584840,Deportes Limache
+273,6296,O'Higgins
+273,4054,Universidad de Concepcion
+273,1891,La Serena
+273,4058,Audax Italiano
+273,4134,Deportes Concepcion
+273,4055,Cobresal
+273,192435,Union La Calera
+120,737052,Chengdu Rongcheng FC
+120,1477050,Chongqing Tongliang Long
+120,1477043,Dalian Yingbo
+120,1477056,Yunnan Yukun
+120,8623,Shandong Taishan
+120,1283248,Qingdao West Coast
+120,737054,Liaoning Tieren
+120,51443,Zhejiang Professional
+120,930027,Shenzhen Peng City
+120,4177,Beijing Guoan
+120,51442,Henan FC
+120,6628,Shanghai Shenhua
+120,198616,Shanghai Port
+120,4183,Qingdao Hainiu
+120,1029687,Wuhan Three Towns
+120,4189,Tianjin Jinmen Tiger
+274,6368,Atletico Nacional
+274,2254,Junior FC
+274,4405,Deportivo Pasto
+274,10280,America de Cali
+274,6024,Once Caldas
+274,1894,Tolima
+274,7818,Santa Fe
+274,47240,Internacional de Bogota
+274,6387,Deportivo Cali
+274,4403,Millonarios
+274,2528,Independiente Medellin
+274,193025,Aguilas Doradas
+274,4401,Bucaramanga
+274,348397,Llaneros FC
+274,244167,Fortaleza FC
+274,424270,CD Jaguares
+274,193029,Alianza FC
+274,6255,Chico FC
+274,6254,Cucuta
+274,4404,Deportivo Pereira
+252,10156,Dinamo Zagreb
+252,10154,Hajduk Split
+252,10165,NK Varazdin
+252,10162,Rijeka
+252,175388,NK Lokomotiva
+252,6038,NK Istra 1961
+252,206560,HNK Gorica
+252,1581,Slaven
+252,10157,Osijek
+252,45228,Vukovar 91
+122,7787,Slavia Prague
+122,10247,Sparta Prague
+122,6033,Viktoria Plzen
+122,1712,Hradec Kralove
+122,7758,Jablonec
+122,10245,Slovan Liberec
+122,4721,Teplice
+122,1860,FC Zlin
+122,10180,Mlada Boleslav
+122,2021,Slovacko
+122,6362,Banik Ostrava
+122,88657,Dukla Praha
+122,6461,Sigma Olomouc
+122,2406,Pardubice
+122,143833,Karvina
+122,1670,Bohemians 1905
+46,8071,AGF
+46,8113,FC Midtjylland
+46,10202,NordsjÃ¦lland
+46,8595,BrÃ¸ndby IF
+46,9939,Viborg
+46,8487,SÃ¸nderjyske
+46,8391,FC KÃ¸benhavn
+46,8414,OB
+46,8415,Silkeborg
+46,8410,Randers FC
+46,8454,Fredericia
+46,8231,Vejle Boldklub
+85,9907,Lyngby
+85,9814,AC Horsens
+85,8285,Esbjerg fB
+85,9940,HillerÃ¸d
+85,10240,Hvidovre
+85,6308,Kolding IF
+85,8470,AaB
+85,8109,Aarhus Fremad
+85,9950,Hobro
+85,8289,HB KÃ¸ge
+85,8453,B 93
+85,9969,Middelfart
+246,192875,Independiente del Valle
+246,4144,Deportivo Cuenca
+246,113053,Universidad Catolica
+246,6453,Barcelona SC
+246,6608,Aucas
+246,6721,LDU de Quito
+246,1014174,Orense
+246,1850,Emelec
+246,113054,Tecnico Universitario
+246,6609,CSD Macara
+246,194754,Guayaquil City
+246,304929,Mushuc Runa
+246,1370528,Leones del Norte
+246,1345405,Libertad
+246,519457,Delfin
+246,162922,Manta
+519,80591,Zamalek SC
+519,517894,Pyramids FC
+519,101745,Al Ahly SC
+519,608449,Ceramica Cleopatra
+519,101762,Al Masry SC
+519,101754,ENPPI
+519,205189,Smouha SC
+519,205190,Wadi Degla FC
+519,585662,ZED FC
+519,687954,National Bank
+519,178268,El Gouna FC
+519,103017,Petrojet
+519,101752,Ghazl Al Mahalla
+519,101757,Al Mokawloon Al Arab
+519,101747,Tala'ea El Gaish
+519,797212,Modern Sport FC
+519,101766,Al Ittihad Alexandria
+519,316480,Kahrbaa Ismailia
+519,101767,Haras El Hodoud
+519,581345,Pharco FC
+519,101746,Ismaily SC
+47,9825,Arsenal
+47,8456,Manchester City
+47,10260,Manchester United
+47,10252,Aston Villa
+47,8650,Liverpool
+47,8678,AFC Bournemouth
+47,8472,Sunderland
+47,10204,Brighton & Hove Albion
+47,9937,Brentford
+47,8455,Chelsea
+47,9879,Fulham
+47,10261,Newcastle United
+47,8668,Everton
+47,8463,Leeds United
+47,9826,Crystal Palace
+47,10203,Nottingham Forest
+47,8586,Tottenham Hotspur
+47,8654,West Ham United
+47,8191,Burnley
+47,8602,Wolverhampton Wanderers
+48,8669,Coventry City
+48,9902,Ipswich Town
+48,10004,Millwall
+48,8466,Southampton
+48,8549,Middlesbrough
+48,8667,Hull City
+48,9841,Wrexham
+48,10170,Derby County
+48,9850,Norwich City
+48,8658,Birmingham City
+48,10003,Swansea City
+48,8427,Bristol City
+48,8657,Sheffield United
+48,8411,Preston North End
+48,10172,Queens Park Rangers
+48,9817,Watford
+48,10194,Stoke City
+48,8462,Portsmouth
+48,8451,Charlton Athletic
+48,8655,Blackburn Rovers
+48,8659,West Bromwich Albion
+48,8653,Oxford United
+48,8197,Leicester City
+48,10163,Sheffield Wednesday
+108,8430,Lincoln City
+108,8344,Cardiff City
+108,10007,Stockport County
+108,8484,Bradford City
+108,8559,Bolton Wanderers
+108,10253,Stevenage
+108,8346,Luton Town
+108,8401,Plymouth Argyle
+108,9796,Huddersfield Town
+108,9818,Mansfield Town
+108,8676,Wycombe Wanderers
+108,9798,Reading
+108,8483,Blackpool
+108,9903,Doncaster Rovers
+108,8283,Barnsley
+108,8528,Wigan Athletic
+108,9792,Burton Albion
+108,8677,Peterborough United
+108,158319,AFC Wimbledon
+108,8351,Leyton Orient
+108,9833,Exeter City
+108,9799,Port Vale
+108,8119,Rotherham United
+108,8651,Northampton Town
+109,45729,Bromley
+109,8645,Milton Keynes Dons
+109,9834,Cambridge United
+109,282326,Salford City
+109,9819,Notts County
+109,9786,Chesterfield
+109,10005,Grimsby Town
+109,8175,Barnet
+109,9795,Swindon Town
+109,9785,Oldham Athletic
+109,9784,Crewe Alexandra
+109,8416,Colchester United
+109,10006,Walsall
+109,10104,Bristol Rovers
+109,45723,Fleetwood Town
+109,8671,Accrington Stanley
+109,10173,Gillingham
+109,8680,Cheltenham Town
+109,9896,Shrewsbury Town
+109,10262,Newport County
+109,8313,Tranmere Rovers
+109,8647,Crawley Town
+109,7946,Harrogate Town
+109,6350,Barrow
+9084,773652,Chelsea U21
+9084,1070257,Manchester United U21
+9084,860800,Manchester City U21
+9084,860801,Fulham U21
+9084,1796115,Ipswich Town U21
+9084,773645,Southampton U21
+9084,1070259,Liverpool U21
+9084,860802,Tottenham Hotspur U21
+9084,773642,Leicester City U21
+9084,1267874,Crystal Palace U21
+9084,1070261,Aston Villa U21
+9084,773678,Brighton & Hove Albion U21
+9084,773649,West Ham United U21
+9084,950214,Arsenal U21
+9084,773657,Sunderland U21
+9084,773660,Middlesbrough U21
+9084,1389162,Nottingham Forest U21
+9084,773653,Everton U21
+9084,773686,Reading U21
+9084,773650,Stoke City U21
+9084,860798,Newcastle United U21
+9084,773683,Wolverhampton Wanderers U21
+9084,773658,Norwich City U21
+9084,773680,Derby County U21
+9084,1177187,Leeds United U21
+9084,773656,West Bromwich Albion U21
+9084,1796111,Birmingham U21
+9084,773685,Blackburn Rovers U21
+9084,1796112,Burnley U21
+51,6550,FC Inter Turku
+51,4449,AC Oulu
+51,1693,KuPS
+51,9861,HJK
+51,2361,IF Gnistan
+51,6597,VPS
+51,6633,TPS
+51,162146,Ilves
+51,8424,FC Lahti
+51,162162,SJK
+51,8473,FF Jaro
+51,6634,IFK Mariehamn
+53,9847,Paris Saint-Germain
+53,8588,Lens
+53,8639,Lille
+53,9748,Lyon
+53,8592,Marseille
+53,9851,Rennes
+53,9829,Monaco
+53,9848,Strasbourg
+53,9941,Toulouse
+53,8689,Lorient
+53,6379,Paris FC
+53,8521,Brest
+53,8121,Angers
+53,9746,Le Havre
+53,8583,Auxerre
+53,9831,Nice
+53,9830,Nantes
+53,8550,Metz
+110,10242,Troyes
+110,8682,Le Mans
+110,9853,Saint-Etienne
+110,6390,Red Star
+110,4120,Rodez
+110,9837,Reims
+110,293352,Annecy FC
+110,10249,Montpellier
+110,6355,Pau
+110,47214,Dunkerque
+110,9747,Guingamp
+110,9855,Grenoble
+110,8311,Clermont Foot
+110,8481,Nancy
+110,4170,Boulogne
+110,7853,Laval
+110,7794,SC Bastia
+110,8587,Amiens
+54,9823,Bayern MÃ¼nchen
+54,9789,Borussia Dortmund
+54,178475,RB Leipzig
+54,10269,VfB Stuttgart
+54,8226,Hoffenheim
+54,8178,Bayer Leverkusen
+54,8358,Freiburg
+54,9810,Eintracht Frankfurt
+54,8406,Augsburg
+54,9905,Mainz 05
+54,8149,Union Berlin
+54,9788,Borussia MÃ¶nchengladbach
+54,9790,Hamburger SV
+54,8722,1. FC KÃ¶ln
+54,8697,Werder Bremen
+54,8721,Wolfsburg
+54,94937,FC Heidenheim
+54,8152,St. Pauli
+146,10189,Schalke 04
+146,8232,Elversberg
+146,8460,Paderborn
+146,9904,Hannover 96
+146,8262,Darmstadt
+146,8350,Kaiserslautern
+146,8177,Hertha BSC
+146,8165,1. FC NÃ¼rnberg
+146,9911,Bochum
+146,8295,Karlsruher SC
+146,8480,Dynamo Dresden
+146,8150,Holstein Kiel
+146,9912,Arminia Bielefeld
+146,8188,Magdeburg
+146,9776,Eintracht Braunschweig
+146,8357,Greuther FÃ¼rth
+146,8194,Fortuna DÃ¼sseldorf
+146,8171,Preussen MÃ¼nster
+208,9775,VfL OsnabrÃ¼ck
+208,8398,Energie Cottbus
+208,8296,RW Essen
+208,8293,MSV Duisburg
+208,8294,Hansa Rostock
+208,7783,SC Verl
+208,8396,Alemannia Aachen
+208,9753,1860 MÃ¼nchen
+208,8196,Wehen Wiesbaden
+208,9743,Waldhof Mannheim
+208,276267,Viktoria KÃ¶ln 1904
+208,8234,Ingolstadt
+208,7789,Jahn Regensburg
+208,8458,VfB Stuttgart II
+208,8271,SaarbrÃ¼cken
+208,94940,Hoffenheim II
+208,89338,TSV Havelse
+208,8319,Erzgebirge Aue
+208,8201,Ulm
+208,7780,FC Schweinfurt
+135,8563,AEK Athens
+135,8638,Olympiacos
+135,8619,PAOK Thessaloniki
+135,10200,Panathinaikos
+135,8239,Aris Thessaloniki
+135,4493,Levadiakos
+135,7753,OFI Crete
+135,885256,NFC Volos
+135,10187,Atromitos
+135,488099,Kifisia FC
+135,80654,Asteras Tripolis
+135,162386,Panetolikos
+135,8120,AE Larissa
+135,104814,Panserraikos FC
+215,6017,Vikingur Reykjavik
+215,8130,KR Reykjavik
+215,6291,Fram Reykjavik
+215,8332,Breidablik
+215,8064,Valur
+215,8004,IA Akranes
+215,4472,Keflavik
+215,6343,Stjarnan
+215,8299,IBV Vestmannaeyjar
+215,2165,KA Akureyri
+215,4496,Thor Akureyri
+215,8151,FH Hafnarfjordur
+9478,165184,East Bengal FC
+9478,578651,Mohun Bagan SG
+9478,578655,Mumbai City FC
+9478,485935,Bengaluru FC
+9478,589749,Punjab FC
+9478,873038,Jamshedpur FC
+9478,578650,FC Goa
+9478,578654,Kerala Blasters FC
+9478,578656,Northeast United FC
+9478,1562126,Inter Kashi
+9478,1086744,SC Delhi
+9478,578653,Odisha FC
+9478,578652,Chennaiyin FC
+9478,165187,Mohammedan SC
+126,4131,Shamrock Rovers
+126,1854,St. Patrick's Athletic
+126,1853,Dundalk
+126,4594,Bohemian FC
+126,5751,Shelbourne
+126,8338,Derry City
+126,520517,Galway United FC
+126,8339,Drogheda United
+126,6361,Sligo Rovers
+126,6042,Waterford FC
+55,8636,Inter
+55,9875,Napoli
+55,8686,Roma
+55,10171,Como
+55,8564,Milan
+55,9885,Juventus
+55,8524,Atalanta
+55,9857,Bologna
+55,8543,Lazio
+55,8600,Udinese
+55,7943,Sassuolo
+55,9804,Torino
+55,10167,Parma
+55,8529,Cagliari
+55,8535,Fiorentina
+55,10233,Genoa
+55,9888,Lecce
+55,7801,Cremonese
+55,9876,Hellas Verona
+55,6479,Pisa
+86,7881,Venezia
+86,9891,Frosinone
+86,6504,Monza
+86,8540,Palermo
+86,10168,Catanzaro
+86,9887,Modena
+86,6106,Juve Stabia
+86,6722,Avellino
+86,9889,Mantova
+86,583944,Padova
+86,584022,Cesena
+86,6488,Carrarese
+86,9882,Sampdoria
+86,208932,Virtus Entella
+86,8534,Empoli
+86,189475,SÃ¼dtirol
+86,9976,Bari
+86,6500,Reggiana
+86,9881,Spezia
+86,9878,Pescara
+223,8270,Avispa Fukuoka
+223,4692,Cerezo Osaka
+223,4399,FC Tokyo
+223,164739,Fagiano Okayama FC
+223,6582,Gamba Osaka
+223,9756,JEF United Chiba
+223,4397,Kashima Antlers
+223,8699,Kashiwa Reysol
+223,6304,Kawasaki Frontale
+223,8542,Kyoto Sanga FC
+223,194011,Machida Zelvia
+223,162195,Mito Hollyhock
+223,8006,Nagoya Grampus
+223,6224,Sanfrecce Hiroshima
+223,4426,Shimizu S-Pulse
+223,6223,Tokyo Verdy
+223,6244,Urawa Red Diamonds
+223,194016,V-Varen Nagasaki
+223,4688,Vissel Kobe
+223,6581,Yokohama F.Marinos
+232,2245,Sutjeska
+232,175653,Mornar
+232,8101,Petrovac
+232,8100,Decic Tuzi
+232,8627,Buducnost Podgorica
+232,1264989,OFK Mladost Donja Gorica
+232,324771,FK Arsenal Tivat
+232,141667,Jezero
+232,89512,FK Bokelj
+232,4489,Jedinstvo BP
+57,8640,PSV Eindhoven
+57,10235,Feyenoord
+57,8464,NEC Nijmegen
+57,8611,FC Twente
+57,8593,Ajax
+57,9908,FC Utrecht
+57,10229,AZ Alkmaar
+57,10228,SC Heerenveen
+57,8674,FC Groningen
+57,8614,Sparta Rotterdam
+57,6422,Fortuna Sittard
+57,6433,Go Ahead Eagles
+57,10218,Excelsior
+57,6414,Telstar
+57,6413,PEC Zwolle
+57,6601,FC Volendam
+57,9761,NAC Breda
+57,9791,Heracles
+111,10217,ADO Den Haag
+111,7788,Cambuur
+111,8525,Willem II
+111,8526,De Graafschap
+111,4116,Almere City FC
+111,10219,RKC Waalwijk
+111,455494,Jong PSV
+111,9803,Roda JC Kerkrade
+111,9835,FC Den Bosch
+111,6631,FC Dordrecht
+111,6416,FC Eindhoven
+111,278960,Jong FC Utrecht
+111,9839,VVV-Venlo
+111,6660,FC Emmen
+111,8277,Vitesse
+111,7781,TOP Oss
+111,681217,Jong AZ Alkmaar
+111,6417,Helmond Sport
+111,9838,MVV Maastricht
+111,163363,Jong Ajax
+59,8478,Viking
+59,8608,TromsÃ¸
+59,8402,BodÃ¸/Glimt
+59,8476,LillestrÃ¸m
+59,9917,Molde
+59,8448,Hamarkameratene
+59,8509,Sarpsborg 08
+59,8609,Sandefjord
+59,8007,VÃ¥lerenga
+59,8417,Fredrikstad
+59,8468,Brann
+59,2305,KFUM
+59,8404,Aalesund
+59,8605,Kristiansund
+59,8422,Rosenborg
+59,9919,Start
+199,49688,2 de Mayo
+199,6295,Cerro Porteno
+199,1893,Guarani
+199,6620,Libertad
+199,49689,Nacional
+199,6619,Olimpia
+199,1427854,Recoleta
+199,162557,Rubio Nu
+199,1242560,Sportivo Ameliano
+199,49687,Luqueno
+199,198186,Sportivo San Lorenzo
+199,59844,Sportivo Trinidense
+131,1104719,Asociacion Deportiva Tarma
+131,4410,Alianza Atletico
+131,6398,Alianza Lima
+131,920789,Atletico Grau
+131,1845,Cienciano
+131,536945,Comerciantes Unidos
+131,305171,Cusco FC
+131,920788,Deportivo Garcilaso
+131,1573140,Club Deportivo Moquegua
+131,1696744,FC Cajamarca
+131,1573153,ADC Juan Pablo II
+131,741328,Los Chankas
+131,4417,FBC Melgar
+131,4412,Sport Boys
+131,165148,Sport Huancayo
+131,1848,Sporting Cristal
+131,425692,CD UT Cajamarca
+131,4409,Universitario de Deportes
+196,2182,Lech PoznaÅ„
+196,8020,GÃ³rnik Zabrze
+196,1957,Jagiellonia BiaÅ‚ystok
+196,4024,RakÃ³w CzÄ™stochowa
+196,4023,GKS Katowice
+196,8673,Legia Warszawa
+196,8021,ZagÅ‚Ä™bie Lubin
+196,8243,WisÅ‚a PÅ‚ock
+196,8023,PogoÅ„ Szczecin
+196,5769,Radomiak Radom
+196,8245,Korona Kielce
+196,89466,Motor Lublin
+196,2186,Cracovia
+196,8024,Widzew ÅÃ³dÅº
+196,8028,Piast Gliwice
+196,8030,Lechia GdaÅ„sk
+196,8322,Arka Gdynia
+196,177361,Termalica Nieciecza
+61,9773,FC Porto
+61,9768,Sporting CP
+61,9772,Benfica
+61,10264,Braga
+61,1634,Famalicao
+61,9764,Gil Vicente
+61,8348,Moreirense
+61,158085,Arouca
+61,7844,Vitoria de Guimaraes
+61,7842,Estoril
+61,9780,Alverca
+61,7841,Rio Ave
+61,1567,Santa Clara
+61,10214,Nacional
+61,1074320,Estrela da Amadora
+61,212821,Casa Pia AC
+61,188163,Tondela
+61,1889,AVS Futebol SAD
+189,480286,Universitatea Craiova
+189,89022,Universitatea Cluj
+189,9731,CFR Cluj
+189,10271,Dinamo Bucuresti
+189,9738,Rapid Bucuresti
+189,9732,FC Arges Pitesti
+189,584663,UTA Arad
+189,9723,FCSB
+189,9736,Otelul Galati
+189,583690,Csikszereda Miercurea Ciuc
+189,188191,Botosani
+189,864269,Hermannstadt
+189,188187,Petrolul Ploiesti
+189,210132,FCV Farul Constanta
+189,364411,FC Unirea Slobozia
+189,404509,FC Metaloglobus Bucuresti
+63,8698,Zenit St. Petersburg
+63,168719,FC Krasnodar
+63,8710,Lokomotiv Moscow
+63,8643,Spartak Moscow
+63,9760,CSKA Moscow
+63,49694,Baltika
+63,9763,Dinamo Moscow
+63,8683,Rubin Kazan
+63,8708,FK Akhmat
+63,8705,FC Rostov
+63,8709,Krylya Sovetov Samara
+63,132286,FC Orenburg
+63,1068364,Akron Togliatti
+63,1068353,Dynamo Makhachkala
+63,657508,Nizhny Novgorod
+63,195601,PFC Sochi
+64,9925,Celtic
+64,9860,Hearts
+64,8548,Rangers
+64,9927,Motherwell
+64,10251,Hibernian
+64,8596,Falkirk
+64,9938,Dundee United
+64,8284,Dundee FC
+64,8485,Aberdeen
+64,8597,Kilmarnock
+64,9800,St. Mirren
+64,8282,Livingston
+182,568569,FK IMT Beograd
+182,6410,Radnicki Nis
+182,1739,Mladost Lucani
+182,1675,FK Radnicki 1923
+182,676140,TSC Backa Topola
+182,2391,Javor
+182,176525,FK Spartak Subotica
+182,6050,Napredak
+182,8687,FK Crvena Zvezda
+182,6406,Vojvodina
+182,7998,Partizan Beograd
+182,676141,Zeleznicar Pancevo
+182,187854,Novi Pazar
+182,8692,OFK Beograd
+182,463461,FK Radnik Surdulica
+182,6374,Cukaricki
+537,7866,Orlando Pirates
+537,4530,Mamelodi Sundowns FC
+537,6279,Kaizer Chiefs
+537,102100,AmaZulu FC
+537,612014,Sekhukhune United
+537,102097,Lamontville Golden Arrows
+537,149600,Polokwane City
+537,149599,Durban City
+537,207873,Stellenbosch FC
+537,102099,Siwelele
+537,866690,Richards Bay
+537,953498,TS Galaxy
+537,316438,Chippa United
+537,352390,Marumo Gallants
+537,429859,Magesi FC
+537,915983,Orbit College
+9080,92630,FC Seoul
+9080,133896,Ulsan HD FC
+9080,46038,Jeonbuk Hyundai Motors FC
+9080,164734,Gangwon FC
+9080,109373,Pohang Steelers
+9080,133895,Incheon United
+9080,429440,FC Anyang
+9080,133898,Jeju SK
+9080,429441,Bucheon FC 1995
+9080,133900,Daejeon Hana Citizen
+9080,133901,Gimcheon Sangmu
+9080,245905,Gwangju FC
+9116,6092,Busan I'Park
+9116,88517,Suwon Samsung Bluewings
+9116,616212,Seoul E-Land FC
+9116,133897,Daegu FC
+9116,739800,Hwaseong FC
+9116,833649,Gimpo FC
+9116,187951,Suwon FC
+9116,429442,Chungnam Asan FC
+9116,187960,Cheonan City
+9116,6614,Seongnam FC
+9116,133899,Gyeongnam FC
+9116,739803,Paju Frontier
+9116,1897657,Yongin FC
+9116,833651,Cheongju FC
+9116,821875,Ansan Greeners
+9116,109377,Jeonnam Dragons
+9116,187953,Gimhae FC 2008
+87,8634,Barcelona
+87,8633,Real Madrid
+87,10205,Villarreal
+87,9906,Atletico Madrid
+87,8603,Real Betis
+87,9910,Celta Vigo
+87,8305,Getafe
+87,8370,Rayo Vallecano
+87,10267,Valencia
+87,8560,Real Sociedad
+87,8558,Espanyol
+87,8315,Athletic Club
+87,8302,Sevilla
+87,9866,Deportivo Alaves
+87,10268,Elche
+87,8581,Levante
+87,8371,Osasuna
+87,8661,Mallorca
+87,7732,Girona
+87,8670,Real Oviedo
+140,8696,Racing Santander
+140,9783,Deportivo La CoruÃ±a
+140,9865,Almeria
+140,9864,Malaga
+140,8306,Las Palmas
+140,10279,Castellon
+140,7876,Burgos CF
+140,8372,Eibar
+140,7869,Cordoba
+140,9869,Sporting Gijon
+140,357259,AD Ceuta FC
+140,8393,Albacete
+140,494050,FC Andorra
+140,7878,Granada
+140,161744,Real Sociedad B
+140,7854,Leganes
+140,10281,Real Valladolid
+140,8385,Cadiz
+140,4032,CD Mirandes
+140,96925,SD Huesca
+140,1753,Cultural Leonesa
+140,8394,Real Zaragoza
+67,6694,Sirius
+67,8428,HÃ¤cken
+67,8014,Elfsborg
+67,8248,Hammarby
+67,8297,GAIS
+67,8127,MjÃ¤llby
+67,8501,Brommapojkarna
+67,9802,DjurgÃ¥rden
+67,10237,MalmÃ¶ FF
+67,8349,AIK
+67,6194,VÃ¤sterÃ¥s SK
+67,6544,Degerfors
+67,9892,Kalmar FF
+67,9893,IFK GÃ¶teborg
+67,8310,Halmstads BK
+67,10002,Ã–rgryte
+69,10191,Thun
+69,10190,St. Gallen
+69,7896,Lugano
+69,10179,Sion
+69,9931,Basel
+69,10192,Young Boys
+69,10199,Luzern
+69,9777,Servette
+69,7730,Lausanne
+69,10243,FC ZÃ¼rich
+69,9956,Grasshopper
+69,7894,Winterthur
+163,9824,FC Vaduz
+163,9930,Aarau
+163,6447,Yverdon
+163,289334,FC Stade Lausanne-Ouchy
+163,7955,Xamax
+163,185504,FC Rapperswil-Jona
+163,1594,Etoile Carouge
+163,10175,Wil
+163,2442,Stade Nyonnais
+163,6493,Bellinzona
+8984,165243,Buriram United
+8984,165255,Port FC
+8984,421346,Ratchaburi FC
+8984,165250,BG Pathum United
+8984,102231,Bangkok United
+8984,585025,Prachuap FC
+8984,243243,Chiangrai United
+8984,109378,Chonburi FC
+8984,584984,Rayong FC
+8984,1110271,Ayutthaya United FC
+8984,561565,Uthai Thani FC
+8984,584947,Lamphun Warrior
+8984,584943,Sukhothai FC
+8984,165251,Muang Thong United
+8984,554037,Nakhon Ratchasima FC
+8984,1513933,Kanchanaburi Power
+71,8637,Galatasaray
+71,8695,FenerbahÃ§e
+71,9752,Trabzonspor
+71,10188,BeÅŸiktaÅŸ
+71,1933,BaÅŸakÅŸehir
+71,1925,GÃ¶ztepe
+71,9750,Samsunspor
+71,2166,Rizespor
+71,8622,Konyaspor
+71,1569,Kocaelispor
+71,4678,Alanyaspor
+71,4081,Gaziantep FK
+71,4685,KasÄ±mpaÅŸa
+71,7800,GenÃ§lerbirliÄŸi
+71,4681,EyÃ¼pspor
+71,1931,Antalyaspor
+71,10182,Kayserispor
+71,2088,Fatih KaragÃ¼mrÃ¼k
+165,281467,Erzurumspor FK
+165,96498,Amed Sportif
+165,863838,Esenler Erokspor
+165,357274,Ã‡orum FK
+165,658811,Bodrum FK
+165,95745,Pendikspor
+165,8387,KeÃ§iÃ¶rengÃ¼cÃ¼
+165,162975,BandÄ±rmaspor
+165,658812,Manisa Futbol KulÃ¼bÃ¼
+165,6265,Sivasspor
+165,106560,Istanbulspor
+165,2090,Sariyer
+165,1281818,Igdir FK
+165,146408,Van Spor KulÃ¼bÃ¼
+165,4675,Boluspor
+165,281460,Ãœmraniyespor
+165,914196,Serik Spor
+165,4124,Sakaryaspor
+165,95749,Hatayspor
+165,1926,Adana Demirspor
+538,102117,Al-Ain
+538,102119,Shabab Al-Ahli Dubai FC
+538,102111,Al-Wasl
+538,102101,Al-Jazira
+538,102122,Al-Wahda
+538,102123,Al-Nasr SC
+538,149994,Ajman
+538,102124,Sharjah Cultural Club
+538,149993,Khorfakkan
+538,182933,Baniyas
+538,209190,Al Ittihad Kalba
+538,102118,Al-Dhafra
+538,1112866,Al Bataeh
+538,391664,Dibba Al Fujairah
+130,915807,Nashville SC
+130,960720,Inter Miami CF
+130,6397,Chicago Fire FC
+130,6580,New England Revolution
+130,6514,Red Bull New York
+130,1323940,Charlotte FC
+130,722265,FC Cincinnati
+130,546238,New York City FC
+130,6602,DC United
+130,6001,Columbus Crew
+130,161195,CF Montreal
+130,267810,Orlando City
+130,56453,Toronto FC
+130,773958,Atlanta United
+130,191716,Philadelphia Union
+130,307691,Vancouver Whitecaps
+130,6603,San Jose Earthquakes
+130,6606,Real Salt Lake
+130,6399,FC Dallas
+130,867280,Los Angeles FC
+130,130394,Seattle Sounders FC
+130,8259,Houston Dynamo FC
+130,207242,Minnesota United
+130,6637,LA Galaxy
+130,1701119,San Diego FC
+130,8314,Colorado Rapids
+130,1427963,St. Louis City
+130,307690,Portland Timbers
+130,1218886,Austin FC
+130,6604,Sporting Kansas City
+8972,197328,Tampa Bay Rowdies
+8972,162183,Charleston Battery
+8972,540855,Detroit City FC
+8972,614316,Louisville City FC
+8972,267816,Pittsburgh Riverhounds SC
+8972,1003206,Hartford Athletic
+8972,514649,Indy Eleven
+8972,721896,Miami FC
+8972,1597140,Rhode Island FC
+8972,1003207,Birmingham Legion FC
+8972,1003205,Loudoun United FC
+8972,1877733,Brooklyn
+8972,1737991,Sporting JAX
+8972,267813,Orange County SC
+8972,1130413,Oakland Roots SC
+8972,722269,San Antonio FC
+8972,614325,FC Tulsa
+8972,1003208,New Mexico United
+8972,424268,Phoenix Rising FC
+8972,614321,Colorado Springs Switchbacks FC
+8972,1003209,El Paso Locomotive FC
+8972,521004,Sacramento Republic FC
+8972,915809,Las Vegas Lights FC
+8972,1430405,Lexington SC
+8972,915808,Monterey Bay FC
+9296,1121685,Union Omaha
+9296,1358088,One Knoxville SC
+9296,614315,Charlotte Independence
+9296,1701876,AV Alta
+9296,1877675,Boise
+9296,1358072,Fort Wayne
+9296,1004919,Forward Madison FC
+9296,1584038,Spokane Velocity FC
+9296,1701877,FC Naples
+9296,1004918,Chattanooga Red Wolves SC
+9296,1448561,Sarasota Paradise
+9296,1706430,Westchester SC
+9296,1701883,Portland Hearts of Pine
+9296,1128317,Corpus Christi
+9296,267811,Richmond Kickers
+9296,1004920,Greenville Triumph SC
+9296,422694,Cosmos
+10282,1348126,Columbus Crew 2
+10282,1451868,Crown Legacy FC
+10282,614318,Red Bull New York  II
+10282,722266,Orlando City B
+10282,1121686,New England Revolution II
+10282,540884,Chattanooga FC
+10282,915806,Atlanta United 2
+10282,1348108,New York City FC II
+10282,614319,Toronto FC II
+10282,1348118,Chicago Fire FC II
+10282,722264,Philadelphia Union II
+10282,1880719,Connecticut United
+10282,1445755,Huntsville City FC
+10282,1610955,Carolina Core FC
+10282,1348109,FC Cincinnati 2
+10282,1348111,Inter Miami CF II
+10282,1451870,Austin FC II
+10282,1348104,Houston Dynamo 2
+10282,614322,Portland Timbers 2
+10282,1346404,St. Louis City 2
+10282,521005,Ventura County FC
+10282,1348105,Minnesota United 2
+10282,1348115,San Jose Earthquakes II
+10282,614324,Real Monarchs SLC
+10282,1451871,Los Angeles FC II
+10282,614327,Tacoma Defiance
+10282,1004921,North Texas SC
+10282,614326,Vancouver Whitecaps 2
+10282,722268,Sporting Kansas City II
+10282,1348103,Colorado Rapids 2
+536,101918,Al Nassr FC
+536,2529,Al Hilal
+536,2530,Al Ahli
+536,101919,Al Qadsiah
+536,8577,Al Ittihad
+536,205686,Al-Taawoun
+536,101915,Al-Ettifaq
+536,1699505,Neom SC
+536,101911,Al Hazem
+536,582749,Al-Fayha
+536,177356,Al Fateh FC
+536,550433,Al Khaleej
+536,101916,Al Shabab
+536,1523706,Al Kholood
+536,582739,Al Riyadh
+536,582823,Damac FC
+536,582759,Al Akhdoud
+536,1523707,Al Najma
+10721,150414,Abha
+10721,205687,Al-Faisaly
+10721,1787233,Al Diriyah
+10721,1793879,Al-Ula FC
+10721,463259,Al-Orobah FC
+10721,1115133,Al Jabalain
+10721,150413,Al-Raed
+10721,1699506,Al-Zulfi
+10721,101917,Al Taee
+10721,6354,Al-Wehda
+10721,1017726,Al Bukayriyah
+10721,1896040,Al Anwar
+10721,1017737,Jeddah
+10721,582816,Al-Adalah
+10721,1652183,Al-Jandal
+10721,582752,Al Batin
+10721,1115137,Al Arabi
+10721,1699507,Al-Jubail
+176,6019,Slovan Bratislava
+176,103598,DAC 1904 Dunajska Streda
+176,4662,Spartak Trnava
+176,6022,Zilina
+176,9899,Zemplin Michalovce
+176,2437,Zeleziarne Podbrezova
+176,969268,FC Kosice
+176,6496,Trencin
+176,555292,Skalica
+176,10186,Ruzomberok
+176,611956,Komarno
+176,8010,Tatran Presov
+176,6019,Slovan Bratislava
+176,103598,DAC 1904 Dunajska Streda
+176,6022,Zilina
+176,4662,Spartak Trnava
+176,2437,Zeleziarne Podbrezova
+176,9899,Zemplin Michalovce
+176,10186,Ruzomberok
+176,969268,FC Kosice
+176,6496,Trencin
+176,611956,Komarno
+176,8010,Tatran Presov
+176,555292,Skalica
+260,10034,Vllaznia
+260,10038,Elbasani
+260,10039,Egnatia
+260,10027,FC Dinamo City
+260,10028,Partizani
+260,10029,KF Tirana
+260,585403,Vora
+260,10037,Teuta Durres
+260,10026,Bylis
+260,10030,Flamurtari
+516,6353,MC Alger
+516,316399,JS Saoura
+516,101633,CR Belouizdad
+516,101636,MC Oran
+516,101630,JS Kabylie
+516,1660716,Olympique Akbou
+516,1387869,USM Khenchela
+516,277392,CS Constantine
+516,1531341,ES Ben Aknoun
+516,101628,USM Alger
+516,45655,ES SÃ©tif
+516,1792386,MB Rouissat
+516,101629,ASO Chlef
+516,316408,Paradou AC
+516,316402,ES Mostaganem
+516,1387865,MC El Bayadh
+8965,213530,Deportivo Moron
+8965,161733,Ferro Carril Oeste
+8965,10097,Los Andes
+8965,10088,Colon
+8965,568706,Deportivo Madryn
+8965,1239548,Ciudad de Bolivar
+8965,207874,Almirante Brown
+8965,213523,Club AtlÃ©tico Estudiantes
+8965,10227,Godoy Cruz
+8965,581826,CA San Miguel
+8965,213522,San Telmo
+8965,213603,CA Defensores de Belgrano
+8965,213592,Racing de Cordoba
+8965,161732,All Boys
+8965,213597,Central Norte
+8965,213529,Acassuso
+8965,568714,Club Atletico Mitre
+8965,465716,CA Chaco For Ever
+8965,10095,Gimnasia Jujuy
+8965,213525,Atlanta
+8965,213528,Tristan Suarez
+8965,213531,Temperley
+8965,425965,CA Ferrocarril Midland
+8965,10085,Atletico Rafaela
+8965,89395,San Martin San Juan
+8965,213535,Colegiales
+8965,146371,San Martin de Tucuman
+8965,213590,Deportivo Maipu
+8965,10099,Almagro
+8965,10226,Quilmes
+8965,10091,Nueva Chicago
+8965,276511,Gimnasia y Tiro
+8965,207875,Patronato de Parana
+8965,10093,Chacarita Juniors
+8965,719912,Atletico Guemes
+8965,769348,Agropecuario
+9213,298633,Excursionistas
+9213,10098,Arsenal Sarandi
+9213,298630,Villa Dalmine
+9213,581805,CA Talleres Remedios de Escalada
+9213,837624,CASD Camioneros
+9213,213533,Sportivo Italiano
+9213,1018433,Real Pilar
+9213,213536,Comunicaciones
+9213,178272,Deportivo Merlo
+9213,581825,San Martin Burzaco
+9213,213527,Deportivo Armenio
+9213,581809,Argentino de Merlo
+9213,581808,Laferrere
+9213,581807,Argentino de Quilmes
+9213,581822,CS Deportivo Liniers
+9213,581802,Dock Sud
+9213,425967,CA Defensores Unidos
+9213,213537,Flandria
+9213,425968,CD UAI Urquiza
+9213,213532,Brown de Adrogue
+9213,213526,Villa San Carlos
+9213,581820,Ituzaingo
+9213,213593,Sportivo Belgrano
+9213,213541,Douglas Haig
+9213,1723190,Gimnasia y Esgrima de Chivilcoy
+9213,278653,Defensores de Belgrano de Villa Ramallo
+9213,622756,Sportivo Las Parejas
+9213,213595,9 de Julio Rafaela
+9213,568723,Independiente Chivilcoy
+9213,1925627,Atletico Escobar
+9213,213599,Gimnasia y Esgrima de Concepcion
+9213,1442522,El Linqueno
+9213,1723191,CA Bartolome Mitre
+9213,739766,San Martin de Formosa
+9213,568718,Sol de America Formosa
+9213,1618062,Sarmiento de La Banda
+9213,1925718,Tucuman Central
+9213,1925720,Defensores de Vilelas
+9213,213600,Juventud Antoniana
+9213,178273,Boca Unidos
+9213,298640,Sarmiento de Resistencia
+9213,213539,Club Cipolletti
+9213,1344071,Argentino Monte Maiz
+9213,1442519,Sportivo Atenas
+9213,927587,Deportivo Rincon
+9213,616460,Huracan Las Heras
+9213,1925738,Fundacion Amigos
+9213,1723154,Costa Brava
+9213,213588,Juventud Unida Universitario
+9213,1442518,San Martin Mendoza
+9213,354496,CA Alvarado
+9213,10100,Olimpo
+9213,1618060,Kimberley
+9213,837626,Sol de Mayo
+9213,213550,Villa Mitre
+9213,1442515,Germinal
+9213,203830,Santamarina
+9213,213542,Guillermo Brown
+9213,1076357,Circulo Deportivo
+118,866109,Ararat Armenia
+118,866111,FC Noah
+118,6345,Pyunik
+118,310094,Alashkert FC
+118,7979,Urartu FC
+118,1078400,Van
+118,1078402,BKMA
+118,1388663,Gandzasar
+118,2212,Ararat
+118,2211,Shirak
+119,9982,Austria Lustenau
+119,1907,SKN St. PÃ¶lten
+119,10053,Admira Wacker
+119,8274,Floridsdorfer AC
+119,1915,FC Liefering
+119,8326,SKU Amstetten
+119,2030,First Vienna FC
+119,10248,Austria Wien II
+119,206091,Austria Salzburg
+119,946908,SPG HOGO Wels
+119,1952,Rapid Wien II
+119,10009,SK Austria Klagenfurt
+119,9979,Kapfenberger SV
+119,1921,Sturm Graz II
+119,80619,SW Bregenz
+119,611179,SV Stripfing
+262,951893,Sabah FK
+262,7981,Qarabag FK
+262,4674,Turan Tovuz
+262,4617,FK Neftchi
+262,577619,Zira
+262,485832,Araz PFK
+262,213987,Sumqayit
+262,2103,Shamakhi FK
+262,1786024,Imisli FK
+262,8076,FK Qabala
+262,4150,FC Kapaz
+262,8045,Karvan FK
+10443,1118572,Bashundhara Kings
+10443,595524,Abahani Limited
+10443,1503795,Fortis
+10443,1503792,Bangladesh Police
+10443,1503794,Mohammedan
+10443,1503799,Rahmatgonj MFS
+10443,1598974,Brothers Union
+10443,1818323,PWD SC
+10443,1818322,Arambagh
+10443,1695974,Fakirerpool
+267,10116,Borac Banja Luka
+267,10107,Zrinjski Mostar
+267,10105,FK Sarajevo
+267,10122,FK Velez Mostar
+267,10112,Siroki Brijeg
+267,10108,Zeljeznicar
+267,10124,Radnik Bijeljina
+267,187928,Sloga Doboj
+267,10111,Posusje
+267,175797,Rudar Prijedor
+8971,7817,Guarani
+8971,197692,Brusque
+8971,6546,Paysandu SC
+8971,581832,Ferroviaria
+8971,104823,Ituano FC
+8971,581840,Inter de Limeira
+8971,1340094,Amazonas FC
+8971,172206,Caxias
+8971,9920,Santa Cruz
+8971,899260,Floresta
+8971,509487,Maringa FC
+8971,8631,Figueirense
+8971,197885,Ypiranga RS
+8971,198135,Volta Redonda
+8971,197792,Botafogo PB
+8971,197781,Maranhao
+8971,1320333,Barra FC
+8971,412808,Anapolis FC
+8971,162167,Confianca
+8971,197398,AO Itabaiana
+10290,7877,Bahia
+10290,7733,Vitoria
+10290,410824,EC Jacuipense
+10290,298336,Juazeirense
+10290,584242,Jequie
+10290,1694586,Porto SC
+10290,1322670,Barcelona de Ilheus
+10290,512258,Galicia EC
+10290,197707,Bahia de Feira
+10290,197706,Atletico Alagoinhas
+10291,109706,Vila Nova
+10291,197769,CRAC
+10291,1320846,Goiatuba SC
+10291,1422139,Inhumas
+10291,9862,Goias
+10291,1232706,Jataiense
+10291,412808,Anapolis FC
+10291,239122,Aparecidense
+10291,165545,Atletico GO
+10291,1696742,Ouvidorense
+10291,197770,Anapolina
+10291,1860737,Centro Oeste
+9464,1608540,Manauara
+9464,197682,Nacional AM
+9464,197603,Sao Raimundo RR
+9464,1918583,Monte Roraima
+9464,512379,Manaus FC
+9464,197604,GAS
+9464,1918576,Guapore
+9464,1236190,Porto Velho EC
+9464,197392,Araguaina
+9464,197384,Independencia
+9464,422123,Galvez EC
+9464,816426,Humaita SC
+9464,1756,Gama
+9464,162171,Luverdense
+9464,5758,Brasiliense
+9464,239122,Aparecidense
+9464,244236,Primavera
+9464,1422139,Inhumas
+9464,304653,Capital FC
+9464,1320846,Goiatuba SC
+9464,197654,Ceilandia
+9464,162173,Mixto
+9464,197821,Uniao Rondonopolis
+9464,197816,Operario VG
+9464,215633,Trem DC
+9464,162177,Aguia de Maraba
+9464,197782,Imperatriz
+9464,239707,Tuna Luso
+9464,197394,Tocantinopolis
+9464,215629,Oratorio
+9464,584281,Iguatu
+9464,410825,Maracana EC
+9464,197641,Parnahyba
+9464,162176,Sampaio Correa
+9464,197778,Moto Club MA
+9464,197777,Iape
+9464,197695,Ferroviario
+9464,197640,Piaui
+9464,1223501,Fluminense PI
+9464,710764,Altos
+9464,1696139,Tirol
+9464,696928,Atletico Cearense
+9464,109708,ABC
+9464,47387,America RN
+9464,1426346,Maguary
+9464,169361,Central SC
+9464,197791,Sousa
+9464,1699616,Laguna RN
+9464,197790,Treze
+9464,197403,Sergipe
+9464,1421409,Serra Branca
+9464,299701,Lagarto FC
+9464,1116984,Retro FC
+9464,584262,Decisao
+9464,239132,CS Alagoano
+9464,298336,Juazeirense
+9464,162164,ASA
+9464,410824,EC Jacuipense
+9464,197675,Clube Sociedade Esportiva
+9464,197706,Atletico Alagoinhas
+9464,197808,Uberlandia
+9464,104815,Betim EC
+9464,197769,CRAC
+9464,197611,Ivinhema
+9464,1696742,Ouvidorense
+9464,246244,Operario MS
+9464,197805,Democrata GV
+9464,414725,Tombense FC
+9464,197666,Vitoria ES
+9464,197659,Rio Branco ES
+9464,1694586,Porto SC
+9464,298451,Real Noroeste
+9464,6065,Portuguesa
+9464,581842,Agua Santa
+9464,581912,Portuguesa RJ
+9464,111689,America RJ
+9464,111117,Madureira RJ
+9464,1221708,Pouso Alegre
+9464,297804,XV de Piracicaba
+9464,163784,Noroeste
+9464,606359,Velo Clube
+9464,581903,Sampaio Correa RJ
+9464,238505,Nova Iguacu
+9464,1328537,Marica FC
+9464,1697960,Santa Catarina
+9464,197430,Cianorte
+9464,612190,FC Cascavel
+9464,197890,Sao Luiz
+9464,197689,Joinville
+9464,1320332,Guarany de Bage
+9464,1922597,Blumenau Esporte Clube
+9464,162172,Marcilio Dias
+9464,1320837,Sao Joseense
+9464,197889,EC Sao Jose
+9464,162165,Brasil de Pelotas
+9464,1223346,Azuriz
+270,8632,Levski Sofia
+270,944215,CSKA 1948
+270,210173,Ludogorets Razgrad
+270,10144,CSKA Sofia
+270,10129,Lokomotiv Plovdiv
+270,944173,Arda Kardzhali
+270,10141,Cherno More Varna
+270,10131,Botev Plovdiv
+270,187880,Botev Vratsa
+270,10128,PFC Lokomotiv Sofia 1929
+270,10134,Slavia Sofia
+270,10145,Spartak Varna
+270,312976,Septemvri Sofia
+270,10126,Beroe
+270,10140,Dobrudzha Dobrich
+270,46475,Montana
+9096,46474,Dunav Ruse
+9096,580286,Yantra
+9096,1651910,Fratria
+9096,10148,Vihren Sandanski
+9096,653823,PFC CSKA Sofia II
+9096,1503004,FC Chernomorets Burgas
+9096,10135,Etar
+9096,653822,Ludogorets Razgrad II
+9096,10139,Marek Dupnitsa
+9096,10143,Hebar
+9096,4488,Pirin Blagoevgrad
+9096,10137,Spartak Pleven
+9096,107356,Sportist Svoge
+9096,553809,Lokomotiv Gorna Oryahovitsa
+9096,675790,Sevlievo
+9096,10136,Minyor Pernik
+9096,10142,Belasitsa Petrich
+9126,1843,Cobreloa
+9126,1849,Santiago Wanderers
+9126,192433,San Marcos
+9126,4060,Deportes Temuco
+9126,6201,Antofagasta
+9126,191607,San Luis
+9126,4059,Puerto Montt
+9126,7843,Union Espanola
+9126,1264972,Deportes Recoleta
+9126,246503,Magallanes
+9126,192436,Deportes Copiapo
+9126,162905,Curico Unido
+9126,4061,Union San Felipe
+9126,162904,Deportes Iquique
+9126,584834,Deportes Santa Cruz
+9126,4057,Rangers
+9137,1623678,Guangdong GZ-Power
+9137,1623365,Shenzhen Juniors
+9137,835637,Nantong Zhiyun FC
+9137,1283246,Wuxi Wugo
+9137,1623699,Guangxi Hengchen
+9137,1242218,Nanjing City FC
+9137,737057,Dingnan United
+9137,1282988,Yanbian Longding
+9137,1623789,Shaanxi Union
+9137,585867,Ningbo Professional
+9137,6401,Changchun Yatai
+9137,1617860,Dalian K'un City
+9137,1282989,Foshan Nanshi
+9137,1282924,Shijiazhuang Gongfu
+9137,585797,Suzhou Dongwu
+9137,585808,Meizhou Hakka
+9125,193031,Atletico FC
+9125,193027,Barranquilla FC
+9125,193023,Boca Juniors de Cali
+9125,193032,Bogota FC
+9125,4407,Deportes Quindio
+9125,4402,Envigado
+9125,4400,Independiente Yumbo
+9125,192963,Internacional FC de Palmira
+9125,193033,Leones
+9125,721594,Orsomarso
+9125,193028,Patriotas
+9125,7731,Real Cartagena
+9125,193026,Real Cundinamarca
+9125,193022,Real Santander
+9125,193030,Tigres FC
+9125,4408,Union Magdalena
+121,49726,Club Sport Herediano
+121,6607,Deportivo Saprissa
+121,210220,AD Municipal Liberia
+121,49732,C.S. CartaginÃ©s
+121,6335,LD Alajuelense
+121,776638,Sporting FC
+121,49728,Deportiva San Carlos
+121,9935,Puntarenas FC
+121,49730,Municipal PÃ©rez ZeledÃ³n
+121,855904,Guadalupe FC
+136,8044,Omonia Nicosia
+136,7797,AEK Larnaca
+136,8003,Apollon Limassol
+136,2137,Pafos FC
+136,8621,APOEL Nicosia
+136,2136,Aris Limassol
+136,6243,Anorthosis
+136,2134,AEL Limassol
+136,154798,Omonia Aradippou
+136,1075325,Krasava Ypsonas FC
+136,5771,Olympiakos Nicosia
+136,184615,Akritas Chlorakas
+136,8334,Ethnikos Achnas
+136,4126,Enosis Paralimni
+9100,8590,Nea Salamis
+9100,468676,Karmiotissa Pano Polemidion
+9100,1282231,Omonia 29 Maiou
+9100,154796,PAEEK
+9100,88811,Doxa Katokopia
+9100,6704,Ayia Napa
+9100,154788,ASIL Lysi
+9100,154792,MEAP Nisou
+9100,154791,Chalkanoras Idaliou
+9100,1664990,Spartakos Kitiou
+9100,1793834,APEA Akrotiri
+9100,2135,Digenis Morphou
+9100,1793837,Iraklis Gerolakkou
+9100,626193,Ethnikos Latsion
+9100,331631,AEZ Zakakiou
+9100,154797,PO Achyronas-Onisilos
+253,1673,FC Zbrojovka Brno
+253,157007,FC Silon Taborsko
+253,106189,Artis Brno
+253,5733,Usti nad Labem
+253,1154238,Banik Ostrava B
+253,1672,Pribram
+253,1713,Opava
+253,6096,Zizkov
+253,1151541,Slavia Prague B
+253,175807,FC Vlasim
+253,279088,MFK Chrudim
+253,2404,Hanacka Slavia Kromeriz
+253,7840,SK Dynamo Ceske Budejovice
+253,358094,SK Prostejov
+253,1949,Vysocina Jihlava
+253,132215,Sparta Prague B
+239,9805,AB
+239,8615,Vendsyssel FF
+239,8112,NÃ¦stved
+239,9821,FC Roskilde
+239,9946,Thisted
+239,8097,HIK
+239,8108,Fremad Amager
+239,6678,VSK Aarhus
+239,9952,Skive
+239,8447,Brabrand
+239,88610,IshÃ¸j IF
+239,9843,FC HelsingÃ¸r
+240,457638,NykÃ¸bing FC
+240,175558,FA 2000
+240,8279,NÃ¦sby
+240,8227,BrÃ¸nshÃ¸j
+240,9959,VanlÃ¸se IF
+240,946241,HÃ¸rsholm UsserÃ¸d IK
+240,8252,HolbÃ¦k B&I
+240,8223,Sundby BK
+240,8250,Frem
+240,1644,Vejgaard
+240,2552,Odder Fodbold
+240,7912,IF Lyseng
+335,49742,CD FAS
+335,49744,Firpo
+335,49740,Alianza FC
+335,1783449,Inter FA
+335,179505,Municipal Limeno
+335,49739,CD Ãguila
+335,49746,Isidro Metapan
+335,1662005,CD Cacahuatique
+335,1280075,CD Platense Municipal
+335,49747,Hercules
+335,1525664,Fuerte San Francisco
+335,1783451,Zacatecoluca
+117,9916,York City
+117,8493,Rochdale
+117,10196,Carlisle United
+117,2488,Boreham Wood
+117,8412,Scunthorpe United
+117,8652,Southend United
+117,9828,Forest Green Rovers
+117,10195,FC Halifax Town
+117,8488,Hartlepool United
+117,8345,Woking
+117,10254,Tamworth
+117,8646,Boston United
+117,9915,Altrincham
+117,161801,Solihull Moors
+117,161812,Wealdstone
+117,10198,Yeovil Town
+117,161803,Eastleigh
+117,6189,Gateshead FC
+117,158316,Sutton United
+117,8465,Aldershot Town
+117,158321,Brackley Town
+117,8489,Morecambe
+117,5763,Braintree Town
+117,177067,Truro City
+8944,282396,AFC Fylde
+8944,865163,South Shields
+8944,10284,Kidderminster Harriers
+8944,8599,Macclesfield FC
+8944,161824,Buxton
+8944,580382,Scarborough Athletic
+8944,9797,Chester FC
+8944,5762,Merthyr Town
+8944,8598,Darlington
+8944,557101,Spennymoor Town FC
+8944,6315,AFC Telford United
+8944,161816,Marine
+8944,282390,Radcliffe
+8944,10197,Southport
+8944,274599,Chorley
+8944,9894,Worksop Town
+8944,161836,Oxford City
+8944,8717,Bedford Town
+8944,45731,King's Lynn Town
+8944,799249,Hereford
+8944,158390,Curzon
+8944,6258,Alfreton Town
+8944,674289,Peterborough Sports
+8944,5764,Leamington
+8944,282351,Worthing
+8944,4047,Hornchurch
+8944,10193,Torquay United
+8944,580438,Dorking Wanderers
+8944,161831,Hemel Hempstead
+8944,6314,Weston Super Mare
+8944,45725,Maidenhead United
+8944,8131,Maidstone United
+8944,9794,Ebbsfleet United
+8944,45724,Chelmsford
+8944,207145,Chesham United
+8944,275027,AFC Totton
+8944,8009,Dagenham & Redbridge
+8944,161808,Tonbridge Angels
+8944,105554,Horsham
+8944,6432,Slough Town
+8944,1114695,Salisbury
+8944,105552,Hampton & Richmond
+8944,7954,Farnborough
+8944,4454,Dover
+8944,6095,Bath City
+8944,7962,Chippenham Town
+8944,282365,Enfield Town
+8944,6627,Eastbourne Borough
+8947,1382661,Harborough Town FC
+8947,580400,Spalding United
+8947,1659622,Real Bedford
+8947,6647,Kettering Town FC
+8947,2260,Halesowen Town FC
+8947,282375,Needham Market
+8947,161800,Redditch United
+8947,129937,Quorn
+8947,6292,Worcester
+8947,158543,Leiston
+8947,459581,Stratford Town
+8947,161841,Banbury United
+8947,158320,Bury Town
+8947,865168,Alvechurch
+8947,161834,Stourbridge
+8947,4046,Bishop's Stortford
+8947,282333,Stamford AFC
+8947,953607,Bromsgrove Sporting
+8947,459582,St. Ives Town FC
+8947,238637,Barwell FC
+8947,338310,Royston Town
+8947,282349,AFC Sudbury
+8947,6093,Walton and Hersham
+8947,674293,Farnham Town
+8947,161833,Gloucester City
+8947,238635,Poole Town FC
+8947,879829,Berkhamsted
+8947,282360,Sholing
+8947,282503,Chertsey Town
+8947,282356,Gosport Borough
+8947,282505,Uxbridge
+8947,1767,Havant and Waterlooville
+8947,674304,Plymouth Parkway
+8947,626250,Bracknell Town
+8947,161839,Yate Town
+8947,582838,Hanwell Town
+8947,282358,Wimborne Town
+8947,282502,Taunton Town
+8947,45807,Basingstoke
+8947,158317,Evesham United
+8947,10221,Weymouth
+8947,158318,Dorchester Town
+8947,282363,Hungerford Town
+8947,2273,Tiverton
+8947,292923,Hebburn Town
+8947,9923,Hednesford
+8947,161822,FC United of Manchester
+8947,1186092,Warrington Rylands
+8947,1087122,Stockton Town
+8947,4451,Lancaster City
+8947,6450,Gainsborough
+8947,282510,Leek Town
+8947,580402,Cleethorpes Town
+8947,161818,Ashton United
+8947,1291005,Ilkeston Town
+8947,282395,Bamber Bridge
+8947,4096,Guiseley
+8947,282389,Warrington Town
+8947,161802,Hyde United
+8947,274600,Rushall Olympic
+8947,6195,Whitby
+8947,105553,Workington
+8947,161828,Prescot Cables
+8947,762783,Morpeth Town FC
+8947,177222,Stocksbridge Park Steels
+8947,6206,Folkestone Invicta
+8947,177063,Aveley
+8947,2261,Billericay
+8947,282368,Chatham Town
+8947,282343,Brentwood Town
+8947,161813,Dartford
+8947,177064,Cray Wanderers
+8947,282340,Burgess Hill Town
+8947,282508,Dulwich Hamlet
+8947,5767,Ramsgate
+8947,10174,St Albans
+8947,1071515,Chichester City FC
+8947,282369,Cheshunt
+8947,282373,Whitehawk
+8947,8679,Welling United
+8947,274594,Wingate & Finchley
+8947,8660,Lewes
+8947,161809,Carshalton Athletic
+8947,879819,Cray Valley Paper Mills
+8947,1186081,Hashtag United
+8947,282341,Potters Bar Town
+8947,6190,Canvey
+10176,773645,Southampton U21
+10176,1177187,Leeds United U21
+10176,1389162,Nottingham Forest U21
+10176,773656,West Bromwich Albion U21
+10176,1070261,Aston Villa U21
+10176,773658,Norwich City U21
+10176,773660,Middlesbrough U21
+10176,860798,Newcastle United U21
+10176,773657,Sunderland U21
+10176,773650,Stoke City U21
+10176,773680,Derby County U21
+10068,1113543,Manchester City U18
+10068,1113551,Manchester United U18
+10068,1113561,Newcastle United U18
+10068,1113547,Everton U18
+10068,1281661,Nottingham Forest U18
+10068,1113557,Middlesbrough U18
+10068,1113563,Sunderland U18
+10068,1113546,Liverpool U18
+10068,1113560,Blackburn Rovers U18
+10068,1113549,Derby County U18
+10068,1183384,Burnley U18
+10068,1183383,Leeds United U18
+10068,1113554,Wolverhampton Wanderers U18
+10068,1113556,Stoke City U18
+10068,1113552,Chelsea U18
+10068,1113562,Tottenham Hotspur U18
+10068,1113564,Aston Villa U18
+10068,1113555,Brighton & Hove Albion U18
+10068,1183385,Crystal Palace U18
+10068,1113548,West Bromwich Albion U18
+10068,1113567,Southampton U18
+10068,1113558,West Ham United U18
+10068,1113559,Leicester City U18
+10068,1113566,Arsenal U18
+10068,1113550,Fulham U18
+10068,1113569,Reading U18
+10068,1113570,Norwich City U18
+10068,1281663,Birmingham City U18
+10068,1791531,Ipswich Town U18
+248,1588,FCI Levadia
+248,8155,Flora Tallinn
+248,112484,Nomme JK Kalju
+248,163540,Paide Linnameeskond
+248,4147,Tammeka
+248,828265,Parnu JK Vaprus
+248,584714,Nomme United
+248,673053,Harju Jalgpallikool
+248,4146,FC Kuressaare
+248,2252,Narva Trans
+250,8110,NSI Runavik
+250,8106,Klaksvik
+250,8002,B36 Torshavn
+250,4666,Vikingur
+250,6652,HB Torshavn
+250,59854,AB Argir
+250,2227,EB/Streymur
+250,6700,B68 Toftir
+250,2228,SkÃ¡la
+250,167964,07 Vestur
+251,6701,FC KTP
+251,7870,Haka
+251,260273,PK-35
+251,2362,JIPPO
+251,1906,JÃ¤PS
+251,162142,EIF
+251,6003,MP
+251,2159,KÃ¤Pa
+251,741816,SJK Akatemia
+251,2160,Klubi 04
+8969,7932,Tampere United
+8969,1576,RoPS
+8969,4446,OLS
+8969,4673,JJK JyvÃ¤skylÃ¤
+8969,162150,SalPa
+8969,162141,PK Keski-Uusimaa
+8969,1970,FC Jazz
+8969,1027302,VJS
+8969,616809,FC Inter Turku II
+8969,1340078,KuPS Akatemia
+8969,49577,TPV
+8969,4450,KPV
+8970,9836,Dijon
+8970,9874,Sochaux
+8970,8582,Rouen
+8970,238687,FC Fleury 91
+8970,191111,Versailles
+8970,47211,OrlÃ©ans
+8970,293257,Le Puy
+8970,7819,Caen
+8970,47207,Concarneau
+8970,9873,Valenciennes
+8970,293443,SC Aubagne Air Bel
+8970,161694,Villefranche Beaujolais
+8970,2517,Quevilly
+8970,238671,Paris 13 Atletico
+8970,6246,Bourg en Bresse Peronnas
+8970,9854,Chateauroux
+8970,685213,Stade Briochin
+439,321780,FC Rustavi
+439,480291,Iberia 1999
+439,7755,Dinamo Tbilisi
+439,6193,Dinamo Batumi
+439,2216,Torpedo Kutaisi
+439,316432,FC Samgurali Tskhaltubo
+439,2217,Dila Gori
+439,1328532,Spaeri
+439,154186,FC Gagra
+439,316427,FC Meshakhte Tkibuli
+512,7786,Fortuna KÃ¶ln
+512,7782,Oberhausen
+512,8198,Schalke 04 II
+512,6200,FC GÃ¼tersloh
+512,8395,Borussia Dortmund II
+512,8278,Borussia MÃ¶nchengladbach II
+512,9757,Sportfreunde Siegen
+512,657648,SC Paderborn 07 II
+512,95047,Bonner SC
+512,8459,FC KÃ¶ln II
+512,95103,Sportfreunde Lotte
+512,95052,Fortuna DÃ¼sseldorf II
+512,557692,FC Bocholt
+512,8200,Bochum II
+512,465376,SV RÃ¶dinghausen
+512,95106,SC WiedenbrÃ¼ck
+512,8142,Wuppertal
+512,2564,Velbert
+512,79904,Meppen
+512,145626,SV Drochtersen/Assel
+512,79905,Oldenburg
+512,343377,SSV Jeddeloh
+512,1072445,1. FC PhÃ¶nix LÃ¼beck
+512,8167,Hannover 96 II
+512,145705,Bremer SV
+512,8192,Kickers Emden
+512,177082,SC Weiche Flensburg
+512,8187,Hamburger SV II
+512,8663,LÃ¼beck
+512,8162,Werder Bremen II
+512,765375,HSC Hannover
+512,1381258,SchÃ¶ningen
+512,145723,Eintracht Norderstedt
+512,4478,St. Pauli II
+512,1168410,Blau-Weiss Lohne
+512,94931,Altonaer FC 93
+512,145597,Lokomotive Leipzig
+512,8320,Carl Zeiss Jena
+512,95202,FSV Zwickau
+512,7761,Hallescher FC
+512,8148,RW Erfurt
+512,339999,VSG Altglienicke
+512,6596,Chemnitzer FC
+512,95189,BFC Preussen
+512,145598,Magdeburg II
+512,177076,FSV Luckenwalde
+512,7775,Babelsberg
+512,95192,BFC Dynamo
+512,586031,BSG Chemie Leipzig
+512,8186,Hertha Berlin II
+512,95195,Greifswalder FC
+512,95209,ZFC Meuselwitz
+512,95205,FC Eilenburg
+512,6081,Hertha Zehlendorf
+512,94941,Sonnenhof GroÃŸaspach
+512,94935,Freiberg
+512,88885,FSV Frankfurt
+512,1734,Homburg
+512,557592,TSV Steinbach
+512,8253,Hessen Kassel
+512,8195,Stuttgarter Kickers
+512,8086,Sandhausen
+512,8397,Mainz 05 II
+512,465626,SG Barockstadt Fulda Lehnerz
+512,6594,Freiburg II
+512,94938,FCA Walldorf
+512,7774,Eintracht Trier
+512,8407,Kickers Offenbach
+512,95039,Bayern Alzenau
+512,555501,TSV Schott Mainz
+512,145498,TSG Balingen
+512,2393,Bahlinger SC
+512,94943,NÃ¼rnberg II
+512,145486,WÃ¼rzburger Kickers
+512,8486,Unterhaching
+512,145501,FV Illertissen
+512,557352,DJK Vilzing
+512,340719,TSV Aubstadt
+512,340732,VfB EichstÃ¤tt
+512,8264,Bayern MÃ¼nchen II
+512,8408,Burghausen
+512,1711,Ansbach
+512,145484,TSV Buchbach
+512,94950,FC Memmingen
+512,7792,SpVgg Bayreuth
+512,338321,Augsburg II
+512,859240,TSV Schwaben Augsburg
+512,94947,Greuther FÃ¼rth II
+512,95026,Viktoria Aschaffenburg
+512,340734,SpVgg Hankofen-Hailing
+522,106975,Medeama SC
+522,1300594,Bibiani Gold Stars
+522,102016,Hearts of Oak
+522,723961,Dreams FC
+522,186663,Aduana Stars
+522,159949,Berekum Chelsea
+522,639361,Samartex
+522,102018,Asante Kotoko SC
+522,1194060,Karela United
+522,1665708,Vision FC
+522,289802,Bechem United
+522,1665707,Holy Stars
+522,102019,Heart of Lions
+522,102027,All Blacks
+522,1665706,Young Apostles
+522,1517695,Nations FC
+522,1799015,Hohoe United
+522,1194058,Eleven Wonders
+8815,8675,Iraklis
+8815,6013,Niki Volou
+8815,149647,Anagennisi Karditsas
+8815,1679128,Asteras Tripolis B
+8815,1303118,PAOK Thessaloniki B
+8815,488150,Nestos Chrisoupolis
+8815,149646,Kavala
+8815,488158,Kampaniakos Chalastras
+8815,162387,Makedonikos Neapolis
+8815,1620,PAS Giannina
+8815,1585,Kalamata
+8815,8170,Panionios
+8815,1787833,GS Marko
+8815,1303117,Olympiacos B
+8815,1797422,Hellas Syros
+8815,7975,Athens Kallithea FC
+8815,6278,Egaleo
+8815,488110,PAE Chania
+8815,162366,Ilioupoli GS
+8815,488116,APO Panargiakos
+336,49758,Club Xelaju
+336,9933,CSD Municipal
+336,188299,Deportivo Mixco
+336,49761,Comunicaciones FC
+336,188298,Antigua Guatemala
+336,188302,Coban Imperial
+336,188303,Guastatoya
+336,9934,Deportivo Marquense
+336,49754,Deportivo Mictlan
+336,89674,Deportivo Malacateco
+336,188294,Aurora FC
+336,188305,Deportivo Achuapa
+212,5755,GyÃ¶ri ETO
+212,8222,Ferencvaros
+212,7986,Paksi SE
+212,8369,Debrecen
+212,1667,Zalaegerszeg
+212,355346,Puskas FC Academy
+212,8043,Ujpest
+212,465382,Kisvarda
+212,2035,Nyiregyhaza Spartacus FC
+212,7778,MTK Budapest
+212,2476,Diosgyori VTK
+212,2280,Kazincbarcikai BSC
+216,4661,Throttur Reykjavik
+216,6434,Fylkir
+216,750462,Vestri
+216,163251,Afturelding
+216,4516,HK Kopavogs
+216,6683,Leiknir Reykjavik
+216,4495,Njardvik
+216,175111,Grotta
+216,163250,IR Reykjavik
+216,8298,Grindavik
+216,559291,Ã†gir
+216,4514,VÃ¶lsungur
+10226,4494,Haukar
+10226,580181,Kari
+10226,319922,Dalvik/Reynir
+10226,114130,Selfoss
+10226,4518,FjÃ¶lnir
+10226,1599412,KormÃ¡kur/HvÃ¶t
+10226,542586,KFG
+10226,1360600,Hviti Riddarinn
+10226,4515,Vikingur Olafsvik
+10226,1340091,KFA
+10226,319923,Throttur Vogar
+10226,449429,Magni
+8982,1782583,Diamond Harbour
+8982,184549,Shillong Lajong
+8982,1320490,Rajasthan United FC
+8982,1320491,Sreenidi Deccan FC
+8982,624342,Chanmari FC
+8982,165182,Dempo SC
+8982,624350,Aizawl FC
+8982,970686,Real Kashmir FC
+8982,898335,Gokulam FC
+8982,1562127,Namdhari FC
+8983,165196,Persib Bandung
+8983,585858,Borneo Samarinda
+8983,165191,Persija Jakarta
+8983,930525,Persebaya Surabaya
+8983,185749,Bhayangkara Presisi Indonesia FC
+8983,1665351,Malut United
+8983,585860,Dewa United FC
+8983,185751,Bali United FC
+8983,165200,Arema
+8983,165206,Persita
+8983,585850,PSIM Yogyakarta
+8983,165197,Persik
+8983,165194,Persijap Jepara
+8983,165199,Madura United
+8983,165198,PSM Makassar
+8983,583034,Persis Solo
+8983,215564,Semen Padang
+8983,585877,PSBS Biak Numfor
+523,101614,Esteghlal
+523,176352,Tractor
+523,101611,Sepahan
+523,389880,Gol Gohar
+523,1396532,Chadormalu Ardakan SC
+523,101610,Persepolis
+523,139914,Foolad Khuzestan
+523,101623,Fajr Sepasi
+523,664862,Kheybar Khorramabad
+523,101612,Malavan
+523,394619,Esteghlal Khuzestan
+523,101619,Paykan
+523,1303998,Shams Azar Qazvin
+523,664861,Aluminium Arak
+523,101618,Zob Ahan
+523,394620,Mes Rafsanjan
+9372,392200,Nassaji Mazandaran FC
+9372,961464,Mes Shahr Babak
+9372,101615,Saipa
+9372,101624,Sanat Naft Abadan
+9372,775750,Pars Jonoubi Jam
+9372,955322,Havadar SC
+9372,101622,Mes Kerman
+9372,1675873,Naft Bandar Abbas
+9372,1693132,FC Fard
+9372,676588,Beasat Kermanshah
+9372,1431260,Ario Islamshahr
+9372,490775,Naft Gachsaran
+9372,1602400,Shenavarsazi Qeshm
+9372,396142,Niroye Zamini
+9372,1528916,Kara Gostar
+9372,1320146,Shahrdari Nowshahr
+9372,958608,Navad Urmia
+9372,101627,Damash
+524,101656,Al Quwa Al Jawiya
+524,101655,Al Shorta
+524,101649,Erbil
+524,101659,Al Zawraa
+524,1680577,Al-Karma
+524,101660,Al Talaba
+524,191818,Al Karkh
+524,1298364,Newroz
+524,191814,Zakho
+524,101650,Duhok
+524,165214,Diyala
+524,101661,Al Naft
+524,1811191,Al-Mosul
+524,1811195,Al-Gharraf
+524,191820,Naft Maysan
+524,101644,Al Minaa
+524,101662,Al Kahrabaa
+524,165215,Amanat Baghdad
+524,101643,Al Najaf
+524,1087313,Al-Qasim
+218,2201,Cork City
+218,1578,UCD
+218,1629,Bray Wanderers
+218,2383,Cobh Ramblers
+218,62337,Wexford FC
+218,4569,Longford Town
+218,2378,Athlone Town
+218,1426348,Kerry FC
+218,1627,Finn Harps
+218,1233534,Treaty United
+147,6266,Benevento
+147,145007,LR Vicenza
+147,9849,Arezzo
+147,189481,Union Brescia
+147,177522,Renate
+147,6512,Lecco
+147,6097,Trento
+147,6485,Cittadella
+147,6452,Lumezzane
+147,655295,Alcione
+147,583958,ArzignanoChiampo
+147,568741,Giana Erminio
+147,9832,AlbinoLeffe
+147,1790497,Inter U23
+147,6269,Novara
+147,189486,Pro Vercelli
+147,6494,Ospitaletto
+147,474521,Pergolettese
+147,1295924,Dolomiti Bellunesi
+147,474519,Virtus Verona
+147,6498,Pro Patria
+147,9872,Triestina
+147,8522,Ascoli
+147,8545,Ravenna
+147,212658,Campobasso
+147,956184,Juventus Next Gen
+147,584069,Pianese
+147,770928,Pineto
+147,6061,Gubbio
+147,6457,Ternana
+147,6049,Vis Pesaro
+147,8537,Livorno
+147,6071,ForlÃ¬
+147,208931,Carpi
+147,8685,Perugia
+147,1667898,Guidonia Montecelio
+147,8482,Sambenedettese
+147,7856,Torres
+147,474518,Bra
+147,145016,Pontedera
+147,8530,Catania
+147,6480,Salernitana
+147,6456,Cosenza
+147,277990,Casertana
+147,9884,Crotone
+147,189506,Monopoli
+147,6460,Casarano
+147,867620,Audace Cerignola
+147,6099,Potenza
+147,1524591,Atalanta U23
+147,867623,Team Altamura
+147,212660,Latina
+147,6063,Cavese
+147,674807,AZ Picerno
+147,88998,Sorrento
+147,6040,Giugliano
+147,6466,Foggia
+147,674812,Siracusa Calcio
+147,208936,Trapani
+8974,162195,Mito Hollyhock
+8974,194016,V-Varen Nagasaki
+8974,9756,JEF United Chiba
+8974,162199,Tokushima Vortis
+8974,8065,Jubilo Iwata
+8974,4398,RB Omiya Ardija
+8974,162192,Vegalta Sendai
+8974,162193,Sagan Tosu
+8974,860934,Iwaki FC
+8974,164720,Montedio Yamagata
+8974,820969,FC Imabari
+8974,112688,Hokkaido Consadole Sapporo
+8974,8539,Ventforet Kofu
+8974,194015,Blaublitz Akita
+8974,305776,Fujieda MYFC
+8974,4427,Oita Trinita
+8974,164737,Kataller Toyama
+8974,162196,Roasso Kumamoto
+8974,614556,Renofa Yamaguchi
+8974,162198,Ehime FC
+9136,194029,Tochigi City FC
+9136,584880,Vanraure Hachinohe
+9136,614335,FC Osaka
+9136,941024,Tegevajaro Miyazaki
+9136,584867,Kagoshima United
+9136,194023,Zweigen Kanazawa
+9136,164738,Tochigi SC
+9136,193858,Giravanz Kitakyushu
+9136,584746,Nara Club
+9136,408082,Fukushima United
+9136,194010,Gainare Tottori
+9136,422974,SC Sagamihara
+9136,162197,FC Gifu
+9136,162194,Thespa Gunma
+9136,194022,Matsumoto Yamaga
+9136,194021,FC Ryukyu
+9136,243585,Kamatamare Sanuki
+9136,860937,Kochi United SC
+9136,243586,Nagano Parceiro
+9136,614337,Azul Claro Numazu
+225,2127,Ordabasy Shymkent
+225,8037,Kairat Almaty
+225,2128,Okzhetpes Kokshetau
+225,1622701,Ulytau
+225,8000,Aktobe
+225,166865,FC Astana
+225,200281,FC Yelimay
+225,2349,Atyrau
+225,1614087,Zhenis
+225,2118,Zhetysu Taldykorgan
+225,2120,FC Kyzylzhar Petropavlovsk
+225,2125,Kaisar Kyzylorda
+225,7983,Tobol Kostanay
+225,2539,Irtysh Pavlodar
+225,732295,Altai Semey
+225,200279,Kaspiy Aktau
+226,624924,Riga FC
+226,248871,RFS
+226,2106,Auda
+226,8016,FK Liepaja
+226,197864,BFC Daugavpils
+226,981193,SK Super Nova
+226,192962,FK Jelgava
+226,197870,FK Tukums 2000
+226,662738,Grobina
+226,1899459,Ogre United
+228,624858,Dziugas Telsiai
+228,439132,FK Kauno Zalgiris
+228,8337,Suduva
+228,1447232,FK TransINVEST
+228,169157,Banga Gargzdai
+228,4616,Zalgiris Vilnius
+228,479143,FK Panevezys
+228,736555,Hegelmann
+228,1099941,FA Siauliai
+228,257518,Riteriai
+229,763242,Atert Bissen
+229,7951,FC Differdange 03
+229,205813,US Mondorf les Bains
+229,271923,Una Strassen
+229,4548,F91 Dudelange
+229,2108,AS Jeunesse Esch
+229,2110,Racing FC Union Luxembourg
+229,4526,UN KÃ¤erjeng 97
+229,187906,US Hostert
+229,2112,FC Victoria Rosport
+229,7953,FC ProgrÃ¨s Niederkorn
+229,2113,Swift Hesperange
+229,187904,FC Jeunesse Canach
+229,7952,FC Mamer 32
+229,654352,Union Titus PÃ©tange
+229,463433,FC Rodange 91
+249,8041,FK Vardar Skopje
+249,2234,KF Shkendija
+249,866489,FK Struga
+249,6187,FK Sileks
+249,206546,GFK Tikves Kavadarci
+249,1389831,Arsimi
+249,1523811,Bashkimi
+249,1589,Pelister
+249,769984,AP Brera Strumica
+249,276798,Makedonija GP
+249,8138,Rabotnicki
+249,358106,Shkupi
+8985,165228,Johor Darul Ta'zim
+8985,1114226,Kuching City
+8985,165223,Selangor
+8985,191752,Kuala Lumpur City
+8985,165229,Terengganu
+8985,1783759,Imigresen FC
+8985,165222,Negeri Sembilan
+8985,165232,Penang
+8985,242698,Sabah
+8985,165158,Brunei DPMM
+8985,1783730,Melaka FC
+8985,1124836,Kelantan The Real Warriors FC
+8985,165235,PDRM
+8976,659098,Tepatitlan FC
+8976,1175679,Cancun FC
+8976,6575,Atletico Morelia
+8976,1374638,Atletico La Paz
+8976,162409,Jaiba Brava del Tampico-Madero
+8976,6574,Mineros de Zacatecas
+8976,162404,Tapatio
+8976,1942,Atlante
+8976,2548,Irapuato
+8976,584866,Tlaxcala FC
+8976,162400,Venados FC
+8976,452823,Alebrijes Oaxaca
+8976,2034,Dorados
+8976,162407,Correcaminos de la UAT
+8976,177535,Leones Negros
+9906,980693,CF America
+9906,980703,Monterrey
+9906,980701,Tigres
+9906,980692,Pachuca
+9906,980702,Chivas
+9906,980694,Toluca
+9906,980700,Cruz Azul
+9906,1066912,FC Juarez
+9906,980699,Club Tijuana
+9906,980695,Pumas
+9906,1066915,Atletico de San Luis
+9906,1174027,Mazatlan FC
+9906,980705,Club Leon
+9906,980704,Atlas
+9906,980696,Puebla
+9906,980709,Santos Laguna
+9906,980706,Queretaro
+9906,980708,Necaxa
+530,102035,FAR Rabat
+530,316652,RSB Berkane
+530,102049,Raja Casablanca
+530,102043,MAS Fes
+530,102050,Wydad Casablanca
+530,316657,Ittihad Tanger
+530,102033,Difaa El Jadida
+530,102036,FUS Rabat
+530,102032,CODM Meknes
+530,102037,Hassania Agadir
+530,102042,KACM
+530,950070,Renaissance Club Zemamra
+530,320835,Union Touarga Sport
+530,570487,Olympique Dcheira
+530,1786714,Union Yacoub El-Mansour
+530,102047,Olympic Club de Safi
+9195,2156,Quick Boys
+9195,183563,De Treffers
+9195,2459,Hoek
+9195,4639,Rijnsburgse Boys
+9195,8435,HHC
+9195,1746,Spakenburg
+9195,206300,Katwijk
+9195,681424,Jong Almere City FC
+9195,8441,Kozakken Boys
+9195,681215,Jong Sparta Rotterdam
+9195,4724,AFC
+9195,183567,Barendrecht
+9195,584412,RKAV Volendam
+9195,150980,GVVV Veenendaal
+9195,559612,Koninklijke HFC
+9195,2153,IJsselmeervogels
+9195,2458,Excelsior Maassluis
+9195,1742,ACV
+8870,613370,Wellington Olympic
+8870,8523,Auckland City FC
+8870,613355,Miramar Rangers
+8870,1814318,Auckland FC B
+8870,613351,Western Springs
+8870,613341,Birkenhead United
+8870,613381,Christchurch United
+8870,590837,Wellington Phoenix B
+8870,613371,Western Suburbs
+8870,1405563,Auckland United FC
+8870,613378,Coastal Spirit
+533,102054,Enugu Rangers
+533,184466,Rivers United FC
+533,184465,Shooting Stars
+533,1661097,Ikorodu City
+533,102053,Bendel Insurance
+533,102062,Nasarawa United
+533,520679,Abia Warriors
+533,1791636,Barau
+533,818870,Katsina United
+533,213295,Plateau United
+533,102060,Kwara United
+533,6623,Enyimba
+533,1791630,Kun Khalifat
+533,154580,Warri Wolves FC
+533,102063,Niger Tornadoes
+533,102059,Kano Pillars
+533,818875,Remo Stars
+533,430189,El Kanemi Warriors
+533,102052,Bayelsa United
+533,102068,Wikki Tourist
+129,2206,Larne
+129,2202,Coleraine
+129,2203,Glentoran
+129,7971,Linfield
+129,1703,Cliftonville
+129,4615,Dungannon Swifts
+129,187969,Carrick Rangers
+129,7984,Portadown
+129,4063,Ballymena United
+129,77755,Bangor
+129,1937,Crusaders
+129,1956,Glenavon
+203,8180,StrÃ¸msgodset
+203,8179,Kongsvinger
+203,8512,FK Haugesund
+203,7988,Odds Ballklubb
+203,9918,StabÃ¦k
+203,6563,Ranheim
+203,8405,Moss
+203,8133,Sandnes Ulf
+203,4722,Egersund
+203,8531,Bryne
+203,7937,HÃ¸dd
+203,8616,Sogndal
+203,9812,Raufoss
+203,10224,Lyn
+203,10021,Ã…sane
+203,4249,StrÃ¸mmen
+204,2303,Jerv
+204,47403,BrattvÃ¥g
+204,161378,Bjarg
+204,5734,Kvik Halden
+204,6541,MjÃ¸ndalen
+204,189420,Sotra Sportsklubb
+204,9929,Notodden
+204,8111,Pors
+204,6115,TrÃ¦ff
+204,6242,Sandviken
+204,413468,Lysekloster
+204,257932,Arendal Fotball
+204,1899,Eik-TÃ¸nsberg
+204,6123,Vidar
+204,6560,KjelsÃ¥s
+204,6561,Levanger
+204,8292,Eidsvold TF
+204,8077,LÃ¸renskog
+204,8067,HÃ¸nefoss
+204,4201,Grorud
+204,8617,Tromsdalen
+204,4320,Junkeren
+204,1004501,Rana FK
+204,4393,StjÃ¸rdals Blink
+204,8421,Skeid
+204,10232,Ull/Kisa
+204,7963,Follo
+204,525114,Trygg/Lade
+205,6540,Asker
+205,608816,Ready
+205,46909,Heming
+205,8137,BÃ¦rum
+205,1609449,Union Carl Berner
+205,1352625,Gamle Oslo
+205,4621,Frigg
+205,8136,VÃ¥lerenga 2
+205,161348,KFUM 2
+205,2324,Ullern
+205,8125,Nordstrand
+205,6542,Konnerud
+205,4206,Grei
+205,428157,Lokomotiv Oslo FK
+205,167840,Herd
+205,2309,Melhus
+205,2000,Volda
+205,10022,Strindheim
+205,4332,Kvik
+205,9801,ByÃ¥sen
+205,10257,Rosenborg 2
+205,4366,Orkla
+205,2318,Spjelkavik
+205,4361,NTNUI
+205,8519,Molde 2
+205,4363,Nardo
+205,46922,Ranheim 2
+205,8114,Aalesund 2
+205,2313,Os
+205,8117,Vard Haugesund
+205,8291,AskÃ¸y
+205,4384,Sogndal 2
+205,8469,Brann 2
+205,46917,Djerv 1919
+205,6539,FÃ¸rde
+205,6600,Fana
+205,6537,Austevoll
+205,7864,Stord
+205,246204,Ã…sane 2
+205,4305,Gneist
+205,300958,FK Fyllingsdalen
+205,4318,Varegg
+205,6579,FlekkerÃ¸y
+205,91781,Madla
+205,10018,Viking 2
+205,4289,Vindbjart
+205,8068,Mandalskameratene
+205,4230,Varhaug
+205,4231,Staal JÃ¸rpeland
+205,119139,Brodd
+205,4216,VÃ¥g
+205,9844,StabÃ¦k 2
+205,4235,Haugesund 2
+205,4232,Ã…kra
+205,161381,Hinna FK
+205,9845,Odds Ballklubb 2
+205,46904,Skedsmo
+205,6543,FlÃ¸ya
+205,6054,Finnsnes
+205,4325,Fauske/Sprint
+205,8477,LillestrÃ¸m 2
+205,8353,Alta
+205,7940,Harstad
+205,4254,Kongsvinger 2
+205,8181,StrÃ¸msgodset 2
+205,4287,SkjervÃ¸y
+205,2536,Skjetten
+205,4296,Bossekop
+205,6538,TromsÃ¸ 2
+205,1599897,Ulfstind
+205,8413,Lillehammer FK
+205,8183,GjÃ¸vik-Lyn
+205,6110,RÃ¥de
+205,2292,Elverum
+205,6517,Sandefjord 2
+205,4250,RÃ¦lingen
+205,10016,Ã˜rn Horten
+205,161353,Oppsal
+205,4244,Lyn 2
+205,9815,DrÃ¸bak/Frogn
+205,4204,Sarpsborg 08 2
+205,4703,Fram Larvik
+205,8116,Brumunddal
+205,4283,BjÃ¸rkelangen
+9039,165476,CD Plaza Amador
+9039,165473,Alianza FC
+9039,1514007,UMECIT FC
+9039,165469,Tauro FC
+9039,165468,CD Ãrabe Unido
+9039,165472,Sporting San Miguelito
+9039,1603136,Veraguas United
+9039,1888923,Union Cocle
+9039,464250,Independiente de La Chorrera
+9039,98585,San Francisco FC
+9039,165475,CD Universitario
+9039,1514006,Herrera FC
+197,10265,WisÅ‚a KrakÃ³w
+197,8025,ÅšlÄ…sk WrocÅ‚aw
+197,1286895,Wieczysta KrakÃ³w
+197,273525,Chrobry GÅ‚ogÃ³w
+197,8244,ÅKS ÅÃ³dÅº
+197,2183,Polonia Warszawa
+197,1601,Ruch ChorzÃ³w
+197,8048,MiedÅº Legnica
+197,205870,Puszcza NiepoÅ‚omice
+197,8031,Polonia Bytom
+197,585593,PogoÅ„ Grodzisk Mazowiecki
+197,8047,Odra Opole
+197,177362,Stal RzeszÃ³w
+197,458623,Stal Mielec
+197,273750,PogoÅ„ Siedlce
+197,89469,Znicz PruszkÃ³w
+197,8019,GÃ³rnik ÅÄ™czna
+197,102859,GKS Tychy
+8935,2417,Skierniewice
+8935,89467,Warta PoznaÅ„
+8935,177358,Olimpia Grudziadz
+8935,8033,TS Podbeskidzie Bielsko-Biala
+8935,585484,Slask Wroclaw ll
+8935,160419,Sandecja Nowy Sacz
+8935,662309,Podhale Nowy Targ
+8935,206344,Chojniczanka Chojnice
+8935,585212,Rekord Bielsko-Biala
+8935,8049,Stal Stalowa Wola
+8935,585624,Hutnik Krakow
+8935,662318,Swit Skolwin
+8935,177360,Resovia
+8935,585524,Sokol Kleczew
+8935,8026,Zaglebie Sosnowiec
+8935,662294,KKS 1925 Kalisz
+8935,1501585,LKS Lodz II
+8935,89465,GKS Jastrzebie
+185,10212,Maritimo
+185,1786,Academico Viseu
+185,212820,Torreense
+185,4531,Vizela
+185,338304,FC Porto B
+185,9771,Uniao de Leiria
+185,6421,Leixoes
+185,4064,Feirense
+185,9774,Chaves
+185,338302,Benfica B
+185,474326,Felgueiras 1932
+185,188154,Lusitania Lourosa
+185,338301,Sporting CP B
+185,6547,Penafiel
+185,9765,Portimonense
+185,6004,Farense
+185,6403,Pacos de Ferreira
+185,1785,Oliveirense
+9112,280216,Amarante FC
+9112,10215,Academica
+9112,1296841,CF Os Belenenses
+9112,47535,Mafra
+9112,338305,Vitoria de Guimaraes B
+9112,1722,Varzim
+9112,1074312,Santarem
+9112,7992,Trofense
+9112,238631,SC Joao Ver
+9112,212796,AD Fafe
+9112,2503,Paredes
+9112,1530180,AD Marco 09
+9112,338303,Braga B
+9112,1796,Sanjoanense
+9112,4665,Atletico
+9112,888452,Lusitano de Evora
+9112,1800,Caldas
+9112,1940,Sporting Covilha
+9112,238626,S.U. 1 de Dezembro
+9112,588631,Amora FC
+9113,1515102,Corvinul Hunedoara
+9113,405332,FC Voluntari
+9113,583706,Sepsi OSK
+9113,2550,FC Bihor Oradea
+9113,1277917,Steaua Bucuresti
+9113,279309,Chindia Targoviste
+9113,1787829,ASA Targu Mures
+9113,1661158,Metalul Buzau
+9113,279308,CSM Slatina
+9113,279290,CSM Politehnica Iasi
+9113,1787832,Gloria Bistrita
+9113,1787831,CS Dinamo Bucuresti
+9113,9725,Ceahlaul Piatra-Neamt
+9113,1661155,Campulung Muscel
+9113,1787830,FC Bacau
+9113,188185,Concordia Chiajna
+9113,408363,CSM Resita
+9113,408362,CS Afumati
+9113,1387005,CSC Dumbravita
+9113,1277922,Comunal Selimbar
+9113,1795466,CSM Olimpia Satu Mare
+9113,405161,CS Tunari
+338,1066681,Rodina
+338,1692,Fakel
+338,49706,Ural
+338,196079,FC Rotor Volgograd
+338,49695,KamAZ
+338,88584,FC Yenisey Krasnoyarsk
+338,5786,Spartak Kostroma
+338,8712,Shinnik Yaroslavl
+338,8704,Torpedo Moscow
+338,176296,FC Chelyabinsk
+338,198153,Neftekhimik
+338,1677,Arsenal Tula
+338,49700,SKA-Khabarovsk
+338,113055,Volga Ulyanovsk
+338,198150,FC Ufa
+338,8701,Chernomorets Novorossiysk
+338,1678,Sokol Saratov
+338,681594,Chayka
+123,8467,St. Johnstone
+123,8426,Partick Thistle
+123,8280,Arbroath
+123,8457,Dunfermline Athletic
+123,10250,Raith Rovers
+123,8235,Queen's Park
+123,9913,Ayr United
+123,8648,Greenock Morton
+123,8176,Airdrieonians
+123,8649,Ross County
+124,8066,Inverness CT
+124,8143,Stenhousemuir
+124,9924,Queen of the South
+124,8160,Alloa Athletic
+124,8158,Peterhead
+124,8257,Montrose
+124,6002,Cove Rangers
+124,9758,East Fife
+124,8429,Hamilton Academical
+124,675817,Kelty Hearts
+125,575419,East Kilbride
+125,6661,Spartans FC
+125,8409,Clyde
+125,8145,Forfar Athletic
+125,9926,Stranraer
+125,9914,Elgin City
+125,46036,Annan Athletic
+125,8141,Stirling Albion
+125,8321,Dumbarton
+125,4130,Edinburgh City
+9545,97904,Brora Rangers
+9545,8146,Brechin City
+9545,351618,Formartine United
+9545,46037,Fraserburgh
+9545,4053,Clachnacuddin
+9545,154583,Banks O'Dee
+9545,1633,Keith
+9545,1630,Buckie Thistle
+9545,97920,Nairn County
+9545,351621,Turriff United
+9545,2498,Huntly
+9545,1809,Forres Mechanics
+9545,575415,Strathspey Thistle
+9545,1810,Deveronvale
+9545,1908,Inverurie Loco Works
+9545,1776,Wick Academy
+9545,5754,Lossiemouth
+9545,97917,Rothes
+9545,97914,Linlithgow Rose
+9545,6102,Clydebank
+9545,183953,Bonnyrigg Rose
+9545,1215940,Tranent
+9545,861453,Caledonian Braves
+9545,660561,Cumbernauld Colts
+9545,1088196,Broxburn Athletic
+9545,8368,Berwick Rangers
+9545,214367,Bo'ness United
+9545,1266921,Celtic B
+9545,8144,Cowdenbeath
+9545,1811,Gala Fairydean Rovers
+9545,8612,Albion Rovers
+9545,97910,Civil Service Strollers
+9545,372898,Stirling University FC
+9545,1273056,Hearts B
+9545,711844,Gretna FC 2008
+9545,10220,East Stirlingshire
+461,67366,Lion City Sailors FC
+461,67386,Tampines Rovers FC
+461,67377,FC Jurong
+461,67378,Balestier Khalsa FC
+461,67383,Hougang United FC
+461,67380,Geylang International FC
+461,243800,Tanjong Pagar United FC
+461,67381,Young Lions
+173,4622,NK Celje
+173,5772,Koper
+173,856680,NK Bravo
+173,7872,Olimpija Ljubljana
+173,8340,Maribor
+173,272871,Radomlje
+173,1862,Aluminij
+173,2172,Mura
+173,2171,Primorje
+173,8154,Domzale
+8968,9867,Tenerife
+8968,161743,Celta Fortuna
+8968,4031,Zamora
+8968,8005,Ponferradina
+8968,8367,Real Madrid Castilla
+8968,7862,Pontevedra
+8968,7734,Barakaldo
+8968,780591,Unionistas de Salamanca
+8968,8206,Lugo
+8968,8317,Merida
+8968,189631,Arenas Getxo
+8968,8474,Racing de Ferrol
+8968,161850,Athletic Club B
+8968,189594,Real Aviles CF
+8968,7809,Cacereno
+8968,357239,CF Talavera de la Reina
+8968,7859,Ourense
+8968,161782,Guadalajara
+8968,161778,Osasuna B
+8968,1314965,CD Arenteiro
+8968,8288,Eldense
+8968,4033,Sabadell
+8968,161759,Atletico Madrileno
+8968,161771,Villarreal B
+8968,189639,CE Europa
+8968,8554,Cartagena
+8968,161849,Antequera
+8968,7811,Algeciras
+8968,10278,Hercules
+8968,8392,Real Murcia
+8968,161750,Alcorcon
+8968,1123073,UD Ibiza
+8968,190091,CD Teruel
+8968,8400,Gimnastic
+8968,371716,Juventud Torremolinos CF
+8968,161780,Betis Deportivo Balompie
+8968,209196,SD Tarazona
+8968,161781,Marbella FC
+8968,189730,Atletico Sanluqueno CF
+8968,91431,Sevilla Atletico
+9138,161745,RC Deportivo Fabril
+9138,209008,Real Oviedo B
+9138,1784666,UD Ourense
+9138,8388,Numancia
+9138,96929,Coruxo FC
+9138,2244,Gimnastica Segoviana
+9138,189689,Real Avila
+9138,490334,Salamanca CF UDS
+9138,161747,Rayo Cantabria
+9138,189567,Bergantinos CF
+9138,189696,Atletico Astorga
+9138,6311,Marino Luanco
+9138,161748,Real Valladolid B
+9138,189590,UP Langreo
+9138,1784555,Sarriana
+9138,277424,Burgos Promesas
+9138,189588,CD Lealtad
+9138,657830,UD Samano
+9138,8380,Real Union
+9138,277394,Deportivo Alaves B
+9138,7880,Logrones
+9138,96923,Utebo
+9138,190055,Tudelano
+9138,189624,SD Amorebieta
+9138,8228,Sestao
+9138,209199,Ebro
+9138,189634,Eibar B
+9138,189627,CD Basconia
+9138,189629,SD Gernika
+9138,190077,Naxara
+9138,210847,SD Logrones
+9138,7726,Beasain
+9138,141787,Ejea
+9138,190057,UD Mutilvera
+9138,190092,Deportivo Aragon
+9138,141783,CD Alfaro
+9138,8229,Sant Andreu
+9138,141784,Atletico Baleares
+9138,189750,Poblense
+9138,96927,Reus
+9138,4697,Alcoyano
+9138,161774,Barca Atletic
+9138,1784557,Girona B
+9138,7822,Terrassa
+9138,161777,Valencia B
+9138,177226,Espanyol B
+9138,8214,Barbastro
+9138,277406,UE Olot
+9138,1784556,Castellon B
+9138,1207140,Ibiza Islas Pitiusas
+9138,351558,CE Andratx
+9138,1783970,Atletic Lleida
+9138,1515440,Torrent CF
+9138,1784558,Porreres
+9138,1686598,CD Extremadura
+9138,278805,Deportiva Minera
+9138,278806,CDA Aguilas FC
+9138,9868,Xerez
+9138,7799,Real Jaen
+9138,8479,Recreativo Huelva
+9138,189783,UCAM Murcia
+9138,357261,Linares Deportivo
+9138,465112,La Union CF
+9138,656544,Lorca Deportiva
+9138,189781,Yeclano
+9138,277430,CA Antoniano
+9138,177231,CD Estepona
+9138,1784559,Puente Genil
+9138,1315047,Xerez Deportivo
+9138,141789,Melilla
+9138,189701,Almeria B
+9138,6210,Atletico Malagueno
+9138,189674,Rayo Majadahonda
+9138,2428,San Sebastian de los Reyes
+9138,6256,Conquense
+9138,189672,Getafe B
+9138,189807,CD Coria
+9138,8316,RSD Alcala
+9138,181802,Tenerife B
+9138,8213,Orihuela
+9138,1112101,CF Intercity
+9138,161758,Navalcarnero
+9138,161760,Las Palmas B
+9138,189659,Elche Ilicitano
+9138,189680,Real Madrid C
+9138,190126,CD Quintanar del Rey
+9138,8555,Fuenlabrada
+9138,278798,CD Colonia Moscardo
+9138,190123,Socuellamos
+9138,189671,Rayo Vallecano B
+168,8449,IFK NorrkÃ¶ping
+168,6545,Falkenbergs FF
+168,6692,Varbergs BoIS FC
+168,1144284,Nordic United FC
+168,9859,Helsingborg
+168,8641,Ã–sters IF
+168,8511,Landskrona BoIS
+168,2004,Ã–stersunds FK
+168,6160,IK Oddevold
+168,6690,IK Brage
+168,6241,Sandvikens IF
+168,8527,Ã–rebro
+168,8500,Ljungskile
+168,2014,Norrby
+168,6181,IFK VÃ¤rnamo
+168,8359,GIF Sundsvall
+169,191433,IF Karlstad
+169,4438,Hammarby TFF
+169,841094,FC Arlanda
+169,8425,EnkÃ¶ping
+169,1011931,FC Stockholm
+169,627694,FBK Karlstad
+169,8601,UmeÃ¥
+169,6238,AFC Eskilstuna
+169,303472,Karlbergs BK
+169,1967,Vasalunds IF
+169,111120,Sollentuna FK
+169,1225382,FC JÃ¤rfÃ¤lla
+169,10225,Assyriska FF
+169,7997,Gefle
+169,2006,PiteÃ¥
+169,916701,IFK Stocksund
+169,8333,Trelleborgs FF
+169,6622,Ã…tvidaberg
+169,1331261,AFC Malmoe
+169,6174,Lunds BK
+169,6170,FC RosengÃ¥rd
+169,241285,TvÃ¥Ã¥kers IF
+169,8510,JÃ¶nkÃ¶ping S.
+169,418688,HÃ¤ssleholms IF
+169,303470,Eskilsminne IF
+169,241064,BK Olympic
+169,6153,SkÃ¶vde AIK
+169,8189,Ã„ngelholms FF
+169,1965,Kristianstad FC
+169,6183,TrollhÃ¤ttan FC
+169,6173,Laholms FK
+169,73158,Utsiktens BK
+9066,165084,Young Africans
+9066,165086,Simba SC
+9066,165091,Azam FC
+9066,1171766,Singida Black Stars
+9066,1524586,TRA United
+9066,1045552,JKT Tanzania
+9066,1056183,Pamba Jiji
+9066,1177034,Dodoma Jiji FC
+9066,287669,Coastal Union
+9066,1396530,Fountain Gate FC
+9066,1084108,Namungo FC
+9066,1499086,Mashujaa
+9066,165088,Mtibwa Sugar
+9066,165087,Tanzania Prisons
+9066,465620,Mbeya City
+9066,1045551,Kinondoni MC
+9498,1798879,Rasi Salai United
+9498,564561,Sisaket UTD
+9498,585115,Pattani FC
+9498,626806,Nong Bua Pitchaya FC
+9498,165244,Police Tero FC
+9498,309016,Chainat FC
+9498,626802,Khonkaen United FC
+9498,1696880,Mahasarakham Sam Bai Tao
+9498,583128,Trat FC
+9498,578228,Phrae United
+9498,1016183,Chiangmai United
+9498,1513934,Pattaya Dolphins United
+9498,309017,Songkhla United FC
+9498,1513932,Chanthaburi FC
+9498,165252,Nakhon Pathom
+9498,615409,Kasetsart
+9498,1381498,Nakhon Si United
+9498,559842,Bangkok FC
+544,102102,Club Africain
+544,8153,EspÃ©rance
+544,102106,CS Sfaxien
+544,102116,Stade Tunisien
+544,102109,US Monastir
+544,102112,Zarzis
+544,6366,Etoile du Sahel
+544,405958,Etoile Metlaoui
+544,1669235,JS Omrane
+544,316413,Ben Guerdane
+544,102105,Avenir de La Marsa
+544,102107,CA Bizertin
+544,102104,Olympique de Beja
+544,177179,JS Kairouanaise
+544,852755,AS Soliman
+544,206148,AS Gabes
+441,9728,Shakhtar Donetsk
+441,2143,LNZ Cherkasy
+441,1181312,Polissya Zhytomyr
+441,8688,Dynamo Kyiv
+441,949030,Metalist 1925
+441,599924,FC Kolos Kovalivka
+441,558259,Kryvbas
+441,7770,Zorya
+441,8691,Karpaty
+441,1395678,Epitsentr Kamianets-Podilskyi
+441,1175395,Veres Rivne
+441,583129,Obolon Kyiv
+441,1763072,Kudrivka
+441,859316,Rukh Lviv
+441,6072,FC Oleksandriya
+441,1395689,SC Poltava
+10084,1130409,Los Angeles Force
+10084,1823066,Peak XI
+10084,1823065,Arkansas Wolves FC
+10084,1770408,DC Hyper
+10084,1437474,Capo FC
+10084,1324452,Northern Colorado Hailstorm FC
+10084,1823068,Sin City FC
+10084,1823067,Modesto City FC
+161,8450,Club Atletico Penarol
+161,148967,Cerro Largo
+161,1834,Central Espanol
+161,6043,Racing
+161,2219,Liverpool FC
+161,188313,Boston River
+161,1836,Cerro
+161,7796,Defensor Sporting
+161,1833,Deportivo Maldonado
+161,8304,Nacional
+161,7863,Montevideo Wanderers
+161,395613,Montevideo City Torque
+161,924934,Albion
+161,9883,Juventud de las Piedras
+161,1838,Club AtlÃ©tico Progreso
+161,8562,Danubio
+9122,688270,Oriental
+9122,4669,Plaza Colonia
+9122,215609,Huracan FC
+9122,7808,Fenix
+9122,2220,Cerrito
+9122,181912,Atenas
+9122,1223580,Colon
+9122,2221,Rentistas
+9122,1837,Tacuarembo FC
+9122,1319664,La Luz
+9122,4424,Miramar Misiones
+9122,6381,CA River Plate Montevideo
+9122,1257662,Uruguay Montevideo
+9122,4660,Paysandu FC
+339,657277,Academia Puerto Cabello
+339,1349498,Anzoategui FC
+339,49681,Carabobo FC
+339,7850,Caracas
+339,176496,Deportivo La Guaira
+339,1896,Deportivo Tachira
+230,6576,CF America
+230,162418,Tijuana
+230,6618,Toluca
+230,1946,Pumas
+230,7849,Monterrey
+230,6578,Cruz Azul
+230,1943,Queretaro FC
+230,1842,Necaxa
+230,6577,Atlas
+230,1942,Atlante
+230,7847,Puebla
+230,7807,Chivas
+230,7848,Pachuca
+230,1841,Leon
+230,6358,Atletico de San Luis
+230,8561,Tigres
+230,7857,Santos Laguna
+230,649424,FC Juarez

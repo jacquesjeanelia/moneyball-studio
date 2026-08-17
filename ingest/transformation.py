@@ -7,20 +7,21 @@ import numpy as np
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 from sklearn.cluster import KMeans
+from sklearn.mixture import GaussianMixture
 import psycopg2
 from psycopg2.extras import execute_values
 from umap import UMAP
 import csv
 
 PLAYER_ROLES = {
-    "ST": "Striker",
+    "ST": "Striker", "forward": "Default Forward",
     "LW": "Winger", "RW": "Winger",
     "LM": "Wide Midfielder", "RM": "Wide Midfielder",
     "AM": "Creative Attacker",
-    "CM": "Central Midfielder", "DM": "Central Midfielder",
+    "CM": "Central Midfielder", "DM": "Central Midfielder", "midfielder": "Default Midfielder",
     "LWB": "Fullback", "RWB": "Fullback", 
     "LB": "Fullback", "RB": "Fullback",
-    "CB": "Center Back",
+    "CB": "Center Back", "defender": "Default Defender",
     "GK": "Goalkeeper"
 }
 
@@ -61,7 +62,19 @@ FEATURE_COLS = [
     'touches_opp_box_per_90', 'dispossessed_per_90', 'fouls_won_per_90', 
     'defcon_per_90', 'tackles_per_90', 'interceptions_per_90', 
     'blocks_per_90', 'fouls_committed_per_90', 'recoveries_per_90', 
-    'poss_won_final_3rd_per_90', 'succ_dribbles_def_per_90', 'clearances_per_90'
+    'poss_won_final_3rd_per_90', 'succ_dribbles_def_per_90', 'clearances_per_90',
+
+    # 'npxg', 'shots', 'sot', 
+    # 'headed_shots', 'xa', 'succ_pass', 
+    # 'acc_long_balls',
+    # 'chances_created', 'big_chances_created', 
+    # 'succ_crosses', 'succ_dribbles', 
+    # 'duels_won',
+    # 'aerials_won', 'touches', 
+    # 'touches_opp_box', 'dispossessed', 'fouls_won', 
+    # 'defcon', 'tackles', 'interceptions', 
+    # 'blocks', 'fouls_committed', 'recoveries', 
+    # 'poss_won_final_3rd', 'succ_dribbles_def', 'clearances'
 ]
 
 def merge_player_data():
@@ -82,10 +95,31 @@ def load_and_clean_data():
     df = merge_player_data()
     df = df[df['minutes_played'] >= 900]
     df = df[df['name'].notnull()]
-    df[FEATURE_COLS] = df[FEATURE_COLS].fillna(0)
+    # df[FEATURE_COLS] = df[FEATURE_COLS].fillna(0)
+
+    invalid_mask = (df[FEATURE_COLS] == 0) | (df[FEATURE_COLS].isna())
+    invalid_stats_count = invalid_mask.sum(axis=1)
+    df = df[invalid_stats_count < 15].copy()
+
     df['dob'] = df['dob'].str.slice(0, 10)
     df = df[df['category'].str.lower() != 'keeper']
+    df = df[~df['category'].str.contains('Coach', na=False)]
+    df = df[~df['category'].str.contains('defender', na=False)]
+    df = df[~df['category'].str.contains('midfielder', na=False)]
+    df = df[~df['category'].str.contains('forward', na=False)]
     df = df[~df['positions'].str.contains('GK', na=False)]
+
+
+    df['main_role'] = df['category'].map(PLAYER_ROLES)
+    
+    rate_cols = [c for c in FEATURE_COLS if 'rate' in c]
+    volume_cols = [c for c in FEATURE_COLS if 'rate' not in c]
+
+    df[volume_cols] = df[volume_cols].fillna(0)
+
+    for col in rate_cols:
+        df[col] = df.groupby('main_role')[col].transform(lambda x: x.fillna(x.median()))
+
     # df.to_csv("data/processed/cleaned_player_dataset.csv", index=False, encoding='utf-8')
     return df
 
@@ -122,10 +156,8 @@ def get_percentiles():
         'clearances': df['clearances_per_90'] * minutes,
     }
 
-    main_role = df['category'].map(PLAYER_ROLES)
-
+    main_role = df['main_role']
     pct = {
-        'main_role': main_role,
         'npxg_per_90_percentile': df['npxg_per_90'].groupby(main_role).rank(pct=True) * 100,
         'shots_per_90_percentile': df['shots_per_90'].groupby(main_role).rank(pct=True) * 100,
         'sot_per_90_percentile': df['sot_per_90'].groupby(main_role).rank(pct=True) * 100,
@@ -208,25 +240,42 @@ def scale_features():
     # striker_highlight_cols = [
     #     'shots_per_90_z', 
     #     'touches_opp_box_per_90_z', 
-    #     'succ_dribbles_per_90_z',  
-    #     'chances_created_per_90_z',
-    #     'headed_shots_per90_z',
-    #     'xa_per90_z',
+    #     # 'touches_per_90_z',
+    #     'xa_per_90_z',
+    #     'headed_shots_per_90_z',
+    #     'poss_won_final_3rd_per_90_z', 
+    #     'succ_dribbles_per_90_z',     
+    #     'recoveries_per_90_z',
+    #     'succ_crosses_per_90_z', 
+    #     'acc_long_balls_per_90_z',
+    #     # 'aerials_won_per_90_z',         
     # ]
 
     # X = striker_df[striker_highlight_cols]
 
-    # kmeans = KMeans(n_clusters=3, random_state=42, n_init=10)
+    # gmm = GaussianMixture(n_components=4, covariance_type='full', random_state=42, n_init=10)
+    # striker_df['cluster_id'] = gmm.fit_predict(X)
+
+    # probabilities = gmm.predict_proba(X)
+
+    # gmm_centroids = pd.DataFrame(gmm.means_, columns=striker_highlight_cols)
+    # gmm_centroids.to_csv("data/processed/striker_gmm_centroids.csv", index=False, encoding='utf-8')
+    # return
+    # KMEANS
+    # kmeans = KMeans(n_clusters=4, random_state=42, n_init=10)
     # striker_df['cluster_id'] = kmeans.fit_predict(X)
 
+    # # 1. Advanced Forward
+    # # 2. Target Man
+    # # 3. False 9
     # centroids = pd.DataFrame(kmeans.cluster_centers_, columns=striker_highlight_cols)
     # centroids.to_csv("data/processed/striker_centroids.csv", index=False, encoding='utf-8')
 
-    # # creative_df = df[df['main_role'] == 'Creative Attacker'].copy()
-    # # X = creative_df[['sot_per_90_z', 'xa_per_90_z', 'succ_crosses_per_90_z', 'succ_dribbles_per_90_z', 'tackles_per_90_z']]
+    # creative_df = df[df['main_role'] == 'Creative Attacker'].copy()
+    # X = creative_df[['sot_per_90_z', 'xa_per_90_z', 'succ_crosses_per_90_z', 'succ_dribbles_per_90_z', 'tackles_per_90_z']]
 
-    # return
-    # # ======================================================================================================================================
+    return
+    # ======================================================================================================================================
 
     # PCA for dimensionality reduction to 17 dimensions (to remove overlap and redundancy in features)
     pca = PCA(n_components=17)
@@ -241,6 +290,9 @@ def scale_features():
         'umap_x': umap_embedding[:, 0],
         'umap_y': umap_embedding[:, 1],
     }, index=df.index)], axis=1)
+
+    
+
 
     os.makedirs(os.path.dirname("data/processed/processed_player_dataset.csv"), exist_ok=True)
     df.to_csv("data/processed/processed_player_dataset.csv", index=False, encoding='utf-8')
